@@ -1,0 +1,102 @@
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+group = 'id.koneko096'
+version = '0.0.1-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.5.+'
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.7'
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE"
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+ext {
+    swagger_annotations_version = "1.5.15"
+    jackson_version = "2.8.9"
+    spring_web_version = "4.3.9.RELEASE"
+    jodatime_version = "2.9.9"
+    junit_version = "4.12"
+    grpc_version = "1.15.0"
+}
+
+apply plugin: 'java'
+apply plugin: 'com.google.protobuf'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'maven'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+install {
+    repositories.mavenInstaller {
+        pom.artifactId = 'grpc'
+    }
+}
+
+sourceSets {
+    main {
+        proto {
+            // In addition to the default 'src/main/proto'
+            srcDir 'specs/proto'
+        }
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.5.1'
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:$grpc_version"
+        }
+    }
+
+    generateProtoTasks {
+        ofSourceSet('main').each { task ->
+            task.builtins {
+                java{
+                    outputSubDir = 'protoGen'
+                }
+            }
+            task.plugins {
+                grpc {
+                    outputSubDir = 'protoGen'
+                }
+            }
+        }
+    }
+    generatedFilesBaseDir = "$projectDir/src/"
+}
+
+task execute(type:JavaExec) {
+    main = System.getProperty('mainClass')
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile 'org.springframework.boot:spring-boot-starter-web'
+
+    compile "io.swagger:swagger-annotations:$swagger_annotations_version"
+    compile "org.springframework:spring-web:$spring_web_version"
+    compile 'io.github.lognet:grpc-spring-boot-starter:3.0.0'
+    compile "com.fasterxml.jackson.core:jackson-core:$jackson_version"
+    compile "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
+    compile "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
+    compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$jackson_version"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:$jackson_version"
+    compile "joda-time:joda-time:$jodatime_version"
+    testCompile "junit:junit:$junit_version"
+}

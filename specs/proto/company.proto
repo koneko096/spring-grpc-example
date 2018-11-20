@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package id.koneko096.grpc.service;
+
+service CompanyService {
+	//rpc Get(SearchParam) returns (Todo);
+	//rpc Add(Todo) returns (ReturnType);
+	//rpc Delete(SearchParam) returns (ReturnType);
+}
+
+message Empty {}
+
+message ReturnType {
+	string id = 1;
+}
+
+message SearchParam {
+	string id = 1;
+}
+
+message Todo {
+	string name = 1;
+	bool is_completed = 2;
+}
