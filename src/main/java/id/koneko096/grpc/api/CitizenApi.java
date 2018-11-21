@@ -22,7 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-20T21:21:26.411+07:00")
-@Component("id.koneko096.swagger.api.CitizenApi")
+@Component("id.koneko096.grpc.api.CitizenApi")
 public class CitizenApi {
     private ApiClient apiClient;
 

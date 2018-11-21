@@ -3,6 +3,7 @@ package id.koneko096.grpc.invoker;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -50,7 +51,7 @@ import id.koneko096.grpc.invoker.auth.ApiKeyAuth;
 import id.koneko096.grpc.invoker.auth.OAuth;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-20T21:21:26.411+07:00")
-@Component("id.koneko096.swagger.invoker.ApiClient")
+@Component("id.koneko096.grpc.invoker.ApiClient")
 public class ApiClient {
     public enum CollectionFormat {
         CSV(","), TSV("\t"), SSV(" "), PIPES("|"), MULTI(null);
@@ -71,6 +72,7 @@ public class ApiClient {
     
     private String basePath = "http://localhost/v1";
 
+    @Autowired
     private RestTemplate restTemplate;
 
     private Map<String, Authentication> authentications;
@@ -79,17 +81,6 @@ public class ApiClient {
     private MultiValueMap<String, String> responseHeaders;
     
     private DateFormat dateFormat;
-
-    public ApiClient() {
-        this.restTemplate = buildRestTemplate();
-        init();
-    }
-    
-    @Autowired
-    public ApiClient(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-        init();
-    }
     
     protected void init() {
         // Use RFC3339 format for date and datetime.
@@ -545,6 +536,7 @@ public class ApiClient {
      * Build the RestTemplate used to make HTTP requests.
      * @return RestTemplate
      */
+    @Bean
     protected RestTemplate buildRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();
         // This allows us to read the response more than once - Necessary for debugging.

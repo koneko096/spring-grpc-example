@@ -91,7 +91,10 @@ dependencies {
 
     compile "io.swagger:swagger-annotations:$swagger_annotations_version"
     compile "org.springframework:spring-web:$spring_web_version"
-    compile 'io.github.lognet:grpc-spring-boot-starter:3.0.0'
+
+    compile "io.github.lognet:grpc-spring-boot-starter:3.0.0"
+    compile "io.grpc:grpc-netty:$grpc_version"
+
     compile "com.fasterxml.jackson.core:jackson-core:$jackson_version"
     compile "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
     compile "com.fasterxml.jackson.core:jackson-databind:$jackson_version"

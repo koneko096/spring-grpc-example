@@ -3,22 +3,35 @@ syntax = "proto3";
 package id.koneko096.grpc.service;
 
 service CompanyService {
-	//rpc Get(SearchParam) returns (Todo);
-	//rpc Add(Todo) returns (ReturnType);
-	//rpc Delete(SearchParam) returns (ReturnType);
+    rpc GetEmployeeStatus(GetEmployeeRequest) returns (EmployeeStatus);
+    rpc RegisterEmployee(RegisterEmployeeRequest) returns (EmployeeStatus);
+	rpc MutateEmployee(MutateEmployeeRequest) returns (EmployeeStatus);
+	rpc FireEmployee(FireEmployeeRequest) returns (Empty);
 }
 
 message Empty {}
 
-message ReturnType {
-	string id = 1;
+message GetEmployeeRequest {
+    string id = 1;
 }
 
-message SearchParam {
-	string id = 1;
+message RegisterEmployeeRequest {
+    string divisionId = 1;
+    string companyId = 2;
 }
 
-message Todo {
-	string name = 1;
-	bool is_completed = 2;
+message MutateEmployeeRequest {
+    string currentDivisionId = 1;
+    string currentCompanyId = 2;
+    string newDivisionId = 3;
+    string newCompanyId = 4;
+}
+
+message FireEmployeeRequest {
+    string id = 1;
+}
+
+message EmployeeStatus {
+    string divisionName = 1;
+    string companyName = 2;
 }
