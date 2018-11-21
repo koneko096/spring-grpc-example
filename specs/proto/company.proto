@@ -1,34 +1,58 @@
 syntax = "proto3";
 
-package id.koneko096.grpc.service;
+package company;
+
+option java_package = "id.koneko096.grpc.service";
+
+import "google/api/annotations.proto";
 
 service CompanyService {
-    rpc GetEmployeeStatus(GetEmployeeRequest) returns (EmployeeStatus);
-    rpc RegisterEmployee(RegisterEmployeeRequest) returns (EmployeeStatus);
-	rpc MutateEmployee(MutateEmployeeRequest) returns (EmployeeStatus);
-	rpc FireEmployee(FireEmployeeRequest) returns (Empty);
+    rpc GetEmployeeStatus(GetEmployeeRequest) returns (EmployeeStatus) {
+        option (google.api.http) = { 
+            get: "/v1/employee/{id}/status" 
+        };
+    }
+    rpc RegisterEmployee(RegisterEmployeeRequest) returns (EmployeeStatus) {
+        option (google.api.http) = {
+            post: "/v1/employee"
+            body: "*"
+        };
+    }
+    rpc MutateEmployee(MutateEmployeeRequest) returns (EmployeeStatus) {
+        option (google.api.http) = {
+            put: "/v1/employee/{citizenId}"
+            body: "*"
+        };
+    }
+    rpc FireEmployee(FireEmployeeRequest) returns (Empty) {
+        option (google.api.http) = {
+            delete: "/v1/employee/{id}"
+        };
+    }
 }
 
 message Empty {}
 
 message GetEmployeeRequest {
-    string id = 1;
+    int64 id = 1;
 }
 
 message RegisterEmployeeRequest {
-    string divisionId = 1;
-    string companyId = 2;
+    int64 divisionId = 1;
+    int64 companyId = 2;
+    int64 citizenId = 3;
 }
 
 message MutateEmployeeRequest {
-    string currentDivisionId = 1;
-    string currentCompanyId = 2;
-    string newDivisionId = 3;
-    string newCompanyId = 4;
+    int64 currentDivisionId = 1;
+    int64 currentCompanyId = 2;
+    int64 newDivisionId = 3;
+    int64 newCompanyId = 4;
+    int64 citizenId = 5;
 }
 
 message FireEmployeeRequest {
-    string id = 1;
+    int64 id = 1;
 }
 
 message EmployeeStatus {

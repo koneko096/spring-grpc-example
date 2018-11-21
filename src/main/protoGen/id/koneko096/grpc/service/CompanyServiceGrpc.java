@@ -24,7 +24,7 @@ public final class CompanyServiceGrpc {
 
   private CompanyServiceGrpc() {}
 
-  public static final String SERVICE_NAME = "id.koneko096.grpc.service.CompanyService";
+  public static final String SERVICE_NAME = "company.CompanyService";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<id.koneko096.grpc.service.Company.GetEmployeeRequest,
@@ -45,7 +45,7 @@ public final class CompanyServiceGrpc {
               io.grpc.MethodDescriptor.<id.koneko096.grpc.service.Company.GetEmployeeRequest, id.koneko096.grpc.service.Company.EmployeeStatus>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "id.koneko096.grpc.service.CompanyService", "GetEmployeeStatus"))
+                  "company.CompanyService", "GetEmployeeStatus"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   id.koneko096.grpc.service.Company.GetEmployeeRequest.getDefaultInstance()))
@@ -77,7 +77,7 @@ public final class CompanyServiceGrpc {
               io.grpc.MethodDescriptor.<id.koneko096.grpc.service.Company.RegisterEmployeeRequest, id.koneko096.grpc.service.Company.EmployeeStatus>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "id.koneko096.grpc.service.CompanyService", "RegisterEmployee"))
+                  "company.CompanyService", "RegisterEmployee"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   id.koneko096.grpc.service.Company.RegisterEmployeeRequest.getDefaultInstance()))
@@ -109,7 +109,7 @@ public final class CompanyServiceGrpc {
               io.grpc.MethodDescriptor.<id.koneko096.grpc.service.Company.MutateEmployeeRequest, id.koneko096.grpc.service.Company.EmployeeStatus>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "id.koneko096.grpc.service.CompanyService", "MutateEmployee"))
+                  "company.CompanyService", "MutateEmployee"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   id.koneko096.grpc.service.Company.MutateEmployeeRequest.getDefaultInstance()))
@@ -141,7 +141,7 @@ public final class CompanyServiceGrpc {
               io.grpc.MethodDescriptor.<id.koneko096.grpc.service.Company.FireEmployeeRequest, id.koneko096.grpc.service.Company.Empty>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "id.koneko096.grpc.service.CompanyService", "FireEmployee"))
+                  "company.CompanyService", "FireEmployee"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   id.koneko096.grpc.service.Company.FireEmployeeRequest.getDefaultInstance()))

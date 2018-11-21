@@ -15,15 +15,15 @@ public final class Company {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface EmptyOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:id.koneko096.grpc.service.Empty)
+      // @@protoc_insertion_point(interface_extends:company.Empty)
       com.google.protobuf.MessageOrBuilder {
   }
   /**
-   * Protobuf type {@code id.koneko096.grpc.service.Empty}
+   * Protobuf type {@code company.Empty}
    */
   public  static final class Empty extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:id.koneko096.grpc.service.Empty)
+      // @@protoc_insertion_point(message_implements:company.Empty)
       EmptyOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use Empty.newBuilder() to construct.
@@ -77,12 +77,12 @@ public final class Company {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_Empty_descriptor;
+      return id.koneko096.grpc.service.Company.internal_static_company_Empty_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_Empty_fieldAccessorTable
+      return id.koneko096.grpc.service.Company.internal_static_company_Empty_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               id.koneko096.grpc.service.Company.Empty.class, id.koneko096.grpc.service.Company.Empty.Builder.class);
     }
@@ -228,20 +228,20 @@ public final class Company {
       return builder;
     }
     /**
-     * Protobuf type {@code id.koneko096.grpc.service.Empty}
+     * Protobuf type {@code company.Empty}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:id.koneko096.grpc.service.Empty)
+        // @@protoc_insertion_point(builder_implements:company.Empty)
         id.koneko096.grpc.service.Company.EmptyOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_Empty_descriptor;
+        return id.koneko096.grpc.service.Company.internal_static_company_Empty_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_Empty_fieldAccessorTable
+        return id.koneko096.grpc.service.Company.internal_static_company_Empty_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 id.koneko096.grpc.service.Company.Empty.class, id.koneko096.grpc.service.Company.Empty.Builder.class);
       }
@@ -268,7 +268,7 @@ public final class Company {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_Empty_descriptor;
+        return id.koneko096.grpc.service.Company.internal_static_company_Empty_descriptor;
       }
 
       public id.koneko096.grpc.service.Company.Empty getDefaultInstanceForType() {
@@ -363,10 +363,10 @@ public final class Company {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:id.koneko096.grpc.service.Empty)
+      // @@protoc_insertion_point(builder_scope:company.Empty)
     }
 
-    // @@protoc_insertion_point(class_scope:id.koneko096.grpc.service.Empty)
+    // @@protoc_insertion_point(class_scope:company.Empty)
     private static final id.koneko096.grpc.service.Company.Empty DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new id.koneko096.grpc.service.Company.Empty();
@@ -402,25 +402,20 @@ public final class Company {
   }
 
   public interface GetEmployeeRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:id.koneko096.grpc.service.GetEmployeeRequest)
+      // @@protoc_insertion_point(interface_extends:company.GetEmployeeRequest)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    java.lang.String getId();
-    /**
-     * <code>string id = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
+    long getId();
   }
   /**
-   * Protobuf type {@code id.koneko096.grpc.service.GetEmployeeRequest}
+   * Protobuf type {@code company.GetEmployeeRequest}
    */
   public  static final class GetEmployeeRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:id.koneko096.grpc.service.GetEmployeeRequest)
+      // @@protoc_insertion_point(message_implements:company.GetEmployeeRequest)
       GetEmployeeRequestOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use GetEmployeeRequest.newBuilder() to construct.
@@ -428,7 +423,7 @@ public final class Company {
       super(builder);
     }
     private GetEmployeeRequest() {
-      id_ = "";
+      id_ = 0L;
     }
 
     @java.lang.Override
@@ -462,10 +457,9 @@ public final class Company {
               }
               break;
             }
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 8: {
 
-              id_ = s;
+              id_ = input.readInt64();
               break;
             }
           }
@@ -482,48 +476,23 @@ public final class Company {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_GetEmployeeRequest_descriptor;
+      return id.koneko096.grpc.service.Company.internal_static_company_GetEmployeeRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_GetEmployeeRequest_fieldAccessorTable
+      return id.koneko096.grpc.service.Company.internal_static_company_GetEmployeeRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               id.koneko096.grpc.service.Company.GetEmployeeRequest.class, id.koneko096.grpc.service.Company.GetEmployeeRequest.Builder.class);
     }
 
     public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
+    private long id_;
     /**
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string id = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getId() {
+      return id_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -538,8 +507,8 @@ public final class Company {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      if (id_ != 0L) {
+        output.writeInt64(1, id_);
       }
       unknownFields.writeTo(output);
     }
@@ -549,8 +518,9 @@ public final class Company {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      if (id_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, id_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -568,8 +538,8 @@ public final class Company {
       id.koneko096.grpc.service.Company.GetEmployeeRequest other = (id.koneko096.grpc.service.Company.GetEmployeeRequest) obj;
 
       boolean result = true;
-      result = result && getId()
-          .equals(other.getId());
+      result = result && (getId()
+          == other.getId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -582,7 +552,8 @@ public final class Company {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getId());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -677,20 +648,20 @@ public final class Company {
       return builder;
     }
     /**
-     * Protobuf type {@code id.koneko096.grpc.service.GetEmployeeRequest}
+     * Protobuf type {@code company.GetEmployeeRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:id.koneko096.grpc.service.GetEmployeeRequest)
+        // @@protoc_insertion_point(builder_implements:company.GetEmployeeRequest)
         id.koneko096.grpc.service.Company.GetEmployeeRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_GetEmployeeRequest_descriptor;
+        return id.koneko096.grpc.service.Company.internal_static_company_GetEmployeeRequest_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_GetEmployeeRequest_fieldAccessorTable
+        return id.koneko096.grpc.service.Company.internal_static_company_GetEmployeeRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 id.koneko096.grpc.service.Company.GetEmployeeRequest.class, id.koneko096.grpc.service.Company.GetEmployeeRequest.Builder.class);
       }
@@ -712,14 +683,14 @@ public final class Company {
       }
       public Builder clear() {
         super.clear();
-        id_ = "";
+        id_ = 0L;
 
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_GetEmployeeRequest_descriptor;
+        return id.koneko096.grpc.service.Company.internal_static_company_GetEmployeeRequest_descriptor;
       }
 
       public id.koneko096.grpc.service.Company.GetEmployeeRequest getDefaultInstanceForType() {
@@ -778,9 +749,8 @@ public final class Company {
 
       public Builder mergeFrom(id.koneko096.grpc.service.Company.GetEmployeeRequest other) {
         if (other == id.koneko096.grpc.service.Company.GetEmployeeRequest.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
+        if (other.getId() != 0L) {
+          setId(other.getId());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -809,71 +779,28 @@ public final class Company {
         return this;
       }
 
-      private java.lang.Object id_ = "";
+      private long id_ ;
       /**
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getId() {
+        return id_;
       }
       /**
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string id = 1;</code>
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setId(long value) {
+        
         id_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
       public Builder clearId() {
         
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string id = 1;</code>
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
+        id_ = 0L;
         onChanged();
         return this;
       }
@@ -888,10 +815,10 @@ public final class Company {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:id.koneko096.grpc.service.GetEmployeeRequest)
+      // @@protoc_insertion_point(builder_scope:company.GetEmployeeRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:id.koneko096.grpc.service.GetEmployeeRequest)
+    // @@protoc_insertion_point(class_scope:company.GetEmployeeRequest)
     private static final id.koneko096.grpc.service.Company.GetEmployeeRequest DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new id.koneko096.grpc.service.Company.GetEmployeeRequest();
@@ -927,35 +854,30 @@ public final class Company {
   }
 
   public interface RegisterEmployeeRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:id.koneko096.grpc.service.RegisterEmployeeRequest)
+      // @@protoc_insertion_point(interface_extends:company.RegisterEmployeeRequest)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>string divisionId = 1;</code>
+     * <code>int64 divisionId = 1;</code>
      */
-    java.lang.String getDivisionId();
-    /**
-     * <code>string divisionId = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getDivisionIdBytes();
+    long getDivisionId();
 
     /**
-     * <code>string companyId = 2;</code>
+     * <code>int64 companyId = 2;</code>
      */
-    java.lang.String getCompanyId();
+    long getCompanyId();
+
     /**
-     * <code>string companyId = 2;</code>
+     * <code>int64 citizenId = 3;</code>
      */
-    com.google.protobuf.ByteString
-        getCompanyIdBytes();
+    long getCitizenId();
   }
   /**
-   * Protobuf type {@code id.koneko096.grpc.service.RegisterEmployeeRequest}
+   * Protobuf type {@code company.RegisterEmployeeRequest}
    */
   public  static final class RegisterEmployeeRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:id.koneko096.grpc.service.RegisterEmployeeRequest)
+      // @@protoc_insertion_point(message_implements:company.RegisterEmployeeRequest)
       RegisterEmployeeRequestOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use RegisterEmployeeRequest.newBuilder() to construct.
@@ -963,8 +885,9 @@ public final class Company {
       super(builder);
     }
     private RegisterEmployeeRequest() {
-      divisionId_ = "";
-      companyId_ = "";
+      divisionId_ = 0L;
+      companyId_ = 0L;
+      citizenId_ = 0L;
     }
 
     @java.lang.Override
@@ -998,16 +921,19 @@ public final class Company {
               }
               break;
             }
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 8: {
 
-              divisionId_ = s;
+              divisionId_ = input.readInt64();
               break;
             }
-            case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 16: {
 
-              companyId_ = s;
+              companyId_ = input.readInt64();
+              break;
+            }
+            case 24: {
+
+              citizenId_ = input.readInt64();
               break;
             }
           }
@@ -1024,82 +950,41 @@ public final class Company {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_RegisterEmployeeRequest_descriptor;
+      return id.koneko096.grpc.service.Company.internal_static_company_RegisterEmployeeRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_RegisterEmployeeRequest_fieldAccessorTable
+      return id.koneko096.grpc.service.Company.internal_static_company_RegisterEmployeeRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               id.koneko096.grpc.service.Company.RegisterEmployeeRequest.class, id.koneko096.grpc.service.Company.RegisterEmployeeRequest.Builder.class);
     }
 
     public static final int DIVISIONID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object divisionId_;
+    private long divisionId_;
     /**
-     * <code>string divisionId = 1;</code>
+     * <code>int64 divisionId = 1;</code>
      */
-    public java.lang.String getDivisionId() {
-      java.lang.Object ref = divisionId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        divisionId_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string divisionId = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getDivisionIdBytes() {
-      java.lang.Object ref = divisionId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        divisionId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getDivisionId() {
+      return divisionId_;
     }
 
     public static final int COMPANYID_FIELD_NUMBER = 2;
-    private volatile java.lang.Object companyId_;
+    private long companyId_;
     /**
-     * <code>string companyId = 2;</code>
+     * <code>int64 companyId = 2;</code>
      */
-    public java.lang.String getCompanyId() {
-      java.lang.Object ref = companyId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        companyId_ = s;
-        return s;
-      }
+    public long getCompanyId() {
+      return companyId_;
     }
+
+    public static final int CITIZENID_FIELD_NUMBER = 3;
+    private long citizenId_;
     /**
-     * <code>string companyId = 2;</code>
+     * <code>int64 citizenId = 3;</code>
      */
-    public com.google.protobuf.ByteString
-        getCompanyIdBytes() {
-      java.lang.Object ref = companyId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        companyId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getCitizenId() {
+      return citizenId_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -1114,11 +999,14 @@ public final class Company {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getDivisionIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, divisionId_);
+      if (divisionId_ != 0L) {
+        output.writeInt64(1, divisionId_);
       }
-      if (!getCompanyIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, companyId_);
+      if (companyId_ != 0L) {
+        output.writeInt64(2, companyId_);
+      }
+      if (citizenId_ != 0L) {
+        output.writeInt64(3, citizenId_);
       }
       unknownFields.writeTo(output);
     }
@@ -1128,11 +1016,17 @@ public final class Company {
       if (size != -1) return size;
 
       size = 0;
-      if (!getDivisionIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, divisionId_);
+      if (divisionId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, divisionId_);
       }
-      if (!getCompanyIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, companyId_);
+      if (companyId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(2, companyId_);
+      }
+      if (citizenId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(3, citizenId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1150,10 +1044,12 @@ public final class Company {
       id.koneko096.grpc.service.Company.RegisterEmployeeRequest other = (id.koneko096.grpc.service.Company.RegisterEmployeeRequest) obj;
 
       boolean result = true;
-      result = result && getDivisionId()
-          .equals(other.getDivisionId());
-      result = result && getCompanyId()
-          .equals(other.getCompanyId());
+      result = result && (getDivisionId()
+          == other.getDivisionId());
+      result = result && (getCompanyId()
+          == other.getCompanyId());
+      result = result && (getCitizenId()
+          == other.getCitizenId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -1166,9 +1062,14 @@ public final class Company {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + DIVISIONID_FIELD_NUMBER;
-      hash = (53 * hash) + getDivisionId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getDivisionId());
       hash = (37 * hash) + COMPANYID_FIELD_NUMBER;
-      hash = (53 * hash) + getCompanyId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getCompanyId());
+      hash = (37 * hash) + CITIZENID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getCitizenId());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1263,20 +1164,20 @@ public final class Company {
       return builder;
     }
     /**
-     * Protobuf type {@code id.koneko096.grpc.service.RegisterEmployeeRequest}
+     * Protobuf type {@code company.RegisterEmployeeRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:id.koneko096.grpc.service.RegisterEmployeeRequest)
+        // @@protoc_insertion_point(builder_implements:company.RegisterEmployeeRequest)
         id.koneko096.grpc.service.Company.RegisterEmployeeRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_RegisterEmployeeRequest_descriptor;
+        return id.koneko096.grpc.service.Company.internal_static_company_RegisterEmployeeRequest_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_RegisterEmployeeRequest_fieldAccessorTable
+        return id.koneko096.grpc.service.Company.internal_static_company_RegisterEmployeeRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 id.koneko096.grpc.service.Company.RegisterEmployeeRequest.class, id.koneko096.grpc.service.Company.RegisterEmployeeRequest.Builder.class);
       }
@@ -1298,16 +1199,18 @@ public final class Company {
       }
       public Builder clear() {
         super.clear();
-        divisionId_ = "";
+        divisionId_ = 0L;
 
-        companyId_ = "";
+        companyId_ = 0L;
+
+        citizenId_ = 0L;
 
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_RegisterEmployeeRequest_descriptor;
+        return id.koneko096.grpc.service.Company.internal_static_company_RegisterEmployeeRequest_descriptor;
       }
 
       public id.koneko096.grpc.service.Company.RegisterEmployeeRequest getDefaultInstanceForType() {
@@ -1326,6 +1229,7 @@ public final class Company {
         id.koneko096.grpc.service.Company.RegisterEmployeeRequest result = new id.koneko096.grpc.service.Company.RegisterEmployeeRequest(this);
         result.divisionId_ = divisionId_;
         result.companyId_ = companyId_;
+        result.citizenId_ = citizenId_;
         onBuilt();
         return result;
       }
@@ -1367,13 +1271,14 @@ public final class Company {
 
       public Builder mergeFrom(id.koneko096.grpc.service.Company.RegisterEmployeeRequest other) {
         if (other == id.koneko096.grpc.service.Company.RegisterEmployeeRequest.getDefaultInstance()) return this;
-        if (!other.getDivisionId().isEmpty()) {
-          divisionId_ = other.divisionId_;
-          onChanged();
+        if (other.getDivisionId() != 0L) {
+          setDivisionId(other.getDivisionId());
         }
-        if (!other.getCompanyId().isEmpty()) {
-          companyId_ = other.companyId_;
-          onChanged();
+        if (other.getCompanyId() != 0L) {
+          setCompanyId(other.getCompanyId());
+        }
+        if (other.getCitizenId() != 0L) {
+          setCitizenId(other.getCitizenId());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1402,140 +1307,80 @@ public final class Company {
         return this;
       }
 
-      private java.lang.Object divisionId_ = "";
+      private long divisionId_ ;
       /**
-       * <code>string divisionId = 1;</code>
+       * <code>int64 divisionId = 1;</code>
        */
-      public java.lang.String getDivisionId() {
-        java.lang.Object ref = divisionId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          divisionId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getDivisionId() {
+        return divisionId_;
       }
       /**
-       * <code>string divisionId = 1;</code>
+       * <code>int64 divisionId = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getDivisionIdBytes() {
-        java.lang.Object ref = divisionId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          divisionId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string divisionId = 1;</code>
-       */
-      public Builder setDivisionId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setDivisionId(long value) {
+        
         divisionId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string divisionId = 1;</code>
+       * <code>int64 divisionId = 1;</code>
        */
       public Builder clearDivisionId() {
         
-        divisionId_ = getDefaultInstance().getDivisionId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string divisionId = 1;</code>
-       */
-      public Builder setDivisionIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        divisionId_ = value;
+        divisionId_ = 0L;
         onChanged();
         return this;
       }
 
-      private java.lang.Object companyId_ = "";
+      private long companyId_ ;
       /**
-       * <code>string companyId = 2;</code>
+       * <code>int64 companyId = 2;</code>
        */
-      public java.lang.String getCompanyId() {
-        java.lang.Object ref = companyId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          companyId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getCompanyId() {
+        return companyId_;
       }
       /**
-       * <code>string companyId = 2;</code>
+       * <code>int64 companyId = 2;</code>
        */
-      public com.google.protobuf.ByteString
-          getCompanyIdBytes() {
-        java.lang.Object ref = companyId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          companyId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string companyId = 2;</code>
-       */
-      public Builder setCompanyId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setCompanyId(long value) {
+        
         companyId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string companyId = 2;</code>
+       * <code>int64 companyId = 2;</code>
        */
       public Builder clearCompanyId() {
         
-        companyId_ = getDefaultInstance().getCompanyId();
+        companyId_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private long citizenId_ ;
+      /**
+       * <code>int64 citizenId = 3;</code>
+       */
+      public long getCitizenId() {
+        return citizenId_;
+      }
+      /**
+       * <code>int64 citizenId = 3;</code>
+       */
+      public Builder setCitizenId(long value) {
+        
+        citizenId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string companyId = 2;</code>
+       * <code>int64 citizenId = 3;</code>
        */
-      public Builder setCompanyIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
+      public Builder clearCitizenId() {
         
-        companyId_ = value;
+        citizenId_ = 0L;
         onChanged();
         return this;
       }
@@ -1550,10 +1395,10 @@ public final class Company {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:id.koneko096.grpc.service.RegisterEmployeeRequest)
+      // @@protoc_insertion_point(builder_scope:company.RegisterEmployeeRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:id.koneko096.grpc.service.RegisterEmployeeRequest)
+    // @@protoc_insertion_point(class_scope:company.RegisterEmployeeRequest)
     private static final id.koneko096.grpc.service.Company.RegisterEmployeeRequest DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new id.koneko096.grpc.service.Company.RegisterEmployeeRequest();
@@ -1589,55 +1434,40 @@ public final class Company {
   }
 
   public interface MutateEmployeeRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:id.koneko096.grpc.service.MutateEmployeeRequest)
+      // @@protoc_insertion_point(interface_extends:company.MutateEmployeeRequest)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>string currentDivisionId = 1;</code>
+     * <code>int64 currentDivisionId = 1;</code>
      */
-    java.lang.String getCurrentDivisionId();
-    /**
-     * <code>string currentDivisionId = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getCurrentDivisionIdBytes();
+    long getCurrentDivisionId();
 
     /**
-     * <code>string currentCompanyId = 2;</code>
+     * <code>int64 currentCompanyId = 2;</code>
      */
-    java.lang.String getCurrentCompanyId();
-    /**
-     * <code>string currentCompanyId = 2;</code>
-     */
-    com.google.protobuf.ByteString
-        getCurrentCompanyIdBytes();
+    long getCurrentCompanyId();
 
     /**
-     * <code>string newDivisionId = 3;</code>
+     * <code>int64 newDivisionId = 3;</code>
      */
-    java.lang.String getNewDivisionId();
-    /**
-     * <code>string newDivisionId = 3;</code>
-     */
-    com.google.protobuf.ByteString
-        getNewDivisionIdBytes();
+    long getNewDivisionId();
 
     /**
-     * <code>string newCompanyId = 4;</code>
+     * <code>int64 newCompanyId = 4;</code>
      */
-    java.lang.String getNewCompanyId();
+    long getNewCompanyId();
+
     /**
-     * <code>string newCompanyId = 4;</code>
+     * <code>int64 citizenId = 5;</code>
      */
-    com.google.protobuf.ByteString
-        getNewCompanyIdBytes();
+    long getCitizenId();
   }
   /**
-   * Protobuf type {@code id.koneko096.grpc.service.MutateEmployeeRequest}
+   * Protobuf type {@code company.MutateEmployeeRequest}
    */
   public  static final class MutateEmployeeRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:id.koneko096.grpc.service.MutateEmployeeRequest)
+      // @@protoc_insertion_point(message_implements:company.MutateEmployeeRequest)
       MutateEmployeeRequestOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use MutateEmployeeRequest.newBuilder() to construct.
@@ -1645,10 +1475,11 @@ public final class Company {
       super(builder);
     }
     private MutateEmployeeRequest() {
-      currentDivisionId_ = "";
-      currentCompanyId_ = "";
-      newDivisionId_ = "";
-      newCompanyId_ = "";
+      currentDivisionId_ = 0L;
+      currentCompanyId_ = 0L;
+      newDivisionId_ = 0L;
+      newCompanyId_ = 0L;
+      citizenId_ = 0L;
     }
 
     @java.lang.Override
@@ -1682,28 +1513,29 @@ public final class Company {
               }
               break;
             }
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 8: {
 
-              currentDivisionId_ = s;
+              currentDivisionId_ = input.readInt64();
               break;
             }
-            case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 16: {
 
-              currentCompanyId_ = s;
+              currentCompanyId_ = input.readInt64();
               break;
             }
-            case 26: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 24: {
 
-              newDivisionId_ = s;
+              newDivisionId_ = input.readInt64();
               break;
             }
-            case 34: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 32: {
 
-              newCompanyId_ = s;
+              newCompanyId_ = input.readInt64();
+              break;
+            }
+            case 40: {
+
+              citizenId_ = input.readInt64();
               break;
             }
           }
@@ -1720,150 +1552,59 @@ public final class Company {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_MutateEmployeeRequest_descriptor;
+      return id.koneko096.grpc.service.Company.internal_static_company_MutateEmployeeRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_MutateEmployeeRequest_fieldAccessorTable
+      return id.koneko096.grpc.service.Company.internal_static_company_MutateEmployeeRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               id.koneko096.grpc.service.Company.MutateEmployeeRequest.class, id.koneko096.grpc.service.Company.MutateEmployeeRequest.Builder.class);
     }
 
     public static final int CURRENTDIVISIONID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object currentDivisionId_;
+    private long currentDivisionId_;
     /**
-     * <code>string currentDivisionId = 1;</code>
+     * <code>int64 currentDivisionId = 1;</code>
      */
-    public java.lang.String getCurrentDivisionId() {
-      java.lang.Object ref = currentDivisionId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        currentDivisionId_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string currentDivisionId = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getCurrentDivisionIdBytes() {
-      java.lang.Object ref = currentDivisionId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        currentDivisionId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getCurrentDivisionId() {
+      return currentDivisionId_;
     }
 
     public static final int CURRENTCOMPANYID_FIELD_NUMBER = 2;
-    private volatile java.lang.Object currentCompanyId_;
+    private long currentCompanyId_;
     /**
-     * <code>string currentCompanyId = 2;</code>
+     * <code>int64 currentCompanyId = 2;</code>
      */
-    public java.lang.String getCurrentCompanyId() {
-      java.lang.Object ref = currentCompanyId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        currentCompanyId_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string currentCompanyId = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getCurrentCompanyIdBytes() {
-      java.lang.Object ref = currentCompanyId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        currentCompanyId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getCurrentCompanyId() {
+      return currentCompanyId_;
     }
 
     public static final int NEWDIVISIONID_FIELD_NUMBER = 3;
-    private volatile java.lang.Object newDivisionId_;
+    private long newDivisionId_;
     /**
-     * <code>string newDivisionId = 3;</code>
+     * <code>int64 newDivisionId = 3;</code>
      */
-    public java.lang.String getNewDivisionId() {
-      java.lang.Object ref = newDivisionId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        newDivisionId_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string newDivisionId = 3;</code>
-     */
-    public com.google.protobuf.ByteString
-        getNewDivisionIdBytes() {
-      java.lang.Object ref = newDivisionId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        newDivisionId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getNewDivisionId() {
+      return newDivisionId_;
     }
 
     public static final int NEWCOMPANYID_FIELD_NUMBER = 4;
-    private volatile java.lang.Object newCompanyId_;
+    private long newCompanyId_;
     /**
-     * <code>string newCompanyId = 4;</code>
+     * <code>int64 newCompanyId = 4;</code>
      */
-    public java.lang.String getNewCompanyId() {
-      java.lang.Object ref = newCompanyId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        newCompanyId_ = s;
-        return s;
-      }
+    public long getNewCompanyId() {
+      return newCompanyId_;
     }
+
+    public static final int CITIZENID_FIELD_NUMBER = 5;
+    private long citizenId_;
     /**
-     * <code>string newCompanyId = 4;</code>
+     * <code>int64 citizenId = 5;</code>
      */
-    public com.google.protobuf.ByteString
-        getNewCompanyIdBytes() {
-      java.lang.Object ref = newCompanyId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        newCompanyId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getCitizenId() {
+      return citizenId_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -1878,17 +1619,20 @@ public final class Company {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getCurrentDivisionIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, currentDivisionId_);
+      if (currentDivisionId_ != 0L) {
+        output.writeInt64(1, currentDivisionId_);
       }
-      if (!getCurrentCompanyIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, currentCompanyId_);
+      if (currentCompanyId_ != 0L) {
+        output.writeInt64(2, currentCompanyId_);
       }
-      if (!getNewDivisionIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, newDivisionId_);
+      if (newDivisionId_ != 0L) {
+        output.writeInt64(3, newDivisionId_);
       }
-      if (!getNewCompanyIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, newCompanyId_);
+      if (newCompanyId_ != 0L) {
+        output.writeInt64(4, newCompanyId_);
+      }
+      if (citizenId_ != 0L) {
+        output.writeInt64(5, citizenId_);
       }
       unknownFields.writeTo(output);
     }
@@ -1898,17 +1642,25 @@ public final class Company {
       if (size != -1) return size;
 
       size = 0;
-      if (!getCurrentDivisionIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, currentDivisionId_);
+      if (currentDivisionId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, currentDivisionId_);
       }
-      if (!getCurrentCompanyIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, currentCompanyId_);
+      if (currentCompanyId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(2, currentCompanyId_);
       }
-      if (!getNewDivisionIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, newDivisionId_);
+      if (newDivisionId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(3, newDivisionId_);
       }
-      if (!getNewCompanyIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, newCompanyId_);
+      if (newCompanyId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(4, newCompanyId_);
+      }
+      if (citizenId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(5, citizenId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1926,14 +1678,16 @@ public final class Company {
       id.koneko096.grpc.service.Company.MutateEmployeeRequest other = (id.koneko096.grpc.service.Company.MutateEmployeeRequest) obj;
 
       boolean result = true;
-      result = result && getCurrentDivisionId()
-          .equals(other.getCurrentDivisionId());
-      result = result && getCurrentCompanyId()
-          .equals(other.getCurrentCompanyId());
-      result = result && getNewDivisionId()
-          .equals(other.getNewDivisionId());
-      result = result && getNewCompanyId()
-          .equals(other.getNewCompanyId());
+      result = result && (getCurrentDivisionId()
+          == other.getCurrentDivisionId());
+      result = result && (getCurrentCompanyId()
+          == other.getCurrentCompanyId());
+      result = result && (getNewDivisionId()
+          == other.getNewDivisionId());
+      result = result && (getNewCompanyId()
+          == other.getNewCompanyId());
+      result = result && (getCitizenId()
+          == other.getCitizenId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -1946,13 +1700,20 @@ public final class Company {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + CURRENTDIVISIONID_FIELD_NUMBER;
-      hash = (53 * hash) + getCurrentDivisionId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getCurrentDivisionId());
       hash = (37 * hash) + CURRENTCOMPANYID_FIELD_NUMBER;
-      hash = (53 * hash) + getCurrentCompanyId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getCurrentCompanyId());
       hash = (37 * hash) + NEWDIVISIONID_FIELD_NUMBER;
-      hash = (53 * hash) + getNewDivisionId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getNewDivisionId());
       hash = (37 * hash) + NEWCOMPANYID_FIELD_NUMBER;
-      hash = (53 * hash) + getNewCompanyId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getNewCompanyId());
+      hash = (37 * hash) + CITIZENID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getCitizenId());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -2047,20 +1808,20 @@ public final class Company {
       return builder;
     }
     /**
-     * Protobuf type {@code id.koneko096.grpc.service.MutateEmployeeRequest}
+     * Protobuf type {@code company.MutateEmployeeRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:id.koneko096.grpc.service.MutateEmployeeRequest)
+        // @@protoc_insertion_point(builder_implements:company.MutateEmployeeRequest)
         id.koneko096.grpc.service.Company.MutateEmployeeRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_MutateEmployeeRequest_descriptor;
+        return id.koneko096.grpc.service.Company.internal_static_company_MutateEmployeeRequest_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_MutateEmployeeRequest_fieldAccessorTable
+        return id.koneko096.grpc.service.Company.internal_static_company_MutateEmployeeRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 id.koneko096.grpc.service.Company.MutateEmployeeRequest.class, id.koneko096.grpc.service.Company.MutateEmployeeRequest.Builder.class);
       }
@@ -2082,20 +1843,22 @@ public final class Company {
       }
       public Builder clear() {
         super.clear();
-        currentDivisionId_ = "";
+        currentDivisionId_ = 0L;
 
-        currentCompanyId_ = "";
+        currentCompanyId_ = 0L;
 
-        newDivisionId_ = "";
+        newDivisionId_ = 0L;
 
-        newCompanyId_ = "";
+        newCompanyId_ = 0L;
+
+        citizenId_ = 0L;
 
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_MutateEmployeeRequest_descriptor;
+        return id.koneko096.grpc.service.Company.internal_static_company_MutateEmployeeRequest_descriptor;
       }
 
       public id.koneko096.grpc.service.Company.MutateEmployeeRequest getDefaultInstanceForType() {
@@ -2116,6 +1879,7 @@ public final class Company {
         result.currentCompanyId_ = currentCompanyId_;
         result.newDivisionId_ = newDivisionId_;
         result.newCompanyId_ = newCompanyId_;
+        result.citizenId_ = citizenId_;
         onBuilt();
         return result;
       }
@@ -2157,21 +1921,20 @@ public final class Company {
 
       public Builder mergeFrom(id.koneko096.grpc.service.Company.MutateEmployeeRequest other) {
         if (other == id.koneko096.grpc.service.Company.MutateEmployeeRequest.getDefaultInstance()) return this;
-        if (!other.getCurrentDivisionId().isEmpty()) {
-          currentDivisionId_ = other.currentDivisionId_;
-          onChanged();
+        if (other.getCurrentDivisionId() != 0L) {
+          setCurrentDivisionId(other.getCurrentDivisionId());
         }
-        if (!other.getCurrentCompanyId().isEmpty()) {
-          currentCompanyId_ = other.currentCompanyId_;
-          onChanged();
+        if (other.getCurrentCompanyId() != 0L) {
+          setCurrentCompanyId(other.getCurrentCompanyId());
         }
-        if (!other.getNewDivisionId().isEmpty()) {
-          newDivisionId_ = other.newDivisionId_;
-          onChanged();
+        if (other.getNewDivisionId() != 0L) {
+          setNewDivisionId(other.getNewDivisionId());
         }
-        if (!other.getNewCompanyId().isEmpty()) {
-          newCompanyId_ = other.newCompanyId_;
-          onChanged();
+        if (other.getNewCompanyId() != 0L) {
+          setNewCompanyId(other.getNewCompanyId());
+        }
+        if (other.getCitizenId() != 0L) {
+          setCitizenId(other.getCitizenId());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2200,278 +1963,132 @@ public final class Company {
         return this;
       }
 
-      private java.lang.Object currentDivisionId_ = "";
+      private long currentDivisionId_ ;
       /**
-       * <code>string currentDivisionId = 1;</code>
+       * <code>int64 currentDivisionId = 1;</code>
        */
-      public java.lang.String getCurrentDivisionId() {
-        java.lang.Object ref = currentDivisionId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          currentDivisionId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getCurrentDivisionId() {
+        return currentDivisionId_;
       }
       /**
-       * <code>string currentDivisionId = 1;</code>
+       * <code>int64 currentDivisionId = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getCurrentDivisionIdBytes() {
-        java.lang.Object ref = currentDivisionId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          currentDivisionId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string currentDivisionId = 1;</code>
-       */
-      public Builder setCurrentDivisionId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setCurrentDivisionId(long value) {
+        
         currentDivisionId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string currentDivisionId = 1;</code>
+       * <code>int64 currentDivisionId = 1;</code>
        */
       public Builder clearCurrentDivisionId() {
         
-        currentDivisionId_ = getDefaultInstance().getCurrentDivisionId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string currentDivisionId = 1;</code>
-       */
-      public Builder setCurrentDivisionIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        currentDivisionId_ = value;
+        currentDivisionId_ = 0L;
         onChanged();
         return this;
       }
 
-      private java.lang.Object currentCompanyId_ = "";
+      private long currentCompanyId_ ;
       /**
-       * <code>string currentCompanyId = 2;</code>
+       * <code>int64 currentCompanyId = 2;</code>
        */
-      public java.lang.String getCurrentCompanyId() {
-        java.lang.Object ref = currentCompanyId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          currentCompanyId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getCurrentCompanyId() {
+        return currentCompanyId_;
       }
       /**
-       * <code>string currentCompanyId = 2;</code>
+       * <code>int64 currentCompanyId = 2;</code>
        */
-      public com.google.protobuf.ByteString
-          getCurrentCompanyIdBytes() {
-        java.lang.Object ref = currentCompanyId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          currentCompanyId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string currentCompanyId = 2;</code>
-       */
-      public Builder setCurrentCompanyId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setCurrentCompanyId(long value) {
+        
         currentCompanyId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string currentCompanyId = 2;</code>
+       * <code>int64 currentCompanyId = 2;</code>
        */
       public Builder clearCurrentCompanyId() {
         
-        currentCompanyId_ = getDefaultInstance().getCurrentCompanyId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string currentCompanyId = 2;</code>
-       */
-      public Builder setCurrentCompanyIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        currentCompanyId_ = value;
+        currentCompanyId_ = 0L;
         onChanged();
         return this;
       }
 
-      private java.lang.Object newDivisionId_ = "";
+      private long newDivisionId_ ;
       /**
-       * <code>string newDivisionId = 3;</code>
+       * <code>int64 newDivisionId = 3;</code>
        */
-      public java.lang.String getNewDivisionId() {
-        java.lang.Object ref = newDivisionId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          newDivisionId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getNewDivisionId() {
+        return newDivisionId_;
       }
       /**
-       * <code>string newDivisionId = 3;</code>
+       * <code>int64 newDivisionId = 3;</code>
        */
-      public com.google.protobuf.ByteString
-          getNewDivisionIdBytes() {
-        java.lang.Object ref = newDivisionId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          newDivisionId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string newDivisionId = 3;</code>
-       */
-      public Builder setNewDivisionId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setNewDivisionId(long value) {
+        
         newDivisionId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string newDivisionId = 3;</code>
+       * <code>int64 newDivisionId = 3;</code>
        */
       public Builder clearNewDivisionId() {
         
-        newDivisionId_ = getDefaultInstance().getNewDivisionId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string newDivisionId = 3;</code>
-       */
-      public Builder setNewDivisionIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        newDivisionId_ = value;
+        newDivisionId_ = 0L;
         onChanged();
         return this;
       }
 
-      private java.lang.Object newCompanyId_ = "";
+      private long newCompanyId_ ;
       /**
-       * <code>string newCompanyId = 4;</code>
+       * <code>int64 newCompanyId = 4;</code>
        */
-      public java.lang.String getNewCompanyId() {
-        java.lang.Object ref = newCompanyId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          newCompanyId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getNewCompanyId() {
+        return newCompanyId_;
       }
       /**
-       * <code>string newCompanyId = 4;</code>
+       * <code>int64 newCompanyId = 4;</code>
        */
-      public com.google.protobuf.ByteString
-          getNewCompanyIdBytes() {
-        java.lang.Object ref = newCompanyId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          newCompanyId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string newCompanyId = 4;</code>
-       */
-      public Builder setNewCompanyId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setNewCompanyId(long value) {
+        
         newCompanyId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string newCompanyId = 4;</code>
+       * <code>int64 newCompanyId = 4;</code>
        */
       public Builder clearNewCompanyId() {
         
-        newCompanyId_ = getDefaultInstance().getNewCompanyId();
+        newCompanyId_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private long citizenId_ ;
+      /**
+       * <code>int64 citizenId = 5;</code>
+       */
+      public long getCitizenId() {
+        return citizenId_;
+      }
+      /**
+       * <code>int64 citizenId = 5;</code>
+       */
+      public Builder setCitizenId(long value) {
+        
+        citizenId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string newCompanyId = 4;</code>
+       * <code>int64 citizenId = 5;</code>
        */
-      public Builder setNewCompanyIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
+      public Builder clearCitizenId() {
         
-        newCompanyId_ = value;
+        citizenId_ = 0L;
         onChanged();
         return this;
       }
@@ -2486,10 +2103,10 @@ public final class Company {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:id.koneko096.grpc.service.MutateEmployeeRequest)
+      // @@protoc_insertion_point(builder_scope:company.MutateEmployeeRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:id.koneko096.grpc.service.MutateEmployeeRequest)
+    // @@protoc_insertion_point(class_scope:company.MutateEmployeeRequest)
     private static final id.koneko096.grpc.service.Company.MutateEmployeeRequest DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new id.koneko096.grpc.service.Company.MutateEmployeeRequest();
@@ -2525,25 +2142,20 @@ public final class Company {
   }
 
   public interface FireEmployeeRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:id.koneko096.grpc.service.FireEmployeeRequest)
+      // @@protoc_insertion_point(interface_extends:company.FireEmployeeRequest)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    java.lang.String getId();
-    /**
-     * <code>string id = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
+    long getId();
   }
   /**
-   * Protobuf type {@code id.koneko096.grpc.service.FireEmployeeRequest}
+   * Protobuf type {@code company.FireEmployeeRequest}
    */
   public  static final class FireEmployeeRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:id.koneko096.grpc.service.FireEmployeeRequest)
+      // @@protoc_insertion_point(message_implements:company.FireEmployeeRequest)
       FireEmployeeRequestOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use FireEmployeeRequest.newBuilder() to construct.
@@ -2551,7 +2163,7 @@ public final class Company {
       super(builder);
     }
     private FireEmployeeRequest() {
-      id_ = "";
+      id_ = 0L;
     }
 
     @java.lang.Override
@@ -2585,10 +2197,9 @@ public final class Company {
               }
               break;
             }
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 8: {
 
-              id_ = s;
+              id_ = input.readInt64();
               break;
             }
           }
@@ -2605,48 +2216,23 @@ public final class Company {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_FireEmployeeRequest_descriptor;
+      return id.koneko096.grpc.service.Company.internal_static_company_FireEmployeeRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_FireEmployeeRequest_fieldAccessorTable
+      return id.koneko096.grpc.service.Company.internal_static_company_FireEmployeeRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               id.koneko096.grpc.service.Company.FireEmployeeRequest.class, id.koneko096.grpc.service.Company.FireEmployeeRequest.Builder.class);
     }
 
     public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
+    private long id_;
     /**
-     * <code>string id = 1;</code>
+     * <code>int64 id = 1;</code>
      */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string id = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getId() {
+      return id_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -2661,8 +2247,8 @@ public final class Company {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      if (id_ != 0L) {
+        output.writeInt64(1, id_);
       }
       unknownFields.writeTo(output);
     }
@@ -2672,8 +2258,9 @@ public final class Company {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      if (id_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, id_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2691,8 +2278,8 @@ public final class Company {
       id.koneko096.grpc.service.Company.FireEmployeeRequest other = (id.koneko096.grpc.service.Company.FireEmployeeRequest) obj;
 
       boolean result = true;
-      result = result && getId()
-          .equals(other.getId());
+      result = result && (getId()
+          == other.getId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -2705,7 +2292,8 @@ public final class Company {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getId());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -2800,20 +2388,20 @@ public final class Company {
       return builder;
     }
     /**
-     * Protobuf type {@code id.koneko096.grpc.service.FireEmployeeRequest}
+     * Protobuf type {@code company.FireEmployeeRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:id.koneko096.grpc.service.FireEmployeeRequest)
+        // @@protoc_insertion_point(builder_implements:company.FireEmployeeRequest)
         id.koneko096.grpc.service.Company.FireEmployeeRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_FireEmployeeRequest_descriptor;
+        return id.koneko096.grpc.service.Company.internal_static_company_FireEmployeeRequest_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_FireEmployeeRequest_fieldAccessorTable
+        return id.koneko096.grpc.service.Company.internal_static_company_FireEmployeeRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 id.koneko096.grpc.service.Company.FireEmployeeRequest.class, id.koneko096.grpc.service.Company.FireEmployeeRequest.Builder.class);
       }
@@ -2835,14 +2423,14 @@ public final class Company {
       }
       public Builder clear() {
         super.clear();
-        id_ = "";
+        id_ = 0L;
 
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_FireEmployeeRequest_descriptor;
+        return id.koneko096.grpc.service.Company.internal_static_company_FireEmployeeRequest_descriptor;
       }
 
       public id.koneko096.grpc.service.Company.FireEmployeeRequest getDefaultInstanceForType() {
@@ -2901,9 +2489,8 @@ public final class Company {
 
       public Builder mergeFrom(id.koneko096.grpc.service.Company.FireEmployeeRequest other) {
         if (other == id.koneko096.grpc.service.Company.FireEmployeeRequest.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
+        if (other.getId() != 0L) {
+          setId(other.getId());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2932,71 +2519,28 @@ public final class Company {
         return this;
       }
 
-      private java.lang.Object id_ = "";
+      private long id_ ;
       /**
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getId() {
+        return id_;
       }
       /**
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string id = 1;</code>
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setId(long value) {
+        
         id_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string id = 1;</code>
+       * <code>int64 id = 1;</code>
        */
       public Builder clearId() {
         
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string id = 1;</code>
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
+        id_ = 0L;
         onChanged();
         return this;
       }
@@ -3011,10 +2555,10 @@ public final class Company {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:id.koneko096.grpc.service.FireEmployeeRequest)
+      // @@protoc_insertion_point(builder_scope:company.FireEmployeeRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:id.koneko096.grpc.service.FireEmployeeRequest)
+    // @@protoc_insertion_point(class_scope:company.FireEmployeeRequest)
     private static final id.koneko096.grpc.service.Company.FireEmployeeRequest DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new id.koneko096.grpc.service.Company.FireEmployeeRequest();
@@ -3050,7 +2594,7 @@ public final class Company {
   }
 
   public interface EmployeeStatusOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:id.koneko096.grpc.service.EmployeeStatus)
+      // @@protoc_insertion_point(interface_extends:company.EmployeeStatus)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -3074,11 +2618,11 @@ public final class Company {
         getCompanyNameBytes();
   }
   /**
-   * Protobuf type {@code id.koneko096.grpc.service.EmployeeStatus}
+   * Protobuf type {@code company.EmployeeStatus}
    */
   public  static final class EmployeeStatus extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:id.koneko096.grpc.service.EmployeeStatus)
+      // @@protoc_insertion_point(message_implements:company.EmployeeStatus)
       EmployeeStatusOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use EmployeeStatus.newBuilder() to construct.
@@ -3147,12 +2691,12 @@ public final class Company {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_EmployeeStatus_descriptor;
+      return id.koneko096.grpc.service.Company.internal_static_company_EmployeeStatus_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_EmployeeStatus_fieldAccessorTable
+      return id.koneko096.grpc.service.Company.internal_static_company_EmployeeStatus_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               id.koneko096.grpc.service.Company.EmployeeStatus.class, id.koneko096.grpc.service.Company.EmployeeStatus.Builder.class);
     }
@@ -3386,20 +2930,20 @@ public final class Company {
       return builder;
     }
     /**
-     * Protobuf type {@code id.koneko096.grpc.service.EmployeeStatus}
+     * Protobuf type {@code company.EmployeeStatus}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:id.koneko096.grpc.service.EmployeeStatus)
+        // @@protoc_insertion_point(builder_implements:company.EmployeeStatus)
         id.koneko096.grpc.service.Company.EmployeeStatusOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_EmployeeStatus_descriptor;
+        return id.koneko096.grpc.service.Company.internal_static_company_EmployeeStatus_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_EmployeeStatus_fieldAccessorTable
+        return id.koneko096.grpc.service.Company.internal_static_company_EmployeeStatus_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 id.koneko096.grpc.service.Company.EmployeeStatus.class, id.koneko096.grpc.service.Company.EmployeeStatus.Builder.class);
       }
@@ -3430,7 +2974,7 @@ public final class Company {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return id.koneko096.grpc.service.Company.internal_static_id_koneko096_grpc_service_EmployeeStatus_descriptor;
+        return id.koneko096.grpc.service.Company.internal_static_company_EmployeeStatus_descriptor;
       }
 
       public id.koneko096.grpc.service.Company.EmployeeStatus getDefaultInstanceForType() {
@@ -3673,10 +3217,10 @@ public final class Company {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:id.koneko096.grpc.service.EmployeeStatus)
+      // @@protoc_insertion_point(builder_scope:company.EmployeeStatus)
     }
 
-    // @@protoc_insertion_point(class_scope:id.koneko096.grpc.service.EmployeeStatus)
+    // @@protoc_insertion_point(class_scope:company.EmployeeStatus)
     private static final id.koneko096.grpc.service.Company.EmployeeStatus DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new id.koneko096.grpc.service.Company.EmployeeStatus();
@@ -3712,35 +3256,35 @@ public final class Company {
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_id_koneko096_grpc_service_Empty_descriptor;
+    internal_static_company_Empty_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_id_koneko096_grpc_service_Empty_fieldAccessorTable;
+      internal_static_company_Empty_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_id_koneko096_grpc_service_GetEmployeeRequest_descriptor;
+    internal_static_company_GetEmployeeRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_id_koneko096_grpc_service_GetEmployeeRequest_fieldAccessorTable;
+      internal_static_company_GetEmployeeRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_id_koneko096_grpc_service_RegisterEmployeeRequest_descriptor;
+    internal_static_company_RegisterEmployeeRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_id_koneko096_grpc_service_RegisterEmployeeRequest_fieldAccessorTable;
+      internal_static_company_RegisterEmployeeRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_id_koneko096_grpc_service_MutateEmployeeRequest_descriptor;
+    internal_static_company_MutateEmployeeRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_id_koneko096_grpc_service_MutateEmployeeRequest_fieldAccessorTable;
+      internal_static_company_MutateEmployeeRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_id_koneko096_grpc_service_FireEmployeeRequest_descriptor;
+    internal_static_company_FireEmployeeRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_id_koneko096_grpc_service_FireEmployeeRequest_fieldAccessorTable;
+      internal_static_company_FireEmployeeRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_id_koneko096_grpc_service_EmployeeStatus_descriptor;
+    internal_static_company_EmployeeStatus_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_id_koneko096_grpc_service_EmployeeStatus_fieldAccessorTable;
+      internal_static_company_EmployeeStatus_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -3750,27 +3294,29 @@ public final class Company {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rcompany.proto\022\031id.koneko096.grpc.servi" +
-      "ce\"\007\n\005Empty\" \n\022GetEmployeeRequest\022\n\n\002id\030" +
-      "\001 \001(\t\"@\n\027RegisterEmployeeRequest\022\022\n\ndivi" +
-      "sionId\030\001 \001(\t\022\021\n\tcompanyId\030\002 \001(\t\"y\n\025Mutat" +
-      "eEmployeeRequest\022\031\n\021currentDivisionId\030\001 " +
-      "\001(\t\022\030\n\020currentCompanyId\030\002 \001(\t\022\025\n\rnewDivi" +
-      "sionId\030\003 \001(\t\022\024\n\014newCompanyId\030\004 \001(\t\"!\n\023Fi" +
-      "reEmployeeRequest\022\n\n\002id\030\001 \001(\t\";\n\016Employe" +
-      "eStatus\022\024\n\014divisionName\030\001 \001(\t\022\023\n\013company" +
-      "Name\030\002 \001(\t2\303\003\n\016CompanyService\022m\n\021GetEmpl" +
-      "oyeeStatus\022-.id.koneko096.grpc.service.G" +
-      "etEmployeeRequest\032).id.koneko096.grpc.se" +
-      "rvice.EmployeeStatus\022q\n\020RegisterEmployee" +
-      "\0222.id.koneko096.grpc.service.RegisterEmp" +
-      "loyeeRequest\032).id.koneko096.grpc.service" +
-      ".EmployeeStatus\022m\n\016MutateEmployee\0220.id.k" +
-      "oneko096.grpc.service.MutateEmployeeRequ" +
-      "est\032).id.koneko096.grpc.service.Employee" +
-      "Status\022`\n\014FireEmployee\022..id.koneko096.gr" +
-      "pc.service.FireEmployeeRequest\032 .id.kone" +
-      "ko096.grpc.service.Emptyb\006proto3"
+      "\n\rcompany.proto\022\007company\032\034google/api/ann" +
+      "otations.proto\"\007\n\005Empty\" \n\022GetEmployeeRe" +
+      "quest\022\n\n\002id\030\001 \001(\003\"S\n\027RegisterEmployeeReq" +
+      "uest\022\022\n\ndivisionId\030\001 \001(\003\022\021\n\tcompanyId\030\002 " +
+      "\001(\003\022\021\n\tcitizenId\030\003 \001(\003\"\214\001\n\025MutateEmploye" +
+      "eRequest\022\031\n\021currentDivisionId\030\001 \001(\003\022\030\n\020c" +
+      "urrentCompanyId\030\002 \001(\003\022\025\n\rnewDivisionId\030\003" +
+      " \001(\003\022\024\n\014newCompanyId\030\004 \001(\003\022\021\n\tcitizenId\030" +
+      "\005 \001(\003\"!\n\023FireEmployeeRequest\022\n\n\002id\030\001 \001(\003" +
+      "\";\n\016EmployeeStatus\022\024\n\014divisionName\030\001 \001(\t" +
+      "\022\023\n\013companyName\030\002 \001(\t2\256\003\n\016CompanyService" +
+      "\022k\n\021GetEmployeeStatus\022\033.company.GetEmplo" +
+      "yeeRequest\032\027.company.EmployeeStatus\" \202\323\344" +
+      "\223\002\032\022\030/v1/employee/{id}/status\022f\n\020Registe" +
+      "rEmployee\022 .company.RegisterEmployeeRequ" +
+      "est\032\027.company.EmployeeStatus\"\027\202\323\344\223\002\021\"\014/v" +
+      "1/employee:\001*\022n\n\016MutateEmployee\022\036.compan" +
+      "y.MutateEmployeeRequest\032\027.company.Employ" +
+      "eeStatus\"#\202\323\344\223\002\035\032\030/v1/employee/{citizenI" +
+      "d}:\001*\022W\n\014FireEmployee\022\034.company.FireEmpl" +
+      "oyeeRequest\032\016.company.Empty\"\031\202\323\344\223\002\023*\021/v1" +
+      "/employee/{id}B\033\n\031id.koneko096.grpc.serv" +
+      "iceb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3783,43 +3329,50 @@ public final class Company {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          com.google.api.AnnotationsProto.getDescriptor(),
         }, assigner);
-    internal_static_id_koneko096_grpc_service_Empty_descriptor =
+    internal_static_company_Empty_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_id_koneko096_grpc_service_Empty_fieldAccessorTable = new
+    internal_static_company_Empty_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_id_koneko096_grpc_service_Empty_descriptor,
+        internal_static_company_Empty_descriptor,
         new java.lang.String[] { });
-    internal_static_id_koneko096_grpc_service_GetEmployeeRequest_descriptor =
+    internal_static_company_GetEmployeeRequest_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_id_koneko096_grpc_service_GetEmployeeRequest_fieldAccessorTable = new
+    internal_static_company_GetEmployeeRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_id_koneko096_grpc_service_GetEmployeeRequest_descriptor,
+        internal_static_company_GetEmployeeRequest_descriptor,
         new java.lang.String[] { "Id", });
-    internal_static_id_koneko096_grpc_service_RegisterEmployeeRequest_descriptor =
+    internal_static_company_RegisterEmployeeRequest_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_id_koneko096_grpc_service_RegisterEmployeeRequest_fieldAccessorTable = new
+    internal_static_company_RegisterEmployeeRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_id_koneko096_grpc_service_RegisterEmployeeRequest_descriptor,
-        new java.lang.String[] { "DivisionId", "CompanyId", });
-    internal_static_id_koneko096_grpc_service_MutateEmployeeRequest_descriptor =
+        internal_static_company_RegisterEmployeeRequest_descriptor,
+        new java.lang.String[] { "DivisionId", "CompanyId", "CitizenId", });
+    internal_static_company_MutateEmployeeRequest_descriptor =
       getDescriptor().getMessageTypes().get(3);
-    internal_static_id_koneko096_grpc_service_MutateEmployeeRequest_fieldAccessorTable = new
+    internal_static_company_MutateEmployeeRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_id_koneko096_grpc_service_MutateEmployeeRequest_descriptor,
-        new java.lang.String[] { "CurrentDivisionId", "CurrentCompanyId", "NewDivisionId", "NewCompanyId", });
-    internal_static_id_koneko096_grpc_service_FireEmployeeRequest_descriptor =
+        internal_static_company_MutateEmployeeRequest_descriptor,
+        new java.lang.String[] { "CurrentDivisionId", "CurrentCompanyId", "NewDivisionId", "NewCompanyId", "CitizenId", });
+    internal_static_company_FireEmployeeRequest_descriptor =
       getDescriptor().getMessageTypes().get(4);
-    internal_static_id_koneko096_grpc_service_FireEmployeeRequest_fieldAccessorTable = new
+    internal_static_company_FireEmployeeRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_id_koneko096_grpc_service_FireEmployeeRequest_descriptor,
+        internal_static_company_FireEmployeeRequest_descriptor,
         new java.lang.String[] { "Id", });
-    internal_static_id_koneko096_grpc_service_EmployeeStatus_descriptor =
+    internal_static_company_EmployeeStatus_descriptor =
       getDescriptor().getMessageTypes().get(5);
-    internal_static_id_koneko096_grpc_service_EmployeeStatus_fieldAccessorTable = new
+    internal_static_company_EmployeeStatus_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_id_koneko096_grpc_service_EmployeeStatus_descriptor,
+        internal_static_company_EmployeeStatus_descriptor,
         new java.lang.String[] { "DivisionName", "CompanyName", });
+    com.google.protobuf.ExtensionRegistry registry =
+        com.google.protobuf.ExtensionRegistry.newInstance();
+    registry.add(com.google.api.AnnotationsProto.http);
+    com.google.protobuf.Descriptors.FileDescriptor
+        .internalUpdateFileDescriptor(descriptor, registry);
+    com.google.api.AnnotationsProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)
