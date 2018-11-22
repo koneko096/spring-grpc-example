@@ -27,6 +27,38 @@ public final class CompanyServiceGrpc {
   public static final String SERVICE_NAME = "company.CompanyService";
 
   // Static method descriptors that strictly reflect the proto.
+  private static volatile io.grpc.MethodDescriptor<id.koneko096.grpc.service.Company.ListEmployeeRequest,
+      id.koneko096.grpc.service.Company.ListEmployeeStatusResponse> getListCompanyEmployeesMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "ListCompanyEmployees",
+      requestType = id.koneko096.grpc.service.Company.ListEmployeeRequest.class,
+      responseType = id.koneko096.grpc.service.Company.ListEmployeeStatusResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<id.koneko096.grpc.service.Company.ListEmployeeRequest,
+      id.koneko096.grpc.service.Company.ListEmployeeStatusResponse> getListCompanyEmployeesMethod() {
+    io.grpc.MethodDescriptor<id.koneko096.grpc.service.Company.ListEmployeeRequest, id.koneko096.grpc.service.Company.ListEmployeeStatusResponse> getListCompanyEmployeesMethod;
+    if ((getListCompanyEmployeesMethod = CompanyServiceGrpc.getListCompanyEmployeesMethod) == null) {
+      synchronized (CompanyServiceGrpc.class) {
+        if ((getListCompanyEmployeesMethod = CompanyServiceGrpc.getListCompanyEmployeesMethod) == null) {
+          CompanyServiceGrpc.getListCompanyEmployeesMethod = getListCompanyEmployeesMethod = 
+              io.grpc.MethodDescriptor.<id.koneko096.grpc.service.Company.ListEmployeeRequest, id.koneko096.grpc.service.Company.ListEmployeeStatusResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "company.CompanyService", "ListCompanyEmployees"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  id.koneko096.grpc.service.Company.ListEmployeeRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  id.koneko096.grpc.service.Company.ListEmployeeStatusResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new CompanyServiceMethodDescriptorSupplier("ListCompanyEmployees"))
+                  .build();
+          }
+        }
+     }
+     return getListCompanyEmployeesMethod;
+  }
+
   private static volatile io.grpc.MethodDescriptor<id.koneko096.grpc.service.Company.GetEmployeeRequest,
       id.koneko096.grpc.service.Company.EmployeeStatus> getGetEmployeeStatusMethod;
 
@@ -184,6 +216,13 @@ public final class CompanyServiceGrpc {
 
     /**
      */
+    public void listCompanyEmployees(id.koneko096.grpc.service.Company.ListEmployeeRequest request,
+        io.grpc.stub.StreamObserver<id.koneko096.grpc.service.Company.ListEmployeeStatusResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getListCompanyEmployeesMethod(), responseObserver);
+    }
+
+    /**
+     */
     public void getEmployeeStatus(id.koneko096.grpc.service.Company.GetEmployeeRequest request,
         io.grpc.stub.StreamObserver<id.koneko096.grpc.service.Company.EmployeeStatus> responseObserver) {
       asyncUnimplementedUnaryCall(getGetEmployeeStatusMethod(), responseObserver);
@@ -212,6 +251,13 @@ public final class CompanyServiceGrpc {
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+          .addMethod(
+            getListCompanyEmployeesMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                id.koneko096.grpc.service.Company.ListEmployeeRequest,
+                id.koneko096.grpc.service.Company.ListEmployeeStatusResponse>(
+                  this, METHODID_LIST_COMPANY_EMPLOYEES)))
           .addMethod(
             getGetEmployeeStatusMethod(),
             asyncUnaryCall(
@@ -260,6 +306,14 @@ public final class CompanyServiceGrpc {
     protected CompanyServiceStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new CompanyServiceStub(channel, callOptions);
+    }
+
+    /**
+     */
+    public void listCompanyEmployees(id.koneko096.grpc.service.Company.ListEmployeeRequest request,
+        io.grpc.stub.StreamObserver<id.koneko096.grpc.service.Company.ListEmployeeStatusResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getListCompanyEmployeesMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -315,6 +369,13 @@ public final class CompanyServiceGrpc {
 
     /**
      */
+    public id.koneko096.grpc.service.Company.ListEmployeeStatusResponse listCompanyEmployees(id.koneko096.grpc.service.Company.ListEmployeeRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getListCompanyEmployeesMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
     public id.koneko096.grpc.service.Company.EmployeeStatus getEmployeeStatus(id.koneko096.grpc.service.Company.GetEmployeeRequest request) {
       return blockingUnaryCall(
           getChannel(), getGetEmployeeStatusMethod(), getCallOptions(), request);
@@ -362,6 +423,14 @@ public final class CompanyServiceGrpc {
 
     /**
      */
+    public com.google.common.util.concurrent.ListenableFuture<id.koneko096.grpc.service.Company.ListEmployeeStatusResponse> listCompanyEmployees(
+        id.koneko096.grpc.service.Company.ListEmployeeRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getListCompanyEmployeesMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
     public com.google.common.util.concurrent.ListenableFuture<id.koneko096.grpc.service.Company.EmployeeStatus> getEmployeeStatus(
         id.koneko096.grpc.service.Company.GetEmployeeRequest request) {
       return futureUnaryCall(
@@ -393,10 +462,11 @@ public final class CompanyServiceGrpc {
     }
   }
 
-  private static final int METHODID_GET_EMPLOYEE_STATUS = 0;
-  private static final int METHODID_REGISTER_EMPLOYEE = 1;
-  private static final int METHODID_MUTATE_EMPLOYEE = 2;
-  private static final int METHODID_FIRE_EMPLOYEE = 3;
+  private static final int METHODID_LIST_COMPANY_EMPLOYEES = 0;
+  private static final int METHODID_GET_EMPLOYEE_STATUS = 1;
+  private static final int METHODID_REGISTER_EMPLOYEE = 2;
+  private static final int METHODID_MUTATE_EMPLOYEE = 3;
+  private static final int METHODID_FIRE_EMPLOYEE = 4;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -415,6 +485,10 @@ public final class CompanyServiceGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_LIST_COMPANY_EMPLOYEES:
+          serviceImpl.listCompanyEmployees((id.koneko096.grpc.service.Company.ListEmployeeRequest) request,
+              (io.grpc.stub.StreamObserver<id.koneko096.grpc.service.Company.ListEmployeeStatusResponse>) responseObserver);
+          break;
         case METHODID_GET_EMPLOYEE_STATUS:
           serviceImpl.getEmployeeStatus((id.koneko096.grpc.service.Company.GetEmployeeRequest) request,
               (io.grpc.stub.StreamObserver<id.koneko096.grpc.service.Company.EmployeeStatus>) responseObserver);
@@ -492,6 +566,7 @@ public final class CompanyServiceGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new CompanyServiceFileDescriptorSupplier())
+              .addMethod(getListCompanyEmployeesMethod())
               .addMethod(getGetEmployeeStatusMethod())
               .addMethod(getRegisterEmployeeMethod())
               .addMethod(getMutateEmployeeMethod())

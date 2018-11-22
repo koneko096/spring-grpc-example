@@ -70,7 +70,7 @@ public class ApiClient {
     
     private HttpHeaders defaultHeaders = new HttpHeaders();
     
-    private String basePath = "http://localhost/v1";
+    private String basePath = "http://localhost:8080/v1";
 
     @Autowired
     private RestTemplate restTemplate;

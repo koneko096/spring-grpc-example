@@ -66,7 +66,7 @@ protobuf {
     generateProtoTasks {
         ofSourceSet('main').each { task ->
             task.builtins {
-                java{
+                java {
                     outputSubDir = 'protoGen'
                 }
             }
@@ -95,6 +95,8 @@ dependencies {
 
     compile "org.flywaydb:flyway-core:5.2.1"
     runtime "com.microsoft.sqlserver:sqljdbc4:4.0"
+
+    compile "org.jadira.usertype:usertype.core:5.0.0.GA"
 
     compile "io.github.lognet:grpc-spring-boot-starter:3.0.0"
     compile "io.grpc:grpc-netty:$grpc_version"

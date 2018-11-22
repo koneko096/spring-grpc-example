@@ -51,8 +51,7 @@ public class CitizenApi {
      * @return Citizen
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Citizen createCitizen() throws RestClientException {
-        Object postBody = null;
+    public Citizen createCitizen(Citizen postBody) throws RestClientException {
         
         String path = UriComponentsBuilder.fromPath("/citizen").build().toUriString();
         
@@ -187,9 +186,7 @@ public class CitizenApi {
      * @return Citizen
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Citizen updateCitizen(Long citizenId) throws RestClientException {
-        Object postBody = null;
-        
+    public Citizen updateCitizen(Long citizenId, Citizen postBody) throws RestClientException {
         // verify the required parameter 'citizenId' is set
         if (citizenId == null) {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'citizenId' when calling updateCitizen");
