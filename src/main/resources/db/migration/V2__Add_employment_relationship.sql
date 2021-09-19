@@ -3,9 +3,11 @@
 --
 
 CREATE TABLE employments (
-  employee_id BIGINT IDENTITY PRIMARY KEY,
+  employee_id BIGINT NOT NULL,
   citizen_id BIGINT NOT NULL,
-  division_id BIGINT FOREIGN KEY REFERENCES divisions,
+  division_id BIGINT NOT NULL,
   join_date DATE NOT NULL,
-  leave_date DATE
+  leave_date DATE,
+  PRIMARY KEY (employee_id),
+  FOREIGN KEY (division_id) REFERENCES divisions (id)
 );

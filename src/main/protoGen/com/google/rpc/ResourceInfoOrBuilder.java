@@ -15,6 +15,7 @@ public interface ResourceInfoOrBuilder extends
    * </pre>
    *
    * <code>string resource_type = 1;</code>
+   * @return The resourceType.
    */
   java.lang.String getResourceType();
   /**
@@ -25,6 +26,7 @@ public interface ResourceInfoOrBuilder extends
    * </pre>
    *
    * <code>string resource_type = 1;</code>
+   * @return The bytes for resourceType.
    */
   com.google.protobuf.ByteString
       getResourceTypeBytes();
@@ -37,6 +39,7 @@ public interface ResourceInfoOrBuilder extends
    * </pre>
    *
    * <code>string resource_name = 2;</code>
+   * @return The resourceName.
    */
   java.lang.String getResourceName();
   /**
@@ -47,6 +50,7 @@ public interface ResourceInfoOrBuilder extends
    * </pre>
    *
    * <code>string resource_name = 2;</code>
+   * @return The bytes for resourceName.
    */
   com.google.protobuf.ByteString
       getResourceNameBytes();
@@ -59,6 +63,7 @@ public interface ResourceInfoOrBuilder extends
    * </pre>
    *
    * <code>string owner = 3;</code>
+   * @return The owner.
    */
   java.lang.String getOwner();
   /**
@@ -69,6 +74,7 @@ public interface ResourceInfoOrBuilder extends
    * </pre>
    *
    * <code>string owner = 3;</code>
+   * @return The bytes for owner.
    */
   com.google.protobuf.ByteString
       getOwnerBytes();
@@ -81,6 +87,7 @@ public interface ResourceInfoOrBuilder extends
    * </pre>
    *
    * <code>string description = 4;</code>
+   * @return The description.
    */
   java.lang.String getDescription();
   /**
@@ -91,6 +98,7 @@ public interface ResourceInfoOrBuilder extends
    * </pre>
    *
    * <code>string description = 4;</code>
+   * @return The bytes for description.
    */
   com.google.protobuf.ByteString
       getDescriptionBytes();

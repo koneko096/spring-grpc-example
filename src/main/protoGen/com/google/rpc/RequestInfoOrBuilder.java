@@ -14,6 +14,7 @@ public interface RequestInfoOrBuilder extends
    * </pre>
    *
    * <code>string request_id = 1;</code>
+   * @return The requestId.
    */
   java.lang.String getRequestId();
   /**
@@ -23,6 +24,7 @@ public interface RequestInfoOrBuilder extends
    * </pre>
    *
    * <code>string request_id = 1;</code>
+   * @return The bytes for requestId.
    */
   com.google.protobuf.ByteString
       getRequestIdBytes();
@@ -34,6 +36,7 @@ public interface RequestInfoOrBuilder extends
    * </pre>
    *
    * <code>string serving_data = 2;</code>
+   * @return The servingData.
    */
   java.lang.String getServingData();
   /**
@@ -43,6 +46,7 @@ public interface RequestInfoOrBuilder extends
    * </pre>
    *
    * <code>string serving_data = 2;</code>
+   * @return The bytes for servingData.
    */
   com.google.protobuf.ByteString
       getServingDataBytes();

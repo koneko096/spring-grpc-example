@@ -13,6 +13,7 @@ public interface CustomHttpPatternOrBuilder extends
    * </pre>
    *
    * <code>string kind = 1;</code>
+   * @return The kind.
    */
   java.lang.String getKind();
   /**
@@ -21,6 +22,7 @@ public interface CustomHttpPatternOrBuilder extends
    * </pre>
    *
    * <code>string kind = 1;</code>
+   * @return The bytes for kind.
    */
   com.google.protobuf.ByteString
       getKindBytes();
@@ -31,6 +33,7 @@ public interface CustomHttpPatternOrBuilder extends
    * </pre>
    *
    * <code>string path = 2;</code>
+   * @return The path.
    */
   java.lang.String getPath();
   /**
@@ -39,6 +42,7 @@ public interface CustomHttpPatternOrBuilder extends
    * </pre>
    *
    * <code>string path = 2;</code>
+   * @return The bytes for path.
    */
   com.google.protobuf.ByteString
       getPathBytes();

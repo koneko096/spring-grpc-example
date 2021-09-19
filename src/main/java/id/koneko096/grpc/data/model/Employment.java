@@ -1,5 +1,8 @@
 package id.koneko096.grpc.data.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.joda.time.LocalDate;
 
 import javax.persistence.*;
@@ -9,6 +12,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "employments")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employment {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -27,34 +33,11 @@ public class Employment {
     @Column(name = "leave_date")
     LocalDate leaveDate;
 
-    public void setDivisionId(Long divisionId) {
-        this.divisionId = divisionId;
-    }
-
-    public void setLeaveDate(LocalDate leaveDate) {
-        this.leaveDate = leaveDate;
-    }
 
     public Employment(Long citizenId, Long divisionId) {
         this.citizenId = citizenId;
         this.divisionId = divisionId;
         this.joinDate = LocalDate.now();
-
     }
 
-    public Long getCitizenId() {
-        return citizenId;
-    }
-
-    public Long getDivisionId() {
-        return divisionId;
-    }
-
-    public LocalDate getJoinDate() {
-        return joinDate;
-    }
-
-    public LocalDate getLeaveDate() {
-        return leaveDate;
-    }
 }

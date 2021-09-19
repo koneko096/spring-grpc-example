@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface EmploymentRepository extends CrudRepository<Employment, Long> {
     @Query("select e from Employment e, Division d where e.divisionId = d.id and d.companyId = ?1")
-    public List<Employment> findByCompany(Long companyId);
+    List<Employment> findByCompany(Long companyId);
 }

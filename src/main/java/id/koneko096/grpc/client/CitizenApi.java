@@ -1,4 +1,4 @@
-package id.koneko096.grpc.api;
+package id.koneko096.grpc.client;
 
 import id.koneko096.grpc.invoker.ApiClient;
 
@@ -22,7 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-20T21:21:26.411+07:00")
-@Component("id.koneko096.grpc.api.CitizenApi")
+@Component("id.koneko096.grpc.client.CitizenApi")
 public class CitizenApi {
     private ApiClient apiClient;
 

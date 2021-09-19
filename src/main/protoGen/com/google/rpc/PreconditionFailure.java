@@ -13,7 +13,7 @@ package com.google.rpc;
  *
  * Protobuf type {@code google.rpc.PreconditionFailure}
  */
-public  final class PreconditionFailure extends
+public final class PreconditionFailure extends
     com.google.protobuf.GeneratedMessageV3 implements
     // @@protoc_insertion_point(message_implements:google.rpc.PreconditionFailure)
     PreconditionFailureOrBuilder {
@@ -24,6 +24,13 @@ private static final long serialVersionUID = 0L;
   }
   private PreconditionFailure() {
     violations_ = java.util.Collections.emptyList();
+  }
+
+  @java.lang.Override
+  @SuppressWarnings({"unused"})
+  protected java.lang.Object newInstance(
+      UnusedPrivateParameter unused) {
+    return new PreconditionFailure();
   }
 
   @java.lang.Override
@@ -50,20 +57,20 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          default: {
-            if (!parseUnknownFieldProto3(
-                input, unknownFields, extensionRegistry, tag)) {
-              done = true;
-            }
-            break;
-          }
           case 10: {
-            if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+            if (!((mutable_bitField0_ & 0x00000001) != 0)) {
               violations_ = new java.util.ArrayList<com.google.rpc.PreconditionFailure.Violation>();
               mutable_bitField0_ |= 0x00000001;
             }
             violations_.add(
                 input.readMessage(com.google.rpc.PreconditionFailure.Violation.parser(), extensionRegistry));
+            break;
+          }
+          default: {
+            if (!parseUnknownField(
+                input, unknownFields, extensionRegistry, tag)) {
+              done = true;
+            }
             break;
           }
         }
@@ -74,7 +81,7 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
         violations_ = java.util.Collections.unmodifiableList(violations_);
       }
       this.unknownFields = unknownFields.build();
@@ -86,6 +93,7 @@ private static final long serialVersionUID = 0L;
     return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_PreconditionFailure_descriptor;
   }
 
+  @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_PreconditionFailure_fieldAccessorTable
@@ -105,6 +113,7 @@ private static final long serialVersionUID = 0L;
      * </pre>
      *
      * <code>string type = 1;</code>
+     * @return The type.
      */
     java.lang.String getType();
     /**
@@ -115,6 +124,7 @@ private static final long serialVersionUID = 0L;
      * </pre>
      *
      * <code>string type = 1;</code>
+     * @return The bytes for type.
      */
     com.google.protobuf.ByteString
         getTypeBytes();
@@ -127,6 +137,7 @@ private static final long serialVersionUID = 0L;
      * </pre>
      *
      * <code>string subject = 2;</code>
+     * @return The subject.
      */
     java.lang.String getSubject();
     /**
@@ -137,6 +148,7 @@ private static final long serialVersionUID = 0L;
      * </pre>
      *
      * <code>string subject = 2;</code>
+     * @return The bytes for subject.
      */
     com.google.protobuf.ByteString
         getSubjectBytes();
@@ -149,6 +161,7 @@ private static final long serialVersionUID = 0L;
      * </pre>
      *
      * <code>string description = 3;</code>
+     * @return The description.
      */
     java.lang.String getDescription();
     /**
@@ -159,6 +172,7 @@ private static final long serialVersionUID = 0L;
      * </pre>
      *
      * <code>string description = 3;</code>
+     * @return The bytes for description.
      */
     com.google.protobuf.ByteString
         getDescriptionBytes();
@@ -170,7 +184,7 @@ private static final long serialVersionUID = 0L;
    *
    * Protobuf type {@code google.rpc.PreconditionFailure.Violation}
    */
-  public  static final class Violation extends
+  public static final class Violation extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:google.rpc.PreconditionFailure.Violation)
       ViolationOrBuilder {
@@ -186,6 +200,13 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Violation();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -198,7 +219,6 @@ private static final long serialVersionUID = 0L;
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
-      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -209,13 +229,6 @@ private static final long serialVersionUID = 0L;
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
@@ -232,6 +245,13 @@ private static final long serialVersionUID = 0L;
               java.lang.String s = input.readStringRequireUtf8();
 
               description_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
               break;
             }
           }
@@ -251,6 +271,7 @@ private static final long serialVersionUID = 0L;
       return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_PreconditionFailure_Violation_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_PreconditionFailure_Violation_fieldAccessorTable
@@ -268,7 +289,9 @@ private static final long serialVersionUID = 0L;
      * </pre>
      *
      * <code>string type = 1;</code>
+     * @return The type.
      */
+    @java.lang.Override
     public java.lang.String getType() {
       java.lang.Object ref = type_;
       if (ref instanceof java.lang.String) {
@@ -289,7 +312,9 @@ private static final long serialVersionUID = 0L;
      * </pre>
      *
      * <code>string type = 1;</code>
+     * @return The bytes for type.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getTypeBytes() {
       java.lang.Object ref = type_;
@@ -314,7 +339,9 @@ private static final long serialVersionUID = 0L;
      * </pre>
      *
      * <code>string subject = 2;</code>
+     * @return The subject.
      */
+    @java.lang.Override
     public java.lang.String getSubject() {
       java.lang.Object ref = subject_;
       if (ref instanceof java.lang.String) {
@@ -335,7 +362,9 @@ private static final long serialVersionUID = 0L;
      * </pre>
      *
      * <code>string subject = 2;</code>
+     * @return The bytes for subject.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getSubjectBytes() {
       java.lang.Object ref = subject_;
@@ -360,7 +389,9 @@ private static final long serialVersionUID = 0L;
      * </pre>
      *
      * <code>string description = 3;</code>
+     * @return The description.
      */
+    @java.lang.Override
     public java.lang.String getDescription() {
       java.lang.Object ref = description_;
       if (ref instanceof java.lang.String) {
@@ -381,7 +412,9 @@ private static final long serialVersionUID = 0L;
      * </pre>
      *
      * <code>string description = 3;</code>
+     * @return The bytes for description.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getDescriptionBytes() {
       java.lang.Object ref = description_;
@@ -397,6 +430,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -406,6 +440,7 @@ private static final long serialVersionUID = 0L;
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!getTypeBytes().isEmpty()) {
@@ -420,6 +455,7 @@ private static final long serialVersionUID = 0L;
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -449,15 +485,14 @@ private static final long serialVersionUID = 0L;
       }
       com.google.rpc.PreconditionFailure.Violation other = (com.google.rpc.PreconditionFailure.Violation) obj;
 
-      boolean result = true;
-      result = result && getType()
-          .equals(other.getType());
-      result = result && getSubject()
-          .equals(other.getSubject());
-      result = result && getDescription()
-          .equals(other.getDescription());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getType()
+          .equals(other.getType())) return false;
+      if (!getSubject()
+          .equals(other.getSubject())) return false;
+      if (!getDescription()
+          .equals(other.getDescription())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -548,6 +583,7 @@ private static final long serialVersionUID = 0L;
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -555,6 +591,7 @@ private static final long serialVersionUID = 0L;
     public static Builder newBuilder(com.google.rpc.PreconditionFailure.Violation prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -582,6 +619,7 @@ private static final long serialVersionUID = 0L;
         return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_PreconditionFailure_Violation_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_PreconditionFailure_Violation_fieldAccessorTable
@@ -604,6 +642,7 @@ private static final long serialVersionUID = 0L;
                 .alwaysUseFieldBuilders) {
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         type_ = "";
@@ -615,15 +654,18 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_PreconditionFailure_Violation_descriptor;
       }
 
+      @java.lang.Override
       public com.google.rpc.PreconditionFailure.Violation getDefaultInstanceForType() {
         return com.google.rpc.PreconditionFailure.Violation.getDefaultInstance();
       }
 
+      @java.lang.Override
       public com.google.rpc.PreconditionFailure.Violation build() {
         com.google.rpc.PreconditionFailure.Violation result = buildPartial();
         if (!result.isInitialized()) {
@@ -632,6 +674,7 @@ private static final long serialVersionUID = 0L;
         return result;
       }
 
+      @java.lang.Override
       public com.google.rpc.PreconditionFailure.Violation buildPartial() {
         com.google.rpc.PreconditionFailure.Violation result = new com.google.rpc.PreconditionFailure.Violation(this);
         result.type_ = type_;
@@ -641,32 +684,39 @@ private static final long serialVersionUID = 0L;
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.google.rpc.PreconditionFailure.Violation) {
           return mergeFrom((com.google.rpc.PreconditionFailure.Violation)other);
@@ -695,10 +745,12 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -726,6 +778,7 @@ private static final long serialVersionUID = 0L;
        * </pre>
        *
        * <code>string type = 1;</code>
+       * @return The type.
        */
       public java.lang.String getType() {
         java.lang.Object ref = type_;
@@ -747,6 +800,7 @@ private static final long serialVersionUID = 0L;
        * </pre>
        *
        * <code>string type = 1;</code>
+       * @return The bytes for type.
        */
       public com.google.protobuf.ByteString
           getTypeBytes() {
@@ -769,6 +823,8 @@ private static final long serialVersionUID = 0L;
        * </pre>
        *
        * <code>string type = 1;</code>
+       * @param value The type to set.
+       * @return This builder for chaining.
        */
       public Builder setType(
           java.lang.String value) {
@@ -788,6 +844,7 @@ private static final long serialVersionUID = 0L;
        * </pre>
        *
        * <code>string type = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearType() {
         
@@ -803,6 +860,8 @@ private static final long serialVersionUID = 0L;
        * </pre>
        *
        * <code>string type = 1;</code>
+       * @param value The bytes for type to set.
+       * @return This builder for chaining.
        */
       public Builder setTypeBytes(
           com.google.protobuf.ByteString value) {
@@ -825,6 +884,7 @@ private static final long serialVersionUID = 0L;
        * </pre>
        *
        * <code>string subject = 2;</code>
+       * @return The subject.
        */
       public java.lang.String getSubject() {
         java.lang.Object ref = subject_;
@@ -846,6 +906,7 @@ private static final long serialVersionUID = 0L;
        * </pre>
        *
        * <code>string subject = 2;</code>
+       * @return The bytes for subject.
        */
       public com.google.protobuf.ByteString
           getSubjectBytes() {
@@ -868,6 +929,8 @@ private static final long serialVersionUID = 0L;
        * </pre>
        *
        * <code>string subject = 2;</code>
+       * @param value The subject to set.
+       * @return This builder for chaining.
        */
       public Builder setSubject(
           java.lang.String value) {
@@ -887,6 +950,7 @@ private static final long serialVersionUID = 0L;
        * </pre>
        *
        * <code>string subject = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearSubject() {
         
@@ -902,6 +966,8 @@ private static final long serialVersionUID = 0L;
        * </pre>
        *
        * <code>string subject = 2;</code>
+       * @param value The bytes for subject to set.
+       * @return This builder for chaining.
        */
       public Builder setSubjectBytes(
           com.google.protobuf.ByteString value) {
@@ -924,6 +990,7 @@ private static final long serialVersionUID = 0L;
        * </pre>
        *
        * <code>string description = 3;</code>
+       * @return The description.
        */
       public java.lang.String getDescription() {
         java.lang.Object ref = description_;
@@ -945,6 +1012,7 @@ private static final long serialVersionUID = 0L;
        * </pre>
        *
        * <code>string description = 3;</code>
+       * @return The bytes for description.
        */
       public com.google.protobuf.ByteString
           getDescriptionBytes() {
@@ -967,6 +1035,8 @@ private static final long serialVersionUID = 0L;
        * </pre>
        *
        * <code>string description = 3;</code>
+       * @param value The description to set.
+       * @return This builder for chaining.
        */
       public Builder setDescription(
           java.lang.String value) {
@@ -986,6 +1056,7 @@ private static final long serialVersionUID = 0L;
        * </pre>
        *
        * <code>string description = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearDescription() {
         
@@ -1001,6 +1072,8 @@ private static final long serialVersionUID = 0L;
        * </pre>
        *
        * <code>string description = 3;</code>
+       * @param value The bytes for description to set.
+       * @return This builder for chaining.
        */
       public Builder setDescriptionBytes(
           com.google.protobuf.ByteString value) {
@@ -1013,11 +1086,13 @@ private static final long serialVersionUID = 0L;
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -1039,6 +1114,7 @@ private static final long serialVersionUID = 0L;
 
     private static final com.google.protobuf.Parser<Violation>
         PARSER = new com.google.protobuf.AbstractParser<Violation>() {
+      @java.lang.Override
       public Violation parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1056,6 +1132,7 @@ private static final long serialVersionUID = 0L;
       return PARSER;
     }
 
+    @java.lang.Override
     public com.google.rpc.PreconditionFailure.Violation getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -1071,6 +1148,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.rpc.PreconditionFailure.Violation> getViolationsList() {
     return violations_;
   }
@@ -1081,6 +1159,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.rpc.PreconditionFailure.ViolationOrBuilder> 
       getViolationsOrBuilderList() {
     return violations_;
@@ -1092,6 +1171,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
+  @java.lang.Override
   public int getViolationsCount() {
     return violations_.size();
   }
@@ -1102,6 +1182,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
+  @java.lang.Override
   public com.google.rpc.PreconditionFailure.Violation getViolations(int index) {
     return violations_.get(index);
   }
@@ -1112,12 +1193,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
+  @java.lang.Override
   public com.google.rpc.PreconditionFailure.ViolationOrBuilder getViolationsOrBuilder(
       int index) {
     return violations_.get(index);
   }
 
   private byte memoizedIsInitialized = -1;
+  @java.lang.Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -1127,6 +1210,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
+  @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     for (int i = 0; i < violations_.size(); i++) {
@@ -1135,6 +1219,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
+  @java.lang.Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -1159,11 +1244,10 @@ private static final long serialVersionUID = 0L;
     }
     com.google.rpc.PreconditionFailure other = (com.google.rpc.PreconditionFailure) obj;
 
-    boolean result = true;
-    result = result && getViolationsList()
-        .equals(other.getViolationsList());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getViolationsList()
+        .equals(other.getViolationsList())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
   @java.lang.Override
@@ -1252,6 +1336,7 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
+  @java.lang.Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
@@ -1259,6 +1344,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder(com.google.rpc.PreconditionFailure prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
+  @java.lang.Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
@@ -1289,6 +1375,7 @@ private static final long serialVersionUID = 0L;
       return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_PreconditionFailure_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_PreconditionFailure_fieldAccessorTable
@@ -1312,6 +1399,7 @@ private static final long serialVersionUID = 0L;
         getViolationsFieldBuilder();
       }
     }
+    @java.lang.Override
     public Builder clear() {
       super.clear();
       if (violationsBuilder_ == null) {
@@ -1323,15 +1411,18 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_PreconditionFailure_descriptor;
     }
 
+    @java.lang.Override
     public com.google.rpc.PreconditionFailure getDefaultInstanceForType() {
       return com.google.rpc.PreconditionFailure.getDefaultInstance();
     }
 
+    @java.lang.Override
     public com.google.rpc.PreconditionFailure build() {
       com.google.rpc.PreconditionFailure result = buildPartial();
       if (!result.isInitialized()) {
@@ -1340,11 +1431,12 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
+    @java.lang.Override
     public com.google.rpc.PreconditionFailure buildPartial() {
       com.google.rpc.PreconditionFailure result = new com.google.rpc.PreconditionFailure(this);
       int from_bitField0_ = bitField0_;
       if (violationsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
           violations_ = java.util.Collections.unmodifiableList(violations_);
           bitField0_ = (bitField0_ & ~0x00000001);
         }
@@ -1356,32 +1448,39 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
+    @java.lang.Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
+    @java.lang.Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+      return super.setField(field, value);
     }
+    @java.lang.Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
+    @java.lang.Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
+    @java.lang.Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+      return super.setRepeatedField(field, index, value);
     }
+    @java.lang.Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+      return super.addRepeatedField(field, value);
     }
+    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.rpc.PreconditionFailure) {
         return mergeFrom((com.google.rpc.PreconditionFailure)other);
@@ -1424,10 +1523,12 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    @java.lang.Override
     public final boolean isInitialized() {
       return true;
     }
 
+    @java.lang.Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1450,7 +1551,7 @@ private static final long serialVersionUID = 0L;
     private java.util.List<com.google.rpc.PreconditionFailure.Violation> violations_ =
       java.util.Collections.emptyList();
     private void ensureViolationsIsMutable() {
-      if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (!((bitField0_ & 0x00000001) != 0)) {
         violations_ = new java.util.ArrayList<com.google.rpc.PreconditionFailure.Violation>(violations_);
         bitField0_ |= 0x00000001;
        }
@@ -1751,18 +1852,20 @@ private static final long serialVersionUID = 0L;
         violationsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
             com.google.rpc.PreconditionFailure.Violation, com.google.rpc.PreconditionFailure.Violation.Builder, com.google.rpc.PreconditionFailure.ViolationOrBuilder>(
                 violations_,
-                ((bitField0_ & 0x00000001) == 0x00000001),
+                ((bitField0_ & 0x00000001) != 0),
                 getParentForChildren(),
                 isClean());
         violations_ = null;
       }
       return violationsBuilder_;
     }
+    @java.lang.Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
+    @java.lang.Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -1784,6 +1887,7 @@ private static final long serialVersionUID = 0L;
 
   private static final com.google.protobuf.Parser<PreconditionFailure>
       PARSER = new com.google.protobuf.AbstractParser<PreconditionFailure>() {
+    @java.lang.Override
     public PreconditionFailure parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1801,6 +1905,7 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
+  @java.lang.Override
   public com.google.rpc.PreconditionFailure getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }

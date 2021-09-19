@@ -13,6 +13,7 @@
 
 package id.koneko096.grpc.api;
 
+import id.koneko096.grpc.client.CitizenApi;
 import id.koneko096.grpc.data.model.Citizen;
 import org.junit.Test;
 import org.junit.Ignore;

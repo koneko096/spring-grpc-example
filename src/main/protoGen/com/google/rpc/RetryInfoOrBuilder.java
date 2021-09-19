@@ -13,6 +13,7 @@ public interface RetryInfoOrBuilder extends
    * </pre>
    *
    * <code>.google.protobuf.Duration retry_delay = 1;</code>
+   * @return Whether the retryDelay field is set.
    */
   boolean hasRetryDelay();
   /**
@@ -21,6 +22,7 @@ public interface RetryInfoOrBuilder extends
    * </pre>
    *
    * <code>.google.protobuf.Duration retry_delay = 1;</code>
+   * @return The retryDelay.
    */
   com.google.protobuf.Duration getRetryDelay();
   /**

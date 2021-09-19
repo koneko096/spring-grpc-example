@@ -3,8 +3,9 @@
 --
 
 CREATE TABLE companies (
-  id BIGINT IDENTITY PRIMARY KEY,
-  name varchar(50) NOT NULL
+  id BIGINT,
+  name varchar(50) NOT NULL,
+  PRIMARY KEY (id)
 );
 
 --
@@ -12,7 +13,9 @@ CREATE TABLE companies (
 --
 
 CREATE TABLE divisions (
-  id BIGINT IDENTITY PRIMARY KEY,
-  company_id BIGINT FOREIGN KEY REFERENCES companies,
-  name varchar(50) NOT NULL
+  id BIGINT,
+  company_id BIGINT,
+  name varchar(50) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (company_id) REFERENCES companies (id)
 );

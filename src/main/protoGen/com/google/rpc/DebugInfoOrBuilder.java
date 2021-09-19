@@ -13,6 +13,7 @@ public interface DebugInfoOrBuilder extends
    * </pre>
    *
    * <code>repeated string stack_entries = 1;</code>
+   * @return A list containing the stackEntries.
    */
   java.util.List<java.lang.String>
       getStackEntriesList();
@@ -22,6 +23,7 @@ public interface DebugInfoOrBuilder extends
    * </pre>
    *
    * <code>repeated string stack_entries = 1;</code>
+   * @return The count of stackEntries.
    */
   int getStackEntriesCount();
   /**
@@ -30,6 +32,8 @@ public interface DebugInfoOrBuilder extends
    * </pre>
    *
    * <code>repeated string stack_entries = 1;</code>
+   * @param index The index of the element to return.
+   * @return The stackEntries at the given index.
    */
   java.lang.String getStackEntries(int index);
   /**
@@ -38,6 +42,8 @@ public interface DebugInfoOrBuilder extends
    * </pre>
    *
    * <code>repeated string stack_entries = 1;</code>
+   * @param index The index of the value to return.
+   * @return The bytes of the stackEntries at the given index.
    */
   com.google.protobuf.ByteString
       getStackEntriesBytes(int index);
@@ -48,6 +54,7 @@ public interface DebugInfoOrBuilder extends
    * </pre>
    *
    * <code>string detail = 2;</code>
+   * @return The detail.
    */
   java.lang.String getDetail();
   /**
@@ -56,6 +63,7 @@ public interface DebugInfoOrBuilder extends
    * </pre>
    *
    * <code>string detail = 2;</code>
+   * @return The bytes for detail.
    */
   com.google.protobuf.ByteString
       getDetailBytes();

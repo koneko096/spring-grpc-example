@@ -5,76 +5,80 @@ package com.google.api;
 
 /**
  * <pre>
- * `HttpRule` defines the mapping of an RPC method to one or more HTTP
- * REST API methods. The mapping specifies how different portions of the RPC
- * request message are mapped to URL path, URL query parameters, and
- * HTTP request body. The mapping is typically specified as an
- * `google.api.http` annotation on the RPC method,
- * see "google/api/annotations.proto" for details.
- * The mapping consists of a field specifying the path template and
- * method kind.  The path template can refer to fields in the request
- * message, as in the example below which describes a REST GET
- * operation on a resource collection of messages:
+ * # gRPC Transcoding
+ * gRPC Transcoding is a feature for mapping between a gRPC method and one or
+ * more HTTP REST endpoints. It allows developers to build a single API service
+ * that supports both gRPC APIs and REST APIs. Many systems, including [Google
+ * APIs](https://github.com/googleapis/googleapis),
+ * [Cloud Endpoints](https://cloud.google.com/endpoints), [gRPC
+ * Gateway](https://github.com/grpc-ecosystem/grpc-gateway),
+ * and [Envoy](https://github.com/envoyproxy/envoy) proxy support this feature
+ * and use it for large scale production services.
+ * `HttpRule` defines the schema of the gRPC/REST mapping. The mapping specifies
+ * how different portions of the gRPC request message are mapped to the URL
+ * path, URL query parameters, and HTTP request body. It also controls how the
+ * gRPC response message is mapped to the HTTP response body. `HttpRule` is
+ * typically specified as an `google.api.http` annotation on the gRPC method.
+ * Each mapping specifies a URL path template and an HTTP method. The path
+ * template may refer to one or more fields in the gRPC request message, as long
+ * as each field is a non-repeated field with a primitive (non-message) type.
+ * The path template controls how fields of the request message are mapped to
+ * the URL path.
+ * Example:
  *     service Messaging {
  *       rpc GetMessage(GetMessageRequest) returns (Message) {
- *         option (google.api.http).get = "/v1/messages/{message_id}/{sub.subfield}";
+ *         option (google.api.http) = {
+ *             get: "/v1/{name=messages/&#42;}"
+ *         };
  *       }
  *     }
  *     message GetMessageRequest {
- *       message SubMessage {
- *         string subfield = 1;
- *       }
- *       string message_id = 1; // mapped to the URL
- *       SubMessage sub = 2;    // `sub.subfield` is url-mapped
+ *       string name = 1; // Mapped to URL path.
  *     }
  *     message Message {
- *       string text = 1; // content of the resource
+ *       string text = 1; // The resource content.
  *     }
- * The same http annotation can alternatively be expressed inside the
- * `GRPC API Configuration` YAML file.
- *     http:
- *       rules:
- *         - selector: &lt;proto_package_name&gt;.Messaging.GetMessage
- *           get: /v1/messages/{message_id}/{sub.subfield}
- * This definition enables an automatic, bidrectional mapping of HTTP
- * JSON to RPC. Example:
- * HTTP | RPC
+ * This enables an HTTP REST to gRPC mapping as below:
+ * HTTP | gRPC
  * -----|-----
- * `GET /v1/messages/123456/foo`  | `GetMessage(message_id: "123456" sub: SubMessage(subfield: "foo"))`
- * In general, not only fields but also field paths can be referenced
- * from a path pattern. Fields mapped to the path pattern cannot be
- * repeated and must have a primitive (non-message) type.
- * Any fields in the request message which are not bound by the path
- * pattern automatically become (optional) HTTP query
- * parameters. Assume the following definition of the request message:
+ * `GET /v1/messages/123456`  | `GetMessage(name: "messages/123456")`
+ * Any fields in the request message which are not bound by the path template
+ * automatically become HTTP query parameters if there is no HTTP request body.
+ * For example:
  *     service Messaging {
  *       rpc GetMessage(GetMessageRequest) returns (Message) {
- *         option (google.api.http).get = "/v1/messages/{message_id}";
+ *         option (google.api.http) = {
+ *             get:"/v1/messages/{message_id}"
+ *         };
  *       }
  *     }
  *     message GetMessageRequest {
  *       message SubMessage {
  *         string subfield = 1;
  *       }
- *       string message_id = 1; // mapped to the URL
- *       int64 revision = 2;    // becomes a parameter
- *       SubMessage sub = 3;    // `sub.subfield` becomes a parameter
+ *       string message_id = 1; // Mapped to URL path.
+ *       int64 revision = 2;    // Mapped to URL query parameter `revision`.
+ *       SubMessage sub = 3;    // Mapped to URL query parameter `sub.subfield`.
  *     }
  * This enables a HTTP JSON to RPC mapping as below:
- * HTTP | RPC
+ * HTTP | gRPC
  * -----|-----
- * `GET /v1/messages/123456?revision=2&amp;sub.subfield=foo` | `GetMessage(message_id: "123456" revision: 2 sub: SubMessage(subfield: "foo"))`
- * Note that fields which are mapped to HTTP parameters must have a
- * primitive type or a repeated primitive type. Message types are not
- * allowed. In the case of a repeated type, the parameter can be
- * repeated in the URL, as in `...?param=A&amp;param=B`.
- * For HTTP method kinds which allow a request body, the `body` field
+ * `GET /v1/messages/123456?revision=2&amp;sub.subfield=foo` |
+ * `GetMessage(message_id: "123456" revision: 2 sub: SubMessage(subfield:
+ * "foo"))`
+ * Note that fields which are mapped to URL query parameters must have a
+ * primitive type or a repeated primitive type or a non-repeated message type.
+ * In the case of a repeated type, the parameter can be repeated in the URL
+ * as `...?param=A&amp;param=B`. In the case of a message type, each field of the
+ * message is mapped to a separate parameter, such as
+ * `...?foo.a=A&amp;foo.b=B&amp;foo.c=C`.
+ * For HTTP methods that allow a request body, the `body` field
  * specifies the mapping. Consider a REST update method on the
  * message resource collection:
  *     service Messaging {
  *       rpc UpdateMessage(UpdateMessageRequest) returns (Message) {
  *         option (google.api.http) = {
- *           put: "/v1/messages/{message_id}"
+ *           patch: "/v1/messages/{message_id}"
  *           body: "message"
  *         };
  *       }
@@ -86,9 +90,10 @@ package com.google.api;
  * The following HTTP JSON to RPC mapping is enabled, where the
  * representation of the JSON in the request body is determined by
  * protos JSON encoding:
- * HTTP | RPC
+ * HTTP | gRPC
  * -----|-----
- * `PUT /v1/messages/123456 { "text": "Hi!" }` | `UpdateMessage(message_id: "123456" message { text: "Hi!" })`
+ * `PATCH /v1/messages/123456 { "text": "Hi!" }` | `UpdateMessage(message_id:
+ * "123456" message { text: "Hi!" })`
  * The special name `*` can be used in the body mapping to define that
  * every field not bound by the path template should be mapped to the
  * request body.  This enables the following alternative definition of
@@ -96,7 +101,7 @@ package com.google.api;
  *     service Messaging {
  *       rpc UpdateMessage(Message) returns (Message) {
  *         option (google.api.http) = {
- *           put: "/v1/messages/{message_id}"
+ *           patch: "/v1/messages/{message_id}"
  *           body: "*"
  *         };
  *       }
@@ -106,12 +111,13 @@ package com.google.api;
  *       string text = 2;
  *     }
  * The following HTTP JSON to RPC mapping is enabled:
- * HTTP | RPC
+ * HTTP | gRPC
  * -----|-----
- * `PUT /v1/messages/123456 { "text": "Hi!" }` | `UpdateMessage(message_id: "123456" text: "Hi!")`
+ * `PATCH /v1/messages/123456 { "text": "Hi!" }` | `UpdateMessage(message_id:
+ * "123456" text: "Hi!")`
  * Note that when using `*` in the body mapping, it is not possible to
  * have HTTP parameters, as all fields not bound by the path end in
- * the body. This makes this option more rarely used in practice of
+ * the body. This makes this option more rarely used in practice when
  * defining REST APIs. The common usage of `*` is in custom methods
  * which don't use the URL at all for transferring data.
  * It is possible to define multiple HTTP methods for one RPC by using
@@ -130,60 +136,102 @@ package com.google.api;
  *       string message_id = 1;
  *       string user_id = 2;
  *     }
- * This enables the following two alternative HTTP JSON to RPC
- * mappings:
- * HTTP | RPC
+ * This enables the following two alternative HTTP JSON to RPC mappings:
+ * HTTP | gRPC
  * -----|-----
  * `GET /v1/messages/123456` | `GetMessage(message_id: "123456")`
- * `GET /v1/users/me/messages/123456` | `GetMessage(user_id: "me" message_id: "123456")`
- * # Rules for HTTP mapping
- * The rules for mapping HTTP path, query parameters, and body fields
- * to the request message are as follows:
- * 1. The `body` field specifies either `*` or a field path, or is
- *    omitted. If omitted, it indicates there is no HTTP request body.
- * 2. Leaf fields (recursive expansion of nested messages in the
- *    request) can be classified into three types:
- *     (a) Matched in the URL template.
- *     (b) Covered by body (if body is `*`, everything except (a) fields;
- *         else everything under the body field)
- *     (c) All other fields.
- * 3. URL query parameters found in the HTTP request are mapped to (c) fields.
- * 4. Any body sent with an HTTP request can contain only (b) fields.
- * The syntax of the path template is as follows:
+ * `GET /v1/users/me/messages/123456` | `GetMessage(user_id: "me" message_id:
+ * "123456")`
+ * ## Rules for HTTP mapping
+ * 1. Leaf request fields (recursive expansion nested messages in the request
+ *    message) are classified into three categories:
+ *    - Fields referred by the path template. They are passed via the URL path.
+ *    - Fields referred by the [HttpRule.body][google.api.HttpRule.body]. They are passed via the HTTP
+ *      request body.
+ *    - All other fields are passed via the URL query parameters, and the
+ *      parameter name is the field path in the request message. A repeated
+ *      field can be represented as multiple query parameters under the same
+ *      name.
+ *  2. If [HttpRule.body][google.api.HttpRule.body] is "*", there is no URL query parameter, all fields
+ *     are passed via URL path and HTTP request body.
+ *  3. If [HttpRule.body][google.api.HttpRule.body] is omitted, there is no HTTP request body, all
+ *     fields are passed via URL path and URL query parameters.
+ * ### Path template syntax
  *     Template = "/" Segments [ Verb ] ;
  *     Segments = Segment { "/" Segment } ;
  *     Segment  = "*" | "**" | LITERAL | Variable ;
  *     Variable = "{" FieldPath [ "=" Segments ] "}" ;
  *     FieldPath = IDENT { "." IDENT } ;
  *     Verb     = ":" LITERAL ;
- * The syntax `*` matches a single path segment. The syntax `**` matches zero
- * or more path segments, which must be the last part of the path except the
- * `Verb`. The syntax `LITERAL` matches literal text in the path.
+ * The syntax `*` matches a single URL path segment. The syntax `**` matches
+ * zero or more URL path segments, which must be the last part of the URL path
+ * except the `Verb`.
  * The syntax `Variable` matches part of the URL path as specified by its
  * template. A variable template must not contain other variables. If a variable
  * matches a single path segment, its template may be omitted, e.g. `{var}`
  * is equivalent to `{var=*}`.
+ * The syntax `LITERAL` matches literal text in the URL path. If the `LITERAL`
+ * contains any reserved character, such characters should be percent-encoded
+ * before the matching.
  * If a variable contains exactly one path segment, such as `"{var}"` or
- * `"{var=*}"`, when such a variable is expanded into a URL path, all characters
- * except `[-_.~0-9a-zA-Z]` are percent-encoded. Such variables show up in the
- * Discovery Document as `{var}`.
- * If a variable contains one or more path segments, such as `"{var=foo/&#42;}"`
- * or `"{var=**}"`, when such a variable is expanded into a URL path, all
- * characters except `[-_.~/0-9a-zA-Z]` are percent-encoded. Such variables
- * show up in the Discovery Document as `{+var}`.
- * NOTE: While the single segment variable matches the semantics of
- * [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2
- * Simple String Expansion, the multi segment variable **does not** match
- * RFC 6570 Reserved Expansion. The reason is that the Reserved Expansion
+ * `"{var=*}"`, when such a variable is expanded into a URL path on the client
+ * side, all characters except `[-_.~0-9a-zA-Z]` are percent-encoded. The
+ * server side does the reverse decoding. Such variables show up in the
+ * [Discovery
+ * Document](https://developers.google.com/discovery/v1/reference/apis) as
+ * `{var}`.
+ * If a variable contains multiple path segments, such as `"{var=foo/&#42;}"`
+ * or `"{var=**}"`, when such a variable is expanded into a URL path on the
+ * client side, all characters except `[-_.~/0-9a-zA-Z]` are percent-encoded.
+ * The server side does the reverse decoding, except "%2F" and "%2f" are left
+ * unchanged. Such variables show up in the
+ * [Discovery
+ * Document](https://developers.google.com/discovery/v1/reference/apis) as
+ * `{+var}`.
+ * ## Using gRPC API Service Configuration
+ * gRPC API Service Configuration (service config) is a configuration language
+ * for configuring a gRPC service to become a user-facing product. The
+ * service config is simply the YAML representation of the `google.api.Service`
+ * proto message.
+ * As an alternative to annotating your proto file, you can configure gRPC
+ * transcoding in your service config YAML files. You do this by specifying a
+ * `HttpRule` that maps the gRPC method to a REST endpoint, achieving the same
+ * effect as the proto annotation. This can be particularly useful if you
+ * have a proto that is reused in multiple services. Note that any transcoding
+ * specified in the service config will override any matching transcoding
+ * configuration in the proto.
+ * Example:
+ *     http:
+ *       rules:
+ *         # Selects a gRPC method and applies HttpRule to it.
+ *         - selector: example.v1.Messaging.GetMessage
+ *           get: /v1/messages/{message_id}/{sub.subfield}
+ * ## Special notes
+ * When gRPC Transcoding is used to map a gRPC to JSON REST endpoints, the
+ * proto to JSON conversion must follow the [proto3
+ * specification](https://developers.google.com/protocol-buffers/docs/proto3#json).
+ * While the single segment variable follows the semantics of
+ * [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2 Simple String
+ * Expansion, the multi segment variable **does not** follow RFC 6570 Section
+ * 3.2.3 Reserved Expansion. The reason is that the Reserved Expansion
  * does not expand special characters like `?` and `#`, which would lead
- * to invalid URLs.
- * NOTE: the field paths in variables and in the `body` must not refer to
- * repeated fields or map fields.
+ * to invalid URLs. As the result, gRPC Transcoding uses a custom encoding
+ * for multi segment variables.
+ * The path variables **must not** refer to any repeated or mapped field,
+ * because client libraries are not capable of handling such variable expansion.
+ * The path variables **must not** capture the leading "/" character. The reason
+ * is that the most common use case "{var}" does not capture the leading "/"
+ * character. For consistency, all path variables must share the same behavior.
+ * Repeated message fields must not be mapped to URL query parameters, because
+ * no client library can support such complicated mapping.
+ * If an API needs to use a JSON array for request or response body, it can map
+ * the request or response body to a repeated field. However, some gRPC
+ * Transcoding implementations may not support this feature.
  * </pre>
  *
  * Protobuf type {@code google.api.HttpRule}
  */
-public  final class HttpRule extends
+public final class HttpRule extends
     com.google.protobuf.GeneratedMessageV3 implements
     // @@protoc_insertion_point(message_implements:google.api.HttpRule)
     HttpRuleOrBuilder {
@@ -197,6 +245,13 @@ private static final long serialVersionUID = 0L;
     body_ = "";
     responseBody_ = "";
     additionalBindings_ = java.util.Collections.emptyList();
+  }
+
+  @java.lang.Override
+  @SuppressWarnings({"unused"})
+  protected java.lang.Object newInstance(
+      UnusedPrivateParameter unused) {
+    return new HttpRule();
   }
 
   @java.lang.Override
@@ -223,13 +278,6 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          default: {
-            if (!parseUnknownFieldProto3(
-                input, unknownFields, extensionRegistry, tag)) {
-              done = true;
-            }
-            break;
-          }
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
@@ -287,9 +335,9 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 90: {
-            if (!((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
+            if (!((mutable_bitField0_ & 0x00000001) != 0)) {
               additionalBindings_ = new java.util.ArrayList<com.google.api.HttpRule>();
-              mutable_bitField0_ |= 0x00000200;
+              mutable_bitField0_ |= 0x00000001;
             }
             additionalBindings_.add(
                 input.readMessage(com.google.api.HttpRule.parser(), extensionRegistry));
@@ -301,6 +349,13 @@ private static final long serialVersionUID = 0L;
             responseBody_ = s;
             break;
           }
+          default: {
+            if (!parseUnknownField(
+                input, unknownFields, extensionRegistry, tag)) {
+              done = true;
+            }
+            break;
+          }
         }
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -309,7 +364,7 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
         additionalBindings_ = java.util.Collections.unmodifiableList(additionalBindings_);
       }
       this.unknownFields = unknownFields.build();
@@ -321,6 +376,7 @@ private static final long serialVersionUID = 0L;
     return com.google.api.HttpProto.internal_static_google_api_HttpRule_descriptor;
   }
 
+  @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.api.HttpProto.internal_static_google_api_HttpRule_fieldAccessorTable
@@ -328,11 +384,11 @@ private static final long serialVersionUID = 0L;
             com.google.api.HttpRule.class, com.google.api.HttpRule.Builder.class);
   }
 
-  private int bitField0_;
   private int patternCase_ = 0;
   private java.lang.Object pattern_;
   public enum PatternCase
-      implements com.google.protobuf.Internal.EnumLite {
+      implements com.google.protobuf.Internal.EnumLite,
+          com.google.protobuf.AbstractMessage.InternalOneOfEnum {
     GET(2),
     PUT(3),
     POST(4),
@@ -345,6 +401,8 @@ private static final long serialVersionUID = 0L;
       this.value = value;
     }
     /**
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -379,12 +437,14 @@ private static final long serialVersionUID = 0L;
   private volatile java.lang.Object selector_;
   /**
    * <pre>
-   * Selects methods to which this rule applies.
+   * Selects a method to which this rule applies.
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
    * </pre>
    *
    * <code>string selector = 1;</code>
+   * @return The selector.
    */
+  @java.lang.Override
   public java.lang.String getSelector() {
     java.lang.Object ref = selector_;
     if (ref instanceof java.lang.String) {
@@ -399,12 +459,14 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Selects methods to which this rule applies.
+   * Selects a method to which this rule applies.
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
    * </pre>
    *
    * <code>string selector = 1;</code>
+   * @return The bytes for selector.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString
       getSelectorBytes() {
     java.lang.Object ref = selector_;
@@ -422,10 +484,24 @@ private static final long serialVersionUID = 0L;
   public static final int GET_FIELD_NUMBER = 2;
   /**
    * <pre>
-   * Used for listing and getting information about resources.
+   * Maps to HTTP GET. Used for listing and getting information about
+   * resources.
    * </pre>
    *
    * <code>string get = 2;</code>
+   * @return Whether the get field is set.
+   */
+  public boolean hasGet() {
+    return patternCase_ == 2;
+  }
+  /**
+   * <pre>
+   * Maps to HTTP GET. Used for listing and getting information about
+   * resources.
+   * </pre>
+   *
+   * <code>string get = 2;</code>
+   * @return The get.
    */
   public java.lang.String getGet() {
     java.lang.Object ref = "";
@@ -446,10 +522,12 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Used for listing and getting information about resources.
+   * Maps to HTTP GET. Used for listing and getting information about
+   * resources.
    * </pre>
    *
    * <code>string get = 2;</code>
+   * @return The bytes for get.
    */
   public com.google.protobuf.ByteString
       getGetBytes() {
@@ -473,10 +551,22 @@ private static final long serialVersionUID = 0L;
   public static final int PUT_FIELD_NUMBER = 3;
   /**
    * <pre>
-   * Used for updating a resource.
+   * Maps to HTTP PUT. Used for replacing a resource.
    * </pre>
    *
    * <code>string put = 3;</code>
+   * @return Whether the put field is set.
+   */
+  public boolean hasPut() {
+    return patternCase_ == 3;
+  }
+  /**
+   * <pre>
+   * Maps to HTTP PUT. Used for replacing a resource.
+   * </pre>
+   *
+   * <code>string put = 3;</code>
+   * @return The put.
    */
   public java.lang.String getPut() {
     java.lang.Object ref = "";
@@ -497,10 +587,11 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Used for updating a resource.
+   * Maps to HTTP PUT. Used for replacing a resource.
    * </pre>
    *
    * <code>string put = 3;</code>
+   * @return The bytes for put.
    */
   public com.google.protobuf.ByteString
       getPutBytes() {
@@ -524,10 +615,22 @@ private static final long serialVersionUID = 0L;
   public static final int POST_FIELD_NUMBER = 4;
   /**
    * <pre>
-   * Used for creating a resource.
+   * Maps to HTTP POST. Used for creating a resource or performing an action.
    * </pre>
    *
    * <code>string post = 4;</code>
+   * @return Whether the post field is set.
+   */
+  public boolean hasPost() {
+    return patternCase_ == 4;
+  }
+  /**
+   * <pre>
+   * Maps to HTTP POST. Used for creating a resource or performing an action.
+   * </pre>
+   *
+   * <code>string post = 4;</code>
+   * @return The post.
    */
   public java.lang.String getPost() {
     java.lang.Object ref = "";
@@ -548,10 +651,11 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Used for creating a resource.
+   * Maps to HTTP POST. Used for creating a resource or performing an action.
    * </pre>
    *
    * <code>string post = 4;</code>
+   * @return The bytes for post.
    */
   public com.google.protobuf.ByteString
       getPostBytes() {
@@ -575,10 +679,22 @@ private static final long serialVersionUID = 0L;
   public static final int DELETE_FIELD_NUMBER = 5;
   /**
    * <pre>
-   * Used for deleting a resource.
+   * Maps to HTTP DELETE. Used for deleting a resource.
    * </pre>
    *
    * <code>string delete = 5;</code>
+   * @return Whether the delete field is set.
+   */
+  public boolean hasDelete() {
+    return patternCase_ == 5;
+  }
+  /**
+   * <pre>
+   * Maps to HTTP DELETE. Used for deleting a resource.
+   * </pre>
+   *
+   * <code>string delete = 5;</code>
+   * @return The delete.
    */
   public java.lang.String getDelete() {
     java.lang.Object ref = "";
@@ -599,10 +715,11 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Used for deleting a resource.
+   * Maps to HTTP DELETE. Used for deleting a resource.
    * </pre>
    *
    * <code>string delete = 5;</code>
+   * @return The bytes for delete.
    */
   public com.google.protobuf.ByteString
       getDeleteBytes() {
@@ -626,10 +743,22 @@ private static final long serialVersionUID = 0L;
   public static final int PATCH_FIELD_NUMBER = 6;
   /**
    * <pre>
-   * Used for updating a resource.
+   * Maps to HTTP PATCH. Used for updating a resource.
    * </pre>
    *
    * <code>string patch = 6;</code>
+   * @return Whether the patch field is set.
+   */
+  public boolean hasPatch() {
+    return patternCase_ == 6;
+  }
+  /**
+   * <pre>
+   * Maps to HTTP PATCH. Used for updating a resource.
+   * </pre>
+   *
+   * <code>string patch = 6;</code>
+   * @return The patch.
    */
   public java.lang.String getPatch() {
     java.lang.Object ref = "";
@@ -650,10 +779,11 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Used for updating a resource.
+   * Maps to HTTP PATCH. Used for updating a resource.
    * </pre>
    *
    * <code>string patch = 6;</code>
+   * @return The bytes for patch.
    */
   public com.google.protobuf.ByteString
       getPatchBytes() {
@@ -684,7 +814,9 @@ private static final long serialVersionUID = 0L;
    * </pre>
    *
    * <code>.google.api.CustomHttpPattern custom = 8;</code>
+   * @return Whether the custom field is set.
    */
+  @java.lang.Override
   public boolean hasCustom() {
     return patternCase_ == 8;
   }
@@ -697,7 +829,9 @@ private static final long serialVersionUID = 0L;
    * </pre>
    *
    * <code>.google.api.CustomHttpPattern custom = 8;</code>
+   * @return The custom.
    */
+  @java.lang.Override
   public com.google.api.CustomHttpPattern getCustom() {
     if (patternCase_ == 8) {
        return (com.google.api.CustomHttpPattern) pattern_;
@@ -714,6 +848,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>.google.api.CustomHttpPattern custom = 8;</code>
    */
+  @java.lang.Override
   public com.google.api.CustomHttpPatternOrBuilder getCustomOrBuilder() {
     if (patternCase_ == 8) {
        return (com.google.api.CustomHttpPattern) pattern_;
@@ -725,14 +860,17 @@ private static final long serialVersionUID = 0L;
   private volatile java.lang.Object body_;
   /**
    * <pre>
-   * The name of the request field whose value is mapped to the HTTP body, or
-   * `*` for mapping all fields not captured by the path pattern to the HTTP
-   * body. NOTE: the referred field must not be a repeated field and must be
-   * present at the top-level of request message type.
+   * The name of the request field whose value is mapped to the HTTP request
+   * body, or `*` for mapping all request fields not captured by the path
+   * pattern to the HTTP body, or omitted for not having any HTTP request body.
+   * NOTE: the referred field must be present at the top-level of the request
+   * message type.
    * </pre>
    *
    * <code>string body = 7;</code>
+   * @return The body.
    */
+  @java.lang.Override
   public java.lang.String getBody() {
     java.lang.Object ref = body_;
     if (ref instanceof java.lang.String) {
@@ -747,14 +885,17 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * The name of the request field whose value is mapped to the HTTP body, or
-   * `*` for mapping all fields not captured by the path pattern to the HTTP
-   * body. NOTE: the referred field must not be a repeated field and must be
-   * present at the top-level of request message type.
+   * The name of the request field whose value is mapped to the HTTP request
+   * body, or `*` for mapping all request fields not captured by the path
+   * pattern to the HTTP body, or omitted for not having any HTTP request body.
+   * NOTE: the referred field must be present at the top-level of the request
+   * message type.
    * </pre>
    *
    * <code>string body = 7;</code>
+   * @return The bytes for body.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString
       getBodyBytes() {
     java.lang.Object ref = body_;
@@ -774,12 +915,16 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Optional. The name of the response field whose value is mapped to the HTTP
-   * body of response. Other response fields are ignored. When
-   * not set, the response message will be used as HTTP body of response.
+   * response body. When omitted, the entire response message will be used
+   * as the HTTP response body.
+   * NOTE: The referred field must be present at the top-level of the response
+   * message type.
    * </pre>
    *
    * <code>string response_body = 12;</code>
+   * @return The responseBody.
    */
+  @java.lang.Override
   public java.lang.String getResponseBody() {
     java.lang.Object ref = responseBody_;
     if (ref instanceof java.lang.String) {
@@ -795,12 +940,16 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Optional. The name of the response field whose value is mapped to the HTTP
-   * body of response. Other response fields are ignored. When
-   * not set, the response message will be used as HTTP body of response.
+   * response body. When omitted, the entire response message will be used
+   * as the HTTP response body.
+   * NOTE: The referred field must be present at the top-level of the response
+   * message type.
    * </pre>
    *
    * <code>string response_body = 12;</code>
+   * @return The bytes for responseBody.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString
       getResponseBodyBytes() {
     java.lang.Object ref = responseBody_;
@@ -826,6 +975,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.HttpRule> getAdditionalBindingsList() {
     return additionalBindings_;
   }
@@ -838,6 +988,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.HttpRuleOrBuilder> 
       getAdditionalBindingsOrBuilderList() {
     return additionalBindings_;
@@ -851,6 +1002,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
+  @java.lang.Override
   public int getAdditionalBindingsCount() {
     return additionalBindings_.size();
   }
@@ -863,6 +1015,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
+  @java.lang.Override
   public com.google.api.HttpRule getAdditionalBindings(int index) {
     return additionalBindings_.get(index);
   }
@@ -875,12 +1028,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
+  @java.lang.Override
   public com.google.api.HttpRuleOrBuilder getAdditionalBindingsOrBuilder(
       int index) {
     return additionalBindings_.get(index);
   }
 
   private byte memoizedIsInitialized = -1;
+  @java.lang.Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -890,6 +1045,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
+  @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (!getSelectorBytes().isEmpty()) {
@@ -925,6 +1081,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
+  @java.lang.Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -977,48 +1134,45 @@ private static final long serialVersionUID = 0L;
     }
     com.google.api.HttpRule other = (com.google.api.HttpRule) obj;
 
-    boolean result = true;
-    result = result && getSelector()
-        .equals(other.getSelector());
-    result = result && getBody()
-        .equals(other.getBody());
-    result = result && getResponseBody()
-        .equals(other.getResponseBody());
-    result = result && getAdditionalBindingsList()
-        .equals(other.getAdditionalBindingsList());
-    result = result && getPatternCase().equals(
-        other.getPatternCase());
-    if (!result) return false;
+    if (!getSelector()
+        .equals(other.getSelector())) return false;
+    if (!getBody()
+        .equals(other.getBody())) return false;
+    if (!getResponseBody()
+        .equals(other.getResponseBody())) return false;
+    if (!getAdditionalBindingsList()
+        .equals(other.getAdditionalBindingsList())) return false;
+    if (!getPatternCase().equals(other.getPatternCase())) return false;
     switch (patternCase_) {
       case 2:
-        result = result && getGet()
-            .equals(other.getGet());
+        if (!getGet()
+            .equals(other.getGet())) return false;
         break;
       case 3:
-        result = result && getPut()
-            .equals(other.getPut());
+        if (!getPut()
+            .equals(other.getPut())) return false;
         break;
       case 4:
-        result = result && getPost()
-            .equals(other.getPost());
+        if (!getPost()
+            .equals(other.getPost())) return false;
         break;
       case 5:
-        result = result && getDelete()
-            .equals(other.getDelete());
+        if (!getDelete()
+            .equals(other.getDelete())) return false;
         break;
       case 6:
-        result = result && getPatch()
-            .equals(other.getPatch());
+        if (!getPatch()
+            .equals(other.getPatch())) return false;
         break;
       case 8:
-        result = result && getCustom()
-            .equals(other.getCustom());
+        if (!getCustom()
+            .equals(other.getCustom())) return false;
         break;
       case 0:
       default:
     }
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
   @java.lang.Override
@@ -1141,6 +1295,7 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
+  @java.lang.Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
@@ -1148,6 +1303,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder(com.google.api.HttpRule prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
+  @java.lang.Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
@@ -1161,76 +1317,80 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * `HttpRule` defines the mapping of an RPC method to one or more HTTP
-   * REST API methods. The mapping specifies how different portions of the RPC
-   * request message are mapped to URL path, URL query parameters, and
-   * HTTP request body. The mapping is typically specified as an
-   * `google.api.http` annotation on the RPC method,
-   * see "google/api/annotations.proto" for details.
-   * The mapping consists of a field specifying the path template and
-   * method kind.  The path template can refer to fields in the request
-   * message, as in the example below which describes a REST GET
-   * operation on a resource collection of messages:
+   * # gRPC Transcoding
+   * gRPC Transcoding is a feature for mapping between a gRPC method and one or
+   * more HTTP REST endpoints. It allows developers to build a single API service
+   * that supports both gRPC APIs and REST APIs. Many systems, including [Google
+   * APIs](https://github.com/googleapis/googleapis),
+   * [Cloud Endpoints](https://cloud.google.com/endpoints), [gRPC
+   * Gateway](https://github.com/grpc-ecosystem/grpc-gateway),
+   * and [Envoy](https://github.com/envoyproxy/envoy) proxy support this feature
+   * and use it for large scale production services.
+   * `HttpRule` defines the schema of the gRPC/REST mapping. The mapping specifies
+   * how different portions of the gRPC request message are mapped to the URL
+   * path, URL query parameters, and HTTP request body. It also controls how the
+   * gRPC response message is mapped to the HTTP response body. `HttpRule` is
+   * typically specified as an `google.api.http` annotation on the gRPC method.
+   * Each mapping specifies a URL path template and an HTTP method. The path
+   * template may refer to one or more fields in the gRPC request message, as long
+   * as each field is a non-repeated field with a primitive (non-message) type.
+   * The path template controls how fields of the request message are mapped to
+   * the URL path.
+   * Example:
    *     service Messaging {
    *       rpc GetMessage(GetMessageRequest) returns (Message) {
-   *         option (google.api.http).get = "/v1/messages/{message_id}/{sub.subfield}";
+   *         option (google.api.http) = {
+   *             get: "/v1/{name=messages/&#42;}"
+   *         };
    *       }
    *     }
    *     message GetMessageRequest {
-   *       message SubMessage {
-   *         string subfield = 1;
-   *       }
-   *       string message_id = 1; // mapped to the URL
-   *       SubMessage sub = 2;    // `sub.subfield` is url-mapped
+   *       string name = 1; // Mapped to URL path.
    *     }
    *     message Message {
-   *       string text = 1; // content of the resource
+   *       string text = 1; // The resource content.
    *     }
-   * The same http annotation can alternatively be expressed inside the
-   * `GRPC API Configuration` YAML file.
-   *     http:
-   *       rules:
-   *         - selector: &lt;proto_package_name&gt;.Messaging.GetMessage
-   *           get: /v1/messages/{message_id}/{sub.subfield}
-   * This definition enables an automatic, bidrectional mapping of HTTP
-   * JSON to RPC. Example:
-   * HTTP | RPC
+   * This enables an HTTP REST to gRPC mapping as below:
+   * HTTP | gRPC
    * -----|-----
-   * `GET /v1/messages/123456/foo`  | `GetMessage(message_id: "123456" sub: SubMessage(subfield: "foo"))`
-   * In general, not only fields but also field paths can be referenced
-   * from a path pattern. Fields mapped to the path pattern cannot be
-   * repeated and must have a primitive (non-message) type.
-   * Any fields in the request message which are not bound by the path
-   * pattern automatically become (optional) HTTP query
-   * parameters. Assume the following definition of the request message:
+   * `GET /v1/messages/123456`  | `GetMessage(name: "messages/123456")`
+   * Any fields in the request message which are not bound by the path template
+   * automatically become HTTP query parameters if there is no HTTP request body.
+   * For example:
    *     service Messaging {
    *       rpc GetMessage(GetMessageRequest) returns (Message) {
-   *         option (google.api.http).get = "/v1/messages/{message_id}";
+   *         option (google.api.http) = {
+   *             get:"/v1/messages/{message_id}"
+   *         };
    *       }
    *     }
    *     message GetMessageRequest {
    *       message SubMessage {
    *         string subfield = 1;
    *       }
-   *       string message_id = 1; // mapped to the URL
-   *       int64 revision = 2;    // becomes a parameter
-   *       SubMessage sub = 3;    // `sub.subfield` becomes a parameter
+   *       string message_id = 1; // Mapped to URL path.
+   *       int64 revision = 2;    // Mapped to URL query parameter `revision`.
+   *       SubMessage sub = 3;    // Mapped to URL query parameter `sub.subfield`.
    *     }
    * This enables a HTTP JSON to RPC mapping as below:
-   * HTTP | RPC
+   * HTTP | gRPC
    * -----|-----
-   * `GET /v1/messages/123456?revision=2&amp;sub.subfield=foo` | `GetMessage(message_id: "123456" revision: 2 sub: SubMessage(subfield: "foo"))`
-   * Note that fields which are mapped to HTTP parameters must have a
-   * primitive type or a repeated primitive type. Message types are not
-   * allowed. In the case of a repeated type, the parameter can be
-   * repeated in the URL, as in `...?param=A&amp;param=B`.
-   * For HTTP method kinds which allow a request body, the `body` field
+   * `GET /v1/messages/123456?revision=2&amp;sub.subfield=foo` |
+   * `GetMessage(message_id: "123456" revision: 2 sub: SubMessage(subfield:
+   * "foo"))`
+   * Note that fields which are mapped to URL query parameters must have a
+   * primitive type or a repeated primitive type or a non-repeated message type.
+   * In the case of a repeated type, the parameter can be repeated in the URL
+   * as `...?param=A&amp;param=B`. In the case of a message type, each field of the
+   * message is mapped to a separate parameter, such as
+   * `...?foo.a=A&amp;foo.b=B&amp;foo.c=C`.
+   * For HTTP methods that allow a request body, the `body` field
    * specifies the mapping. Consider a REST update method on the
    * message resource collection:
    *     service Messaging {
    *       rpc UpdateMessage(UpdateMessageRequest) returns (Message) {
    *         option (google.api.http) = {
-   *           put: "/v1/messages/{message_id}"
+   *           patch: "/v1/messages/{message_id}"
    *           body: "message"
    *         };
    *       }
@@ -1242,9 +1402,10 @@ private static final long serialVersionUID = 0L;
    * The following HTTP JSON to RPC mapping is enabled, where the
    * representation of the JSON in the request body is determined by
    * protos JSON encoding:
-   * HTTP | RPC
+   * HTTP | gRPC
    * -----|-----
-   * `PUT /v1/messages/123456 { "text": "Hi!" }` | `UpdateMessage(message_id: "123456" message { text: "Hi!" })`
+   * `PATCH /v1/messages/123456 { "text": "Hi!" }` | `UpdateMessage(message_id:
+   * "123456" message { text: "Hi!" })`
    * The special name `*` can be used in the body mapping to define that
    * every field not bound by the path template should be mapped to the
    * request body.  This enables the following alternative definition of
@@ -1252,7 +1413,7 @@ private static final long serialVersionUID = 0L;
    *     service Messaging {
    *       rpc UpdateMessage(Message) returns (Message) {
    *         option (google.api.http) = {
-   *           put: "/v1/messages/{message_id}"
+   *           patch: "/v1/messages/{message_id}"
    *           body: "*"
    *         };
    *       }
@@ -1262,12 +1423,13 @@ private static final long serialVersionUID = 0L;
    *       string text = 2;
    *     }
    * The following HTTP JSON to RPC mapping is enabled:
-   * HTTP | RPC
+   * HTTP | gRPC
    * -----|-----
-   * `PUT /v1/messages/123456 { "text": "Hi!" }` | `UpdateMessage(message_id: "123456" text: "Hi!")`
+   * `PATCH /v1/messages/123456 { "text": "Hi!" }` | `UpdateMessage(message_id:
+   * "123456" text: "Hi!")`
    * Note that when using `*` in the body mapping, it is not possible to
    * have HTTP parameters, as all fields not bound by the path end in
-   * the body. This makes this option more rarely used in practice of
+   * the body. This makes this option more rarely used in practice when
    * defining REST APIs. The common usage of `*` is in custom methods
    * which don't use the URL at all for transferring data.
    * It is possible to define multiple HTTP methods for one RPC by using
@@ -1286,55 +1448,97 @@ private static final long serialVersionUID = 0L;
    *       string message_id = 1;
    *       string user_id = 2;
    *     }
-   * This enables the following two alternative HTTP JSON to RPC
-   * mappings:
-   * HTTP | RPC
+   * This enables the following two alternative HTTP JSON to RPC mappings:
+   * HTTP | gRPC
    * -----|-----
    * `GET /v1/messages/123456` | `GetMessage(message_id: "123456")`
-   * `GET /v1/users/me/messages/123456` | `GetMessage(user_id: "me" message_id: "123456")`
-   * # Rules for HTTP mapping
-   * The rules for mapping HTTP path, query parameters, and body fields
-   * to the request message are as follows:
-   * 1. The `body` field specifies either `*` or a field path, or is
-   *    omitted. If omitted, it indicates there is no HTTP request body.
-   * 2. Leaf fields (recursive expansion of nested messages in the
-   *    request) can be classified into three types:
-   *     (a) Matched in the URL template.
-   *     (b) Covered by body (if body is `*`, everything except (a) fields;
-   *         else everything under the body field)
-   *     (c) All other fields.
-   * 3. URL query parameters found in the HTTP request are mapped to (c) fields.
-   * 4. Any body sent with an HTTP request can contain only (b) fields.
-   * The syntax of the path template is as follows:
+   * `GET /v1/users/me/messages/123456` | `GetMessage(user_id: "me" message_id:
+   * "123456")`
+   * ## Rules for HTTP mapping
+   * 1. Leaf request fields (recursive expansion nested messages in the request
+   *    message) are classified into three categories:
+   *    - Fields referred by the path template. They are passed via the URL path.
+   *    - Fields referred by the [HttpRule.body][google.api.HttpRule.body]. They are passed via the HTTP
+   *      request body.
+   *    - All other fields are passed via the URL query parameters, and the
+   *      parameter name is the field path in the request message. A repeated
+   *      field can be represented as multiple query parameters under the same
+   *      name.
+   *  2. If [HttpRule.body][google.api.HttpRule.body] is "*", there is no URL query parameter, all fields
+   *     are passed via URL path and HTTP request body.
+   *  3. If [HttpRule.body][google.api.HttpRule.body] is omitted, there is no HTTP request body, all
+   *     fields are passed via URL path and URL query parameters.
+   * ### Path template syntax
    *     Template = "/" Segments [ Verb ] ;
    *     Segments = Segment { "/" Segment } ;
    *     Segment  = "*" | "**" | LITERAL | Variable ;
    *     Variable = "{" FieldPath [ "=" Segments ] "}" ;
    *     FieldPath = IDENT { "." IDENT } ;
    *     Verb     = ":" LITERAL ;
-   * The syntax `*` matches a single path segment. The syntax `**` matches zero
-   * or more path segments, which must be the last part of the path except the
-   * `Verb`. The syntax `LITERAL` matches literal text in the path.
+   * The syntax `*` matches a single URL path segment. The syntax `**` matches
+   * zero or more URL path segments, which must be the last part of the URL path
+   * except the `Verb`.
    * The syntax `Variable` matches part of the URL path as specified by its
    * template. A variable template must not contain other variables. If a variable
    * matches a single path segment, its template may be omitted, e.g. `{var}`
    * is equivalent to `{var=*}`.
+   * The syntax `LITERAL` matches literal text in the URL path. If the `LITERAL`
+   * contains any reserved character, such characters should be percent-encoded
+   * before the matching.
    * If a variable contains exactly one path segment, such as `"{var}"` or
-   * `"{var=*}"`, when such a variable is expanded into a URL path, all characters
-   * except `[-_.~0-9a-zA-Z]` are percent-encoded. Such variables show up in the
-   * Discovery Document as `{var}`.
-   * If a variable contains one or more path segments, such as `"{var=foo/&#42;}"`
-   * or `"{var=**}"`, when such a variable is expanded into a URL path, all
-   * characters except `[-_.~/0-9a-zA-Z]` are percent-encoded. Such variables
-   * show up in the Discovery Document as `{+var}`.
-   * NOTE: While the single segment variable matches the semantics of
-   * [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2
-   * Simple String Expansion, the multi segment variable **does not** match
-   * RFC 6570 Reserved Expansion. The reason is that the Reserved Expansion
+   * `"{var=*}"`, when such a variable is expanded into a URL path on the client
+   * side, all characters except `[-_.~0-9a-zA-Z]` are percent-encoded. The
+   * server side does the reverse decoding. Such variables show up in the
+   * [Discovery
+   * Document](https://developers.google.com/discovery/v1/reference/apis) as
+   * `{var}`.
+   * If a variable contains multiple path segments, such as `"{var=foo/&#42;}"`
+   * or `"{var=**}"`, when such a variable is expanded into a URL path on the
+   * client side, all characters except `[-_.~/0-9a-zA-Z]` are percent-encoded.
+   * The server side does the reverse decoding, except "%2F" and "%2f" are left
+   * unchanged. Such variables show up in the
+   * [Discovery
+   * Document](https://developers.google.com/discovery/v1/reference/apis) as
+   * `{+var}`.
+   * ## Using gRPC API Service Configuration
+   * gRPC API Service Configuration (service config) is a configuration language
+   * for configuring a gRPC service to become a user-facing product. The
+   * service config is simply the YAML representation of the `google.api.Service`
+   * proto message.
+   * As an alternative to annotating your proto file, you can configure gRPC
+   * transcoding in your service config YAML files. You do this by specifying a
+   * `HttpRule` that maps the gRPC method to a REST endpoint, achieving the same
+   * effect as the proto annotation. This can be particularly useful if you
+   * have a proto that is reused in multiple services. Note that any transcoding
+   * specified in the service config will override any matching transcoding
+   * configuration in the proto.
+   * Example:
+   *     http:
+   *       rules:
+   *         # Selects a gRPC method and applies HttpRule to it.
+   *         - selector: example.v1.Messaging.GetMessage
+   *           get: /v1/messages/{message_id}/{sub.subfield}
+   * ## Special notes
+   * When gRPC Transcoding is used to map a gRPC to JSON REST endpoints, the
+   * proto to JSON conversion must follow the [proto3
+   * specification](https://developers.google.com/protocol-buffers/docs/proto3#json).
+   * While the single segment variable follows the semantics of
+   * [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2 Simple String
+   * Expansion, the multi segment variable **does not** follow RFC 6570 Section
+   * 3.2.3 Reserved Expansion. The reason is that the Reserved Expansion
    * does not expand special characters like `?` and `#`, which would lead
-   * to invalid URLs.
-   * NOTE: the field paths in variables and in the `body` must not refer to
-   * repeated fields or map fields.
+   * to invalid URLs. As the result, gRPC Transcoding uses a custom encoding
+   * for multi segment variables.
+   * The path variables **must not** refer to any repeated or mapped field,
+   * because client libraries are not capable of handling such variable expansion.
+   * The path variables **must not** capture the leading "/" character. The reason
+   * is that the most common use case "{var}" does not capture the leading "/"
+   * character. For consistency, all path variables must share the same behavior.
+   * Repeated message fields must not be mapped to URL query parameters, because
+   * no client library can support such complicated mapping.
+   * If an API needs to use a JSON array for request or response body, it can map
+   * the request or response body to a repeated field. However, some gRPC
+   * Transcoding implementations may not support this feature.
    * </pre>
    *
    * Protobuf type {@code google.api.HttpRule}
@@ -1348,6 +1552,7 @@ private static final long serialVersionUID = 0L;
       return com.google.api.HttpProto.internal_static_google_api_HttpRule_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.HttpProto.internal_static_google_api_HttpRule_fieldAccessorTable
@@ -1371,6 +1576,7 @@ private static final long serialVersionUID = 0L;
         getAdditionalBindingsFieldBuilder();
       }
     }
+    @java.lang.Override
     public Builder clear() {
       super.clear();
       selector_ = "";
@@ -1381,7 +1587,7 @@ private static final long serialVersionUID = 0L;
 
       if (additionalBindingsBuilder_ == null) {
         additionalBindings_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000200);
+        bitField0_ = (bitField0_ & ~0x00000001);
       } else {
         additionalBindingsBuilder_.clear();
       }
@@ -1390,15 +1596,18 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.api.HttpProto.internal_static_google_api_HttpRule_descriptor;
     }
 
+    @java.lang.Override
     public com.google.api.HttpRule getDefaultInstanceForType() {
       return com.google.api.HttpRule.getDefaultInstance();
     }
 
+    @java.lang.Override
     public com.google.api.HttpRule build() {
       com.google.api.HttpRule result = buildPartial();
       if (!result.isInitialized()) {
@@ -1407,10 +1616,10 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
+    @java.lang.Override
     public com.google.api.HttpRule buildPartial() {
       com.google.api.HttpRule result = new com.google.api.HttpRule(this);
       int from_bitField0_ = bitField0_;
-      int to_bitField0_ = 0;
       result.selector_ = selector_;
       if (patternCase_ == 2) {
         result.pattern_ = pattern_;
@@ -1437,46 +1646,52 @@ private static final long serialVersionUID = 0L;
       result.body_ = body_;
       result.responseBody_ = responseBody_;
       if (additionalBindingsBuilder_ == null) {
-        if (((bitField0_ & 0x00000200) == 0x00000200)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
           additionalBindings_ = java.util.Collections.unmodifiableList(additionalBindings_);
-          bitField0_ = (bitField0_ & ~0x00000200);
+          bitField0_ = (bitField0_ & ~0x00000001);
         }
         result.additionalBindings_ = additionalBindings_;
       } else {
         result.additionalBindings_ = additionalBindingsBuilder_.build();
       }
-      result.bitField0_ = to_bitField0_;
       result.patternCase_ = patternCase_;
       onBuilt();
       return result;
     }
 
+    @java.lang.Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
+    @java.lang.Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+      return super.setField(field, value);
     }
+    @java.lang.Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
+    @java.lang.Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
+    @java.lang.Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+      return super.setRepeatedField(field, index, value);
     }
+    @java.lang.Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+      return super.addRepeatedField(field, value);
     }
+    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.api.HttpRule) {
         return mergeFrom((com.google.api.HttpRule)other);
@@ -1504,7 +1719,7 @@ private static final long serialVersionUID = 0L;
         if (!other.additionalBindings_.isEmpty()) {
           if (additionalBindings_.isEmpty()) {
             additionalBindings_ = other.additionalBindings_;
-            bitField0_ = (bitField0_ & ~0x00000200);
+            bitField0_ = (bitField0_ & ~0x00000001);
           } else {
             ensureAdditionalBindingsIsMutable();
             additionalBindings_.addAll(other.additionalBindings_);
@@ -1517,7 +1732,7 @@ private static final long serialVersionUID = 0L;
             additionalBindingsBuilder_.dispose();
             additionalBindingsBuilder_ = null;
             additionalBindings_ = other.additionalBindings_;
-            bitField0_ = (bitField0_ & ~0x00000200);
+            bitField0_ = (bitField0_ & ~0x00000001);
             additionalBindingsBuilder_ = 
               com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                  getAdditionalBindingsFieldBuilder() : null;
@@ -1570,10 +1785,12 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    @java.lang.Override
     public final boolean isInitialized() {
       return true;
     }
 
+    @java.lang.Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1611,11 +1828,12 @@ private static final long serialVersionUID = 0L;
     private java.lang.Object selector_ = "";
     /**
      * <pre>
-     * Selects methods to which this rule applies.
+     * Selects a method to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
      * </pre>
      *
      * <code>string selector = 1;</code>
+     * @return The selector.
      */
     public java.lang.String getSelector() {
       java.lang.Object ref = selector_;
@@ -1631,11 +1849,12 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Selects methods to which this rule applies.
+     * Selects a method to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
      * </pre>
      *
      * <code>string selector = 1;</code>
+     * @return The bytes for selector.
      */
     public com.google.protobuf.ByteString
         getSelectorBytes() {
@@ -1652,11 +1871,13 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Selects methods to which this rule applies.
+     * Selects a method to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
      * </pre>
      *
      * <code>string selector = 1;</code>
+     * @param value The selector to set.
+     * @return This builder for chaining.
      */
     public Builder setSelector(
         java.lang.String value) {
@@ -1670,11 +1891,12 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Selects methods to which this rule applies.
+     * Selects a method to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
      * </pre>
      *
      * <code>string selector = 1;</code>
+     * @return This builder for chaining.
      */
     public Builder clearSelector() {
       
@@ -1684,11 +1906,13 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Selects methods to which this rule applies.
+     * Selects a method to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
      * </pre>
      *
      * <code>string selector = 1;</code>
+     * @param value The bytes for selector to set.
+     * @return This builder for chaining.
      */
     public Builder setSelectorBytes(
         com.google.protobuf.ByteString value) {
@@ -1704,11 +1928,27 @@ private static final long serialVersionUID = 0L;
 
     /**
      * <pre>
-     * Used for listing and getting information about resources.
+     * Maps to HTTP GET. Used for listing and getting information about
+     * resources.
      * </pre>
      *
      * <code>string get = 2;</code>
+     * @return Whether the get field is set.
      */
+    @java.lang.Override
+    public boolean hasGet() {
+      return patternCase_ == 2;
+    }
+    /**
+     * <pre>
+     * Maps to HTTP GET. Used for listing and getting information about
+     * resources.
+     * </pre>
+     *
+     * <code>string get = 2;</code>
+     * @return The get.
+     */
+    @java.lang.Override
     public java.lang.String getGet() {
       java.lang.Object ref = "";
       if (patternCase_ == 2) {
@@ -1728,11 +1968,14 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for listing and getting information about resources.
+     * Maps to HTTP GET. Used for listing and getting information about
+     * resources.
      * </pre>
      *
      * <code>string get = 2;</code>
+     * @return The bytes for get.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getGetBytes() {
       java.lang.Object ref = "";
@@ -1753,10 +1996,13 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for listing and getting information about resources.
+     * Maps to HTTP GET. Used for listing and getting information about
+     * resources.
      * </pre>
      *
      * <code>string get = 2;</code>
+     * @param value The get to set.
+     * @return This builder for chaining.
      */
     public Builder setGet(
         java.lang.String value) {
@@ -1770,10 +2016,12 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for listing and getting information about resources.
+     * Maps to HTTP GET. Used for listing and getting information about
+     * resources.
      * </pre>
      *
      * <code>string get = 2;</code>
+     * @return This builder for chaining.
      */
     public Builder clearGet() {
       if (patternCase_ == 2) {
@@ -1785,10 +2033,13 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for listing and getting information about resources.
+     * Maps to HTTP GET. Used for listing and getting information about
+     * resources.
      * </pre>
      *
      * <code>string get = 2;</code>
+     * @param value The bytes for get to set.
+     * @return This builder for chaining.
      */
     public Builder setGetBytes(
         com.google.protobuf.ByteString value) {
@@ -1804,11 +2055,25 @@ private static final long serialVersionUID = 0L;
 
     /**
      * <pre>
-     * Used for updating a resource.
+     * Maps to HTTP PUT. Used for replacing a resource.
      * </pre>
      *
      * <code>string put = 3;</code>
+     * @return Whether the put field is set.
      */
+    @java.lang.Override
+    public boolean hasPut() {
+      return patternCase_ == 3;
+    }
+    /**
+     * <pre>
+     * Maps to HTTP PUT. Used for replacing a resource.
+     * </pre>
+     *
+     * <code>string put = 3;</code>
+     * @return The put.
+     */
+    @java.lang.Override
     public java.lang.String getPut() {
       java.lang.Object ref = "";
       if (patternCase_ == 3) {
@@ -1828,11 +2093,13 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for updating a resource.
+     * Maps to HTTP PUT. Used for replacing a resource.
      * </pre>
      *
      * <code>string put = 3;</code>
+     * @return The bytes for put.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getPutBytes() {
       java.lang.Object ref = "";
@@ -1853,10 +2120,12 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for updating a resource.
+     * Maps to HTTP PUT. Used for replacing a resource.
      * </pre>
      *
      * <code>string put = 3;</code>
+     * @param value The put to set.
+     * @return This builder for chaining.
      */
     public Builder setPut(
         java.lang.String value) {
@@ -1870,10 +2139,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for updating a resource.
+     * Maps to HTTP PUT. Used for replacing a resource.
      * </pre>
      *
      * <code>string put = 3;</code>
+     * @return This builder for chaining.
      */
     public Builder clearPut() {
       if (patternCase_ == 3) {
@@ -1885,10 +2155,12 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for updating a resource.
+     * Maps to HTTP PUT. Used for replacing a resource.
      * </pre>
      *
      * <code>string put = 3;</code>
+     * @param value The bytes for put to set.
+     * @return This builder for chaining.
      */
     public Builder setPutBytes(
         com.google.protobuf.ByteString value) {
@@ -1904,11 +2176,25 @@ private static final long serialVersionUID = 0L;
 
     /**
      * <pre>
-     * Used for creating a resource.
+     * Maps to HTTP POST. Used for creating a resource or performing an action.
      * </pre>
      *
      * <code>string post = 4;</code>
+     * @return Whether the post field is set.
      */
+    @java.lang.Override
+    public boolean hasPost() {
+      return patternCase_ == 4;
+    }
+    /**
+     * <pre>
+     * Maps to HTTP POST. Used for creating a resource or performing an action.
+     * </pre>
+     *
+     * <code>string post = 4;</code>
+     * @return The post.
+     */
+    @java.lang.Override
     public java.lang.String getPost() {
       java.lang.Object ref = "";
       if (patternCase_ == 4) {
@@ -1928,11 +2214,13 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for creating a resource.
+     * Maps to HTTP POST. Used for creating a resource or performing an action.
      * </pre>
      *
      * <code>string post = 4;</code>
+     * @return The bytes for post.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getPostBytes() {
       java.lang.Object ref = "";
@@ -1953,10 +2241,12 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for creating a resource.
+     * Maps to HTTP POST. Used for creating a resource or performing an action.
      * </pre>
      *
      * <code>string post = 4;</code>
+     * @param value The post to set.
+     * @return This builder for chaining.
      */
     public Builder setPost(
         java.lang.String value) {
@@ -1970,10 +2260,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for creating a resource.
+     * Maps to HTTP POST. Used for creating a resource or performing an action.
      * </pre>
      *
      * <code>string post = 4;</code>
+     * @return This builder for chaining.
      */
     public Builder clearPost() {
       if (patternCase_ == 4) {
@@ -1985,10 +2276,12 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for creating a resource.
+     * Maps to HTTP POST. Used for creating a resource or performing an action.
      * </pre>
      *
      * <code>string post = 4;</code>
+     * @param value The bytes for post to set.
+     * @return This builder for chaining.
      */
     public Builder setPostBytes(
         com.google.protobuf.ByteString value) {
@@ -2004,11 +2297,25 @@ private static final long serialVersionUID = 0L;
 
     /**
      * <pre>
-     * Used for deleting a resource.
+     * Maps to HTTP DELETE. Used for deleting a resource.
      * </pre>
      *
      * <code>string delete = 5;</code>
+     * @return Whether the delete field is set.
      */
+    @java.lang.Override
+    public boolean hasDelete() {
+      return patternCase_ == 5;
+    }
+    /**
+     * <pre>
+     * Maps to HTTP DELETE. Used for deleting a resource.
+     * </pre>
+     *
+     * <code>string delete = 5;</code>
+     * @return The delete.
+     */
+    @java.lang.Override
     public java.lang.String getDelete() {
       java.lang.Object ref = "";
       if (patternCase_ == 5) {
@@ -2028,11 +2335,13 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for deleting a resource.
+     * Maps to HTTP DELETE. Used for deleting a resource.
      * </pre>
      *
      * <code>string delete = 5;</code>
+     * @return The bytes for delete.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getDeleteBytes() {
       java.lang.Object ref = "";
@@ -2053,10 +2362,12 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for deleting a resource.
+     * Maps to HTTP DELETE. Used for deleting a resource.
      * </pre>
      *
      * <code>string delete = 5;</code>
+     * @param value The delete to set.
+     * @return This builder for chaining.
      */
     public Builder setDelete(
         java.lang.String value) {
@@ -2070,10 +2381,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for deleting a resource.
+     * Maps to HTTP DELETE. Used for deleting a resource.
      * </pre>
      *
      * <code>string delete = 5;</code>
+     * @return This builder for chaining.
      */
     public Builder clearDelete() {
       if (patternCase_ == 5) {
@@ -2085,10 +2397,12 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for deleting a resource.
+     * Maps to HTTP DELETE. Used for deleting a resource.
      * </pre>
      *
      * <code>string delete = 5;</code>
+     * @param value The bytes for delete to set.
+     * @return This builder for chaining.
      */
     public Builder setDeleteBytes(
         com.google.protobuf.ByteString value) {
@@ -2104,11 +2418,25 @@ private static final long serialVersionUID = 0L;
 
     /**
      * <pre>
-     * Used for updating a resource.
+     * Maps to HTTP PATCH. Used for updating a resource.
      * </pre>
      *
      * <code>string patch = 6;</code>
+     * @return Whether the patch field is set.
      */
+    @java.lang.Override
+    public boolean hasPatch() {
+      return patternCase_ == 6;
+    }
+    /**
+     * <pre>
+     * Maps to HTTP PATCH. Used for updating a resource.
+     * </pre>
+     *
+     * <code>string patch = 6;</code>
+     * @return The patch.
+     */
+    @java.lang.Override
     public java.lang.String getPatch() {
       java.lang.Object ref = "";
       if (patternCase_ == 6) {
@@ -2128,11 +2456,13 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for updating a resource.
+     * Maps to HTTP PATCH. Used for updating a resource.
      * </pre>
      *
      * <code>string patch = 6;</code>
+     * @return The bytes for patch.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getPatchBytes() {
       java.lang.Object ref = "";
@@ -2153,10 +2483,12 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for updating a resource.
+     * Maps to HTTP PATCH. Used for updating a resource.
      * </pre>
      *
      * <code>string patch = 6;</code>
+     * @param value The patch to set.
+     * @return This builder for chaining.
      */
     public Builder setPatch(
         java.lang.String value) {
@@ -2170,10 +2502,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for updating a resource.
+     * Maps to HTTP PATCH. Used for updating a resource.
      * </pre>
      *
      * <code>string patch = 6;</code>
+     * @return This builder for chaining.
      */
     public Builder clearPatch() {
       if (patternCase_ == 6) {
@@ -2185,10 +2518,12 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Used for updating a resource.
+     * Maps to HTTP PATCH. Used for updating a resource.
      * </pre>
      *
      * <code>string patch = 6;</code>
+     * @param value The bytes for patch to set.
+     * @return This builder for chaining.
      */
     public Builder setPatchBytes(
         com.google.protobuf.ByteString value) {
@@ -2213,7 +2548,9 @@ private static final long serialVersionUID = 0L;
      * </pre>
      *
      * <code>.google.api.CustomHttpPattern custom = 8;</code>
+     * @return Whether the custom field is set.
      */
+    @java.lang.Override
     public boolean hasCustom() {
       return patternCase_ == 8;
     }
@@ -2226,7 +2563,9 @@ private static final long serialVersionUID = 0L;
      * </pre>
      *
      * <code>.google.api.CustomHttpPattern custom = 8;</code>
+     * @return The custom.
      */
+    @java.lang.Override
     public com.google.api.CustomHttpPattern getCustom() {
       if (customBuilder_ == null) {
         if (patternCase_ == 8) {
@@ -2362,6 +2701,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.CustomHttpPattern custom = 8;</code>
      */
+    @java.lang.Override
     public com.google.api.CustomHttpPatternOrBuilder getCustomOrBuilder() {
       if ((patternCase_ == 8) && (customBuilder_ != null)) {
         return customBuilder_.getMessageOrBuilder();
@@ -2404,13 +2744,15 @@ private static final long serialVersionUID = 0L;
     private java.lang.Object body_ = "";
     /**
      * <pre>
-     * The name of the request field whose value is mapped to the HTTP body, or
-     * `*` for mapping all fields not captured by the path pattern to the HTTP
-     * body. NOTE: the referred field must not be a repeated field and must be
-     * present at the top-level of request message type.
+     * The name of the request field whose value is mapped to the HTTP request
+     * body, or `*` for mapping all request fields not captured by the path
+     * pattern to the HTTP body, or omitted for not having any HTTP request body.
+     * NOTE: the referred field must be present at the top-level of the request
+     * message type.
      * </pre>
      *
      * <code>string body = 7;</code>
+     * @return The body.
      */
     public java.lang.String getBody() {
       java.lang.Object ref = body_;
@@ -2426,13 +2768,15 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The name of the request field whose value is mapped to the HTTP body, or
-     * `*` for mapping all fields not captured by the path pattern to the HTTP
-     * body. NOTE: the referred field must not be a repeated field and must be
-     * present at the top-level of request message type.
+     * The name of the request field whose value is mapped to the HTTP request
+     * body, or `*` for mapping all request fields not captured by the path
+     * pattern to the HTTP body, or omitted for not having any HTTP request body.
+     * NOTE: the referred field must be present at the top-level of the request
+     * message type.
      * </pre>
      *
      * <code>string body = 7;</code>
+     * @return The bytes for body.
      */
     public com.google.protobuf.ByteString
         getBodyBytes() {
@@ -2449,13 +2793,16 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The name of the request field whose value is mapped to the HTTP body, or
-     * `*` for mapping all fields not captured by the path pattern to the HTTP
-     * body. NOTE: the referred field must not be a repeated field and must be
-     * present at the top-level of request message type.
+     * The name of the request field whose value is mapped to the HTTP request
+     * body, or `*` for mapping all request fields not captured by the path
+     * pattern to the HTTP body, or omitted for not having any HTTP request body.
+     * NOTE: the referred field must be present at the top-level of the request
+     * message type.
      * </pre>
      *
      * <code>string body = 7;</code>
+     * @param value The body to set.
+     * @return This builder for chaining.
      */
     public Builder setBody(
         java.lang.String value) {
@@ -2469,13 +2816,15 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The name of the request field whose value is mapped to the HTTP body, or
-     * `*` for mapping all fields not captured by the path pattern to the HTTP
-     * body. NOTE: the referred field must not be a repeated field and must be
-     * present at the top-level of request message type.
+     * The name of the request field whose value is mapped to the HTTP request
+     * body, or `*` for mapping all request fields not captured by the path
+     * pattern to the HTTP body, or omitted for not having any HTTP request body.
+     * NOTE: the referred field must be present at the top-level of the request
+     * message type.
      * </pre>
      *
      * <code>string body = 7;</code>
+     * @return This builder for chaining.
      */
     public Builder clearBody() {
       
@@ -2485,13 +2834,16 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The name of the request field whose value is mapped to the HTTP body, or
-     * `*` for mapping all fields not captured by the path pattern to the HTTP
-     * body. NOTE: the referred field must not be a repeated field and must be
-     * present at the top-level of request message type.
+     * The name of the request field whose value is mapped to the HTTP request
+     * body, or `*` for mapping all request fields not captured by the path
+     * pattern to the HTTP body, or omitted for not having any HTTP request body.
+     * NOTE: the referred field must be present at the top-level of the request
+     * message type.
      * </pre>
      *
      * <code>string body = 7;</code>
+     * @param value The bytes for body to set.
+     * @return This builder for chaining.
      */
     public Builder setBodyBytes(
         com.google.protobuf.ByteString value) {
@@ -2509,11 +2861,14 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Optional. The name of the response field whose value is mapped to the HTTP
-     * body of response. Other response fields are ignored. When
-     * not set, the response message will be used as HTTP body of response.
+     * response body. When omitted, the entire response message will be used
+     * as the HTTP response body.
+     * NOTE: The referred field must be present at the top-level of the response
+     * message type.
      * </pre>
      *
      * <code>string response_body = 12;</code>
+     * @return The responseBody.
      */
     public java.lang.String getResponseBody() {
       java.lang.Object ref = responseBody_;
@@ -2530,11 +2885,14 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Optional. The name of the response field whose value is mapped to the HTTP
-     * body of response. Other response fields are ignored. When
-     * not set, the response message will be used as HTTP body of response.
+     * response body. When omitted, the entire response message will be used
+     * as the HTTP response body.
+     * NOTE: The referred field must be present at the top-level of the response
+     * message type.
      * </pre>
      *
      * <code>string response_body = 12;</code>
+     * @return The bytes for responseBody.
      */
     public com.google.protobuf.ByteString
         getResponseBodyBytes() {
@@ -2552,11 +2910,15 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Optional. The name of the response field whose value is mapped to the HTTP
-     * body of response. Other response fields are ignored. When
-     * not set, the response message will be used as HTTP body of response.
+     * response body. When omitted, the entire response message will be used
+     * as the HTTP response body.
+     * NOTE: The referred field must be present at the top-level of the response
+     * message type.
      * </pre>
      *
      * <code>string response_body = 12;</code>
+     * @param value The responseBody to set.
+     * @return This builder for chaining.
      */
     public Builder setResponseBody(
         java.lang.String value) {
@@ -2571,11 +2933,14 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Optional. The name of the response field whose value is mapped to the HTTP
-     * body of response. Other response fields are ignored. When
-     * not set, the response message will be used as HTTP body of response.
+     * response body. When omitted, the entire response message will be used
+     * as the HTTP response body.
+     * NOTE: The referred field must be present at the top-level of the response
+     * message type.
      * </pre>
      *
      * <code>string response_body = 12;</code>
+     * @return This builder for chaining.
      */
     public Builder clearResponseBody() {
       
@@ -2586,11 +2951,15 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Optional. The name of the response field whose value is mapped to the HTTP
-     * body of response. Other response fields are ignored. When
-     * not set, the response message will be used as HTTP body of response.
+     * response body. When omitted, the entire response message will be used
+     * as the HTTP response body.
+     * NOTE: The referred field must be present at the top-level of the response
+     * message type.
      * </pre>
      *
      * <code>string response_body = 12;</code>
+     * @param value The bytes for responseBody to set.
+     * @return This builder for chaining.
      */
     public Builder setResponseBodyBytes(
         com.google.protobuf.ByteString value) {
@@ -2607,9 +2976,9 @@ private static final long serialVersionUID = 0L;
     private java.util.List<com.google.api.HttpRule> additionalBindings_ =
       java.util.Collections.emptyList();
     private void ensureAdditionalBindingsIsMutable() {
-      if (!((bitField0_ & 0x00000200) == 0x00000200)) {
+      if (!((bitField0_ & 0x00000001) != 0)) {
         additionalBindings_ = new java.util.ArrayList<com.google.api.HttpRule>(additionalBindings_);
-        bitField0_ |= 0x00000200;
+        bitField0_ |= 0x00000001;
        }
     }
 
@@ -2825,7 +3194,7 @@ private static final long serialVersionUID = 0L;
     public Builder clearAdditionalBindings() {
       if (additionalBindingsBuilder_ == null) {
         additionalBindings_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000200);
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
       } else {
         additionalBindingsBuilder_.clear();
@@ -2944,18 +3313,20 @@ private static final long serialVersionUID = 0L;
         additionalBindingsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
             com.google.api.HttpRule, com.google.api.HttpRule.Builder, com.google.api.HttpRuleOrBuilder>(
                 additionalBindings_,
-                ((bitField0_ & 0x00000200) == 0x00000200),
+                ((bitField0_ & 0x00000001) != 0),
                 getParentForChildren(),
                 isClean());
         additionalBindings_ = null;
       }
       return additionalBindingsBuilder_;
     }
+    @java.lang.Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
+    @java.lang.Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -2977,6 +3348,7 @@ private static final long serialVersionUID = 0L;
 
   private static final com.google.protobuf.Parser<HttpRule>
       PARSER = new com.google.protobuf.AbstractParser<HttpRule>() {
+    @java.lang.Override
     public HttpRule parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2994,6 +3366,7 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
+  @java.lang.Override
   public com.google.api.HttpRule getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }

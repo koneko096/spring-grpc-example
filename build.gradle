@@ -39,7 +39,7 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 install {
     repositories.mavenInstaller {
-        pom.artifactId = 'grpc'
+        pom.artifactId = 'grpc-http'
     }
 }
 
@@ -47,15 +47,14 @@ sourceSets {
     main {
         proto {
             // In addition to the default 'src/main/proto'
-            srcDir 'specs/proto'
-            srcDir "$System.env.GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis"
+            srcDir "/home/afrizal/.go/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis"
         }
     }
 }
 
 protobuf {
     protoc {
-        artifact = 'com.google.protobuf:protoc:3.5.1'
+        artifact = 'com.google.protobuf:protoc:3.17.2'
     }
     plugins {
         grpc {
@@ -94,13 +93,16 @@ dependencies {
     compile "org.springframework:spring-web:$spring_web_version"
 
     compile "org.flywaydb:flyway-core:5.2.1"
-    runtime "com.microsoft.sqlserver:sqljdbc4:4.0"
+    runtime "mysql:mysql-connector-java:8.0.15"
 
     compile "org.jadira.usertype:usertype.core:5.0.0.GA"
 
+    compile "com.google.protobuf:protobuf-java:3.17.2"
+    compile "com.googlecode.protobuf-java-format:protobuf-java-format:1.4"
     compile "io.github.lognet:grpc-spring-boot-starter:3.0.0"
     compile "io.grpc:grpc-netty:$grpc_version"
 
+    compile "org.projectlombok:lombok:1.18.12"
     compile "com.fasterxml.jackson.core:jackson-core:$jackson_version"
     compile "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
     compile "com.fasterxml.jackson.core:jackson-databind:$jackson_version"

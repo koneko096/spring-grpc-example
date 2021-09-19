@@ -1,4 +1,4 @@
-package id.koneko096.grpc;
+package id.koneko096.grpc.config;
 
 import id.koneko096.grpc.data.dao.CitizenDAO;
 import id.koneko096.grpc.data.repository.CitizenRepository;
