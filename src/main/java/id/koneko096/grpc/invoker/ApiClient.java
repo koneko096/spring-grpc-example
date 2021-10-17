@@ -1,8 +1,13 @@
 package id.koneko096.grpc.invoker;
 
+import id.koneko096.grpc.invoker.auth.ApiKeyAuth;
+import id.koneko096.grpc.invoker.auth.Authentication;
+import id.koneko096.grpc.invoker.auth.HttpBasicAuth;
+import id.koneko096.grpc.invoker.auth.OAuth;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
@@ -45,11 +50,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TimeZone;
 
-import id.koneko096.grpc.invoker.auth.Authentication;
-import id.koneko096.grpc.invoker.auth.HttpBasicAuth;
-import id.koneko096.grpc.invoker.auth.ApiKeyAuth;
-import id.koneko096.grpc.invoker.auth.OAuth;
-
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-20T21:21:26.411+07:00")
 @Component("id.koneko096.grpc.invoker.ApiClient")
 public class ApiClient {
@@ -69,8 +69,9 @@ public class ApiClient {
     private boolean debugging = false;
     
     private HttpHeaders defaultHeaders = new HttpHeaders();
-    
-    private String basePath = "http://localhost:8080/v1";
+
+    @Value("${upstream.basepath}")
+    private String basePath;
 
     @Autowired
     private RestTemplate restTemplate;
