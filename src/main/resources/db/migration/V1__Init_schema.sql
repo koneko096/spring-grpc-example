@@ -3,7 +3,7 @@
 --
 
 CREATE TABLE companies (
-  id BIGINT,
+  id BIGINT AUTO_INCREMENT,
   name varchar(50) NOT NULL,
   PRIMARY KEY (id)
 );
@@ -13,7 +13,7 @@ CREATE TABLE companies (
 --
 
 CREATE TABLE divisions (
-  id BIGINT,
+  id BIGINT AUTO_INCREMENT,
   company_id BIGINT,
   name varchar(50) NOT NULL,
   PRIMARY KEY (id),

@@ -1,11 +1,14 @@
 package id.koneko096.grpc.data.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.joda.time.LocalDate;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Created by afrizal on 22/11/2018.
@@ -13,8 +16,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "employments")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Employment {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -34,10 +35,12 @@ public class Employment {
     LocalDate leaveDate;
 
 
-    public Employment(Long citizenId, Long divisionId) {
-        this.citizenId = citizenId;
-        this.divisionId = divisionId;
-        this.joinDate = LocalDate.now();
+    public static Employment EmploymentFactory(Long citizenId, Long divisionId) {
+        Employment employment = new Employment();
+        employment.citizenId = citizenId;
+        employment.divisionId = divisionId;
+        employment.joinDate = LocalDate.now();
+        return employment;
     }
 
 }

@@ -51,7 +51,8 @@ public class CompanyServiceImplementation implements CompanyService {
 
   @Override
   public Company.EmployeeStatus RegisterEmployee(Company.RegisterEmployeeRequest request) {
-    Employment employment = this.employmentRepository.save(new Employment(request.getCitizenId(), request.getDivisionId()));
+    Employment emp = Employment.EmploymentFactory(request.getCitizenId(), request.getDivisionId());
+    Employment employment = this.employmentRepository.save(emp);
     return getEmployeeStatus(employment);
   }
 
@@ -65,16 +66,17 @@ public class CompanyServiceImplementation implements CompanyService {
   }
 
   @Override
-  public void FireEmployee(Company.FireEmployeeRequest request) {
+  public Company.EmployeeStatus FireEmployee(Company.FireEmployeeRequest request) {
     Employment employment = this.employmentRepository.findOne(request.getEmployeeId());
     employment.setLeaveDate(LocalDate.now());
-    this.employmentRepository.save(employment);
+    return getEmployeeStatus(this.employmentRepository.save(employment));
   }
 
   private Company.EmployeeStatus getEmployeeStatus(Employment employment) {
     Division division = this.divisionRepository.findOne(employment.getDivisionId());
     CompanyData company = this.companyRepository.findOne(division.getCompanyId());
-    Citizen citizen = this.citizenRepository.findOne(employment.getCitizenId());
+    Citizen citizen = new Citizen(); //   TODO: migrate to real upstream
+//        this.citizenRepository.findOne(employment.getCitizenId());
     return Company.EmployeeStatus.newBuilder()
         .setCitizenId(employment.getCitizenId())
         .setName(citizen.getLastName() + ", " + citizen.getFirstName())

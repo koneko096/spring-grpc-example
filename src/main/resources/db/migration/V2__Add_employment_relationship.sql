@@ -3,7 +3,7 @@
 --
 
 CREATE TABLE employments (
-  employee_id BIGINT NOT NULL,
+  employee_id BIGINT NOT NULL AUTO_INCREMENT,
   citizen_id BIGINT NOT NULL,
   division_id BIGINT NOT NULL,
   join_date DATE NOT NULL,

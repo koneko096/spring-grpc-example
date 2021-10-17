@@ -10,5 +10,5 @@ public interface CompanyService {
 
   Company.EmployeeStatus MutateEmployeeRequest(Company.MutateEmployeeRequest request);
 
-  void FireEmployee(Company.FireEmployeeRequest request);
+  Company.EmployeeStatus FireEmployee(Company.FireEmployeeRequest request);
 }

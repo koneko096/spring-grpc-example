@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by afrizal on 19/09/2021.
@@ -30,8 +33,12 @@ public class CompanyController {
           "application/x-protobuf"
       }
   )
-  Company.ListEmployeeStatusResponse company(@PathVariable long companyId) {
-    return service.ListCompanyEmployees(Company.ListEmployeeRequest.newBuilder().setCompanyId(companyId).build());
+  List<Company.EmployeeStatus> company(@PathVariable long companyId) {
+    Company.ListEmployeeRequest request =
+        Company.ListEmployeeRequest.newBuilder().setCompanyId(companyId).build();
+    List<Company.EmployeeStatus> employeesList =
+        service.ListCompanyEmployees(request).getEmployeesList();
+    return employeesList;
   }
 
   @GetMapping(
@@ -59,8 +66,8 @@ public class CompanyController {
           "application/x-protobuf"
       }
   )
-  Company.EmployeeStatus hire(@PathVariable long employeeId) {
-    return service.GetEmployeeStatus(Company.GetEmployeeRequest.newBuilder().setEmployeeId(employeeId).build());
+  Company.EmployeeStatus hire(@RequestBody Company.RegisterEmployeeRequest request) {
+    return service.RegisterEmployee(request);
   }
 
   @PutMapping(
@@ -89,6 +96,6 @@ public class CompanyController {
       }
   )
   Company.EmployeeStatus fire(@PathVariable long employeeId) {
-    return service.GetEmployeeStatus(Company.GetEmployeeRequest.newBuilder().setEmployeeId(employeeId).build());
+    return service.FireEmployee(Company.FireEmployeeRequest.newBuilder().setEmployeeId(employeeId).build());
   }
 }

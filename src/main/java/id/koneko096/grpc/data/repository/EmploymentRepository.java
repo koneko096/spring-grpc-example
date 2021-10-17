@@ -10,6 +10,6 @@ import java.util.List;
  * Created by afrizal on 22/11/2018.
  */
 public interface EmploymentRepository extends CrudRepository<Employment, Long> {
-    @Query("select e from Employment e, Division d where e.divisionId = d.id and d.companyId = ?1")
+    @Query("select e from Employment e, Division d where e.divisionId = d.id and d.companyId = ?1 and e.leaveDate = NULL")
     List<Employment> findByCompany(Long companyId);
 }

@@ -7,71 +7,72 @@ option java_package = "id.koneko096.grpc.service";
 import "google/api/annotations.proto";
 
 service CompanyService {
-    rpc ListCompanyEmployees(ListEmployeeRequest) returns (ListEmployeeStatusResponse) {
-        option (google.api.http) = { 
-            get: "/v1/company/{companyId}"
-        };
-    }
-    rpc GetEmployeeStatus(GetEmployeeRequest) returns (EmployeeStatus) {
-        option (google.api.http) = { 
-            get: "/v1/employee/{employeeId}/status"
-        };
-    }
-    rpc RegisterEmployee(RegisterEmployeeRequest) returns (EmployeeStatus) {
-        option (google.api.http) = {
-            post: "/v1/employee"
-            body: "*"
-        };
-    }
-    rpc MutateEmployee(MutateEmployeeRequest) returns (EmployeeStatus) {
-        option (google.api.http) = {
-            put: "/v1/employee/{employeeId}"
-            body: "*"
-        };
-    }
-    rpc FireEmployee(FireEmployeeRequest) returns (Empty) {
-        option (google.api.http) = {
-            delete: "/v1/employee/{employeeId}"
-        };
-    }
+  rpc ListCompanyEmployees(ListEmployeeRequest) returns (ListEmployeeStatusResponse) {
+    option (google.api.http) = {
+      get: "/v1/company/{companyId}"
+    };
+  }
+  rpc GetEmployeeStatus(GetEmployeeRequest) returns (EmployeeStatus) {
+    option (google.api.http) = {
+      get: "/v1/employee/{employeeId}/status"
+    };
+  }
+  rpc RegisterEmployee(RegisterEmployeeRequest) returns (EmployeeStatus) {
+    option (google.api.http) = {
+      post: "/v1/employee"
+      body: "*"
+    };
+  }
+  rpc MutateEmployee(MutateEmployeeRequest) returns (EmployeeStatus) {
+    option (google.api.http) = {
+      put: "/v1/employee/{employeeId}"
+      body: "*"
+    };
+  }
+  rpc FireEmployee(FireEmployeeRequest) returns (Empty) {
+    option (google.api.http) = {
+      delete: "/v1/employee/{employeeId}"
+    };
+  }
 }
 
 message Empty {}
 
 message ListEmployeeRequest {
-    int64 companyId = 1;
+  int64 companyId = 1;
 }
 
 message GetEmployeeRequest {
-    int64 employeeId = 1;
+  int64 employeeId = 1;
 }
 
 message RegisterEmployeeRequest {
-    int64 divisionId = 1;
-    int64 companyId = 2;
-    int64 citizenId = 3;
+  int64 divisionId = 1;
+  int64 companyId = 2;
+  int64 citizenId = 3;
 }
 
 message MutateEmployeeRequest {
-    int64 currentDivisionId = 1;
-    int64 currentCompanyId = 2;
-    int64 newDivisionId = 3;
-    int64 newCompanyId = 4;
-    int64 employeeId = 5;
+  int64 currentDivisionId = 1;
+  int64 currentCompanyId = 2;
+  int64 newDivisionId = 3;
+  int64 newCompanyId = 4;
+  int64 employeeId = 5;
 }
 
 message FireEmployeeRequest {
-    int64 employeeId = 1;
+  int64 employeeId = 1;
 }
 
 message EmployeeStatus {
-	int64 citizenId = 1;
-    string name = 2;
-    int32 age = 3;
-    string divisionName = 4;
-    string companyName = 5;
+  int64 employeeId = 1;
+  int64 citizenId = 2;
+  string name = 3;
+  int32 age = 4;
+  string divisionName = 5;
+  string companyName = 6;
 }
 
 message ListEmployeeStatusResponse {
-	repeated EmployeeStatus employees = 1;
+  repeated EmployeeStatus employees = 1;
 }

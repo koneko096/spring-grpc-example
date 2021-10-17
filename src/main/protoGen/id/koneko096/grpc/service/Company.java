@@ -3308,48 +3308,54 @@ public final class Company {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int64 citizenId = 1;</code>
+     * <code>int64 employeeId = 1;</code>
+     * @return The employeeId.
+     */
+    long getEmployeeId();
+
+    /**
+     * <code>int64 citizenId = 2;</code>
      * @return The citizenId.
      */
     long getCitizenId();
 
     /**
-     * <code>string name = 2;</code>
+     * <code>string name = 3;</code>
      * @return The name.
      */
     java.lang.String getName();
     /**
-     * <code>string name = 2;</code>
+     * <code>string name = 3;</code>
      * @return The bytes for name.
      */
     com.google.protobuf.ByteString
         getNameBytes();
 
     /**
-     * <code>int32 age = 3;</code>
+     * <code>int32 age = 4;</code>
      * @return The age.
      */
     int getAge();
 
     /**
-     * <code>string divisionName = 4;</code>
+     * <code>string divisionName = 5;</code>
      * @return The divisionName.
      */
     java.lang.String getDivisionName();
     /**
-     * <code>string divisionName = 4;</code>
+     * <code>string divisionName = 5;</code>
      * @return The bytes for divisionName.
      */
     com.google.protobuf.ByteString
         getDivisionNameBytes();
 
     /**
-     * <code>string companyName = 5;</code>
+     * <code>string companyName = 6;</code>
      * @return The companyName.
      */
     java.lang.String getCompanyName();
     /**
-     * <code>string companyName = 5;</code>
+     * <code>string companyName = 6;</code>
      * @return The bytes for companyName.
      */
     com.google.protobuf.ByteString
@@ -3405,27 +3411,32 @@ public final class Company {
               break;
             case 8: {
 
+              employeeId_ = input.readInt64();
+              break;
+            }
+            case 16: {
+
               citizenId_ = input.readInt64();
               break;
             }
-            case 18: {
+            case 26: {
               java.lang.String s = input.readStringRequireUtf8();
 
               name_ = s;
               break;
             }
-            case 24: {
+            case 32: {
 
               age_ = input.readInt32();
               break;
             }
-            case 34: {
+            case 42: {
               java.lang.String s = input.readStringRequireUtf8();
 
               divisionName_ = s;
               break;
             }
-            case 42: {
+            case 50: {
               java.lang.String s = input.readStringRequireUtf8();
 
               companyName_ = s;
@@ -3463,10 +3474,21 @@ public final class Company {
               id.koneko096.grpc.service.Company.EmployeeStatus.class, id.koneko096.grpc.service.Company.EmployeeStatus.Builder.class);
     }
 
-    public static final int CITIZENID_FIELD_NUMBER = 1;
+    public static final int EMPLOYEEID_FIELD_NUMBER = 1;
+    private long employeeId_;
+    /**
+     * <code>int64 employeeId = 1;</code>
+     * @return The employeeId.
+     */
+    @java.lang.Override
+    public long getEmployeeId() {
+      return employeeId_;
+    }
+
+    public static final int CITIZENID_FIELD_NUMBER = 2;
     private long citizenId_;
     /**
-     * <code>int64 citizenId = 1;</code>
+     * <code>int64 citizenId = 2;</code>
      * @return The citizenId.
      */
     @java.lang.Override
@@ -3474,10 +3496,10 @@ public final class Company {
       return citizenId_;
     }
 
-    public static final int NAME_FIELD_NUMBER = 2;
+    public static final int NAME_FIELD_NUMBER = 3;
     private volatile java.lang.Object name_;
     /**
-     * <code>string name = 2;</code>
+     * <code>string name = 3;</code>
      * @return The name.
      */
     @java.lang.Override
@@ -3494,7 +3516,7 @@ public final class Company {
       }
     }
     /**
-     * <code>string name = 2;</code>
+     * <code>string name = 3;</code>
      * @return The bytes for name.
      */
     @java.lang.Override
@@ -3512,10 +3534,10 @@ public final class Company {
       }
     }
 
-    public static final int AGE_FIELD_NUMBER = 3;
+    public static final int AGE_FIELD_NUMBER = 4;
     private int age_;
     /**
-     * <code>int32 age = 3;</code>
+     * <code>int32 age = 4;</code>
      * @return The age.
      */
     @java.lang.Override
@@ -3523,10 +3545,10 @@ public final class Company {
       return age_;
     }
 
-    public static final int DIVISIONNAME_FIELD_NUMBER = 4;
+    public static final int DIVISIONNAME_FIELD_NUMBER = 5;
     private volatile java.lang.Object divisionName_;
     /**
-     * <code>string divisionName = 4;</code>
+     * <code>string divisionName = 5;</code>
      * @return The divisionName.
      */
     @java.lang.Override
@@ -3543,7 +3565,7 @@ public final class Company {
       }
     }
     /**
-     * <code>string divisionName = 4;</code>
+     * <code>string divisionName = 5;</code>
      * @return The bytes for divisionName.
      */
     @java.lang.Override
@@ -3561,10 +3583,10 @@ public final class Company {
       }
     }
 
-    public static final int COMPANYNAME_FIELD_NUMBER = 5;
+    public static final int COMPANYNAME_FIELD_NUMBER = 6;
     private volatile java.lang.Object companyName_;
     /**
-     * <code>string companyName = 5;</code>
+     * <code>string companyName = 6;</code>
      * @return The companyName.
      */
     @java.lang.Override
@@ -3581,7 +3603,7 @@ public final class Company {
       }
     }
     /**
-     * <code>string companyName = 5;</code>
+     * <code>string companyName = 6;</code>
      * @return The bytes for companyName.
      */
     @java.lang.Override
@@ -3613,20 +3635,23 @@ public final class Company {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (employeeId_ != 0L) {
+        output.writeInt64(1, employeeId_);
+      }
       if (citizenId_ != 0L) {
-        output.writeInt64(1, citizenId_);
+        output.writeInt64(2, citizenId_);
       }
       if (!getNameBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, name_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, name_);
       }
       if (age_ != 0) {
-        output.writeInt32(3, age_);
+        output.writeInt32(4, age_);
       }
       if (!getDivisionNameBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, divisionName_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, divisionName_);
       }
       if (!getCompanyNameBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, companyName_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, companyName_);
       }
       unknownFields.writeTo(output);
     }
@@ -3637,22 +3662,26 @@ public final class Company {
       if (size != -1) return size;
 
       size = 0;
+      if (employeeId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, employeeId_);
+      }
       if (citizenId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, citizenId_);
+          .computeInt64Size(2, citizenId_);
       }
       if (!getNameBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, name_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, name_);
       }
       if (age_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, age_);
+          .computeInt32Size(4, age_);
       }
       if (!getDivisionNameBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, divisionName_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, divisionName_);
       }
       if (!getCompanyNameBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, companyName_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, companyName_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -3669,6 +3698,8 @@ public final class Company {
       }
       id.koneko096.grpc.service.Company.EmployeeStatus other = (id.koneko096.grpc.service.Company.EmployeeStatus) obj;
 
+      if (getEmployeeId()
+          != other.getEmployeeId()) return false;
       if (getCitizenId()
           != other.getCitizenId()) return false;
       if (!getName()
@@ -3690,6 +3721,9 @@ public final class Company {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + EMPLOYEEID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getEmployeeId());
       hash = (37 * hash) + CITIZENID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getCitizenId());
@@ -3834,6 +3868,8 @@ public final class Company {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        employeeId_ = 0L;
+
         citizenId_ = 0L;
 
         name_ = "";
@@ -3870,6 +3906,7 @@ public final class Company {
       @java.lang.Override
       public id.koneko096.grpc.service.Company.EmployeeStatus buildPartial() {
         id.koneko096.grpc.service.Company.EmployeeStatus result = new id.koneko096.grpc.service.Company.EmployeeStatus(this);
+        result.employeeId_ = employeeId_;
         result.citizenId_ = citizenId_;
         result.name_ = name_;
         result.age_ = age_;
@@ -3923,6 +3960,9 @@ public final class Company {
 
       public Builder mergeFrom(id.koneko096.grpc.service.Company.EmployeeStatus other) {
         if (other == id.koneko096.grpc.service.Company.EmployeeStatus.getDefaultInstance()) return this;
+        if (other.getEmployeeId() != 0L) {
+          setEmployeeId(other.getEmployeeId());
+        }
         if (other.getCitizenId() != 0L) {
           setCitizenId(other.getCitizenId());
         }
@@ -3970,9 +4010,40 @@ public final class Company {
         return this;
       }
 
+      private long employeeId_ ;
+      /**
+       * <code>int64 employeeId = 1;</code>
+       * @return The employeeId.
+       */
+      @java.lang.Override
+      public long getEmployeeId() {
+        return employeeId_;
+      }
+      /**
+       * <code>int64 employeeId = 1;</code>
+       * @param value The employeeId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEmployeeId(long value) {
+        
+        employeeId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 employeeId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearEmployeeId() {
+        
+        employeeId_ = 0L;
+        onChanged();
+        return this;
+      }
+
       private long citizenId_ ;
       /**
-       * <code>int64 citizenId = 1;</code>
+       * <code>int64 citizenId = 2;</code>
        * @return The citizenId.
        */
       @java.lang.Override
@@ -3980,7 +4051,7 @@ public final class Company {
         return citizenId_;
       }
       /**
-       * <code>int64 citizenId = 1;</code>
+       * <code>int64 citizenId = 2;</code>
        * @param value The citizenId to set.
        * @return This builder for chaining.
        */
@@ -3991,7 +4062,7 @@ public final class Company {
         return this;
       }
       /**
-       * <code>int64 citizenId = 1;</code>
+       * <code>int64 citizenId = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearCitizenId() {
@@ -4003,7 +4074,7 @@ public final class Company {
 
       private java.lang.Object name_ = "";
       /**
-       * <code>string name = 2;</code>
+       * <code>string name = 3;</code>
        * @return The name.
        */
       public java.lang.String getName() {
@@ -4019,7 +4090,7 @@ public final class Company {
         }
       }
       /**
-       * <code>string name = 2;</code>
+       * <code>string name = 3;</code>
        * @return The bytes for name.
        */
       public com.google.protobuf.ByteString
@@ -4036,7 +4107,7 @@ public final class Company {
         }
       }
       /**
-       * <code>string name = 2;</code>
+       * <code>string name = 3;</code>
        * @param value The name to set.
        * @return This builder for chaining.
        */
@@ -4051,7 +4122,7 @@ public final class Company {
         return this;
       }
       /**
-       * <code>string name = 2;</code>
+       * <code>string name = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearName() {
@@ -4061,7 +4132,7 @@ public final class Company {
         return this;
       }
       /**
-       * <code>string name = 2;</code>
+       * <code>string name = 3;</code>
        * @param value The bytes for name to set.
        * @return This builder for chaining.
        */
@@ -4079,7 +4150,7 @@ public final class Company {
 
       private int age_ ;
       /**
-       * <code>int32 age = 3;</code>
+       * <code>int32 age = 4;</code>
        * @return The age.
        */
       @java.lang.Override
@@ -4087,7 +4158,7 @@ public final class Company {
         return age_;
       }
       /**
-       * <code>int32 age = 3;</code>
+       * <code>int32 age = 4;</code>
        * @param value The age to set.
        * @return This builder for chaining.
        */
@@ -4098,7 +4169,7 @@ public final class Company {
         return this;
       }
       /**
-       * <code>int32 age = 3;</code>
+       * <code>int32 age = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearAge() {
@@ -4110,7 +4181,7 @@ public final class Company {
 
       private java.lang.Object divisionName_ = "";
       /**
-       * <code>string divisionName = 4;</code>
+       * <code>string divisionName = 5;</code>
        * @return The divisionName.
        */
       public java.lang.String getDivisionName() {
@@ -4126,7 +4197,7 @@ public final class Company {
         }
       }
       /**
-       * <code>string divisionName = 4;</code>
+       * <code>string divisionName = 5;</code>
        * @return The bytes for divisionName.
        */
       public com.google.protobuf.ByteString
@@ -4143,7 +4214,7 @@ public final class Company {
         }
       }
       /**
-       * <code>string divisionName = 4;</code>
+       * <code>string divisionName = 5;</code>
        * @param value The divisionName to set.
        * @return This builder for chaining.
        */
@@ -4158,7 +4229,7 @@ public final class Company {
         return this;
       }
       /**
-       * <code>string divisionName = 4;</code>
+       * <code>string divisionName = 5;</code>
        * @return This builder for chaining.
        */
       public Builder clearDivisionName() {
@@ -4168,7 +4239,7 @@ public final class Company {
         return this;
       }
       /**
-       * <code>string divisionName = 4;</code>
+       * <code>string divisionName = 5;</code>
        * @param value The bytes for divisionName to set.
        * @return This builder for chaining.
        */
@@ -4186,7 +4257,7 @@ public final class Company {
 
       private java.lang.Object companyName_ = "";
       /**
-       * <code>string companyName = 5;</code>
+       * <code>string companyName = 6;</code>
        * @return The companyName.
        */
       public java.lang.String getCompanyName() {
@@ -4202,7 +4273,7 @@ public final class Company {
         }
       }
       /**
-       * <code>string companyName = 5;</code>
+       * <code>string companyName = 6;</code>
        * @return The bytes for companyName.
        */
       public com.google.protobuf.ByteString
@@ -4219,7 +4290,7 @@ public final class Company {
         }
       }
       /**
-       * <code>string companyName = 5;</code>
+       * <code>string companyName = 6;</code>
        * @param value The companyName to set.
        * @return This builder for chaining.
        */
@@ -4234,7 +4305,7 @@ public final class Company {
         return this;
       }
       /**
-       * <code>string companyName = 5;</code>
+       * <code>string companyName = 6;</code>
        * @return This builder for chaining.
        */
       public Builder clearCompanyName() {
@@ -4244,7 +4315,7 @@ public final class Company {
         return this;
       }
       /**
-       * <code>string companyName = 5;</code>
+       * <code>string companyName = 6;</code>
        * @param value The bytes for companyName to set.
        * @return This builder for chaining.
        */
@@ -5164,27 +5235,27 @@ public final class Company {
       "\001 \001(\003\022\030\n\020currentCompanyId\030\002 \001(\003\022\025\n\rnewDi" +
       "visionId\030\003 \001(\003\022\024\n\014newCompanyId\030\004 \001(\003\022\022\n\n" +
       "employeeId\030\005 \001(\003\")\n\023FireEmployeeRequest\022" +
-      "\022\n\nemployeeId\030\001 \001(\003\"i\n\016EmployeeStatus\022\021\n" +
-      "\tcitizenId\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\022\013\n\003age\030\003 " +
-      "\001(\005\022\024\n\014divisionName\030\004 \001(\t\022\023\n\013companyName" +
-      "\030\005 \001(\t\"H\n\032ListEmployeeStatusResponse\022*\n\t" +
-      "employees\030\001 \003(\0132\027.company.EmployeeStatus" +
-      "2\273\004\n\016CompanyService\022z\n\024ListCompanyEmploy" +
-      "ees\022\034.company.ListEmployeeRequest\032#.comp" +
-      "any.ListEmployeeStatusResponse\"\037\202\323\344\223\002\031\022\027" +
-      "/v1/company/{companyId}\022s\n\021GetEmployeeSt" +
-      "atus\022\033.company.GetEmployeeRequest\032\027.comp" +
-      "any.EmployeeStatus\"(\202\323\344\223\002\"\022 /v1/employee" +
-      "/{employeeId}/status\022f\n\020RegisterEmployee" +
-      "\022 .company.RegisterEmployeeRequest\032\027.com" +
-      "pany.EmployeeStatus\"\027\202\323\344\223\002\021\"\014/v1/employe" +
-      "e:\001*\022o\n\016MutateEmployee\022\036.company.MutateE" +
+      "\022\n\nemployeeId\030\001 \001(\003\"}\n\016EmployeeStatus\022\022\n" +
+      "\nemployeeId\030\001 \001(\003\022\021\n\tcitizenId\030\002 \001(\003\022\014\n\004" +
+      "name\030\003 \001(\t\022\013\n\003age\030\004 \001(\005\022\024\n\014divisionName\030" +
+      "\005 \001(\t\022\023\n\013companyName\030\006 \001(\t\"H\n\032ListEmploy" +
+      "eeStatusResponse\022*\n\temployees\030\001 \003(\0132\027.co" +
+      "mpany.EmployeeStatus2\273\004\n\016CompanyService\022" +
+      "z\n\024ListCompanyEmployees\022\034.company.ListEm" +
+      "ployeeRequest\032#.company.ListEmployeeStat" +
+      "usResponse\"\037\202\323\344\223\002\031\022\027/v1/company/{company" +
+      "Id}\022s\n\021GetEmployeeStatus\022\033.company.GetEm" +
+      "ployeeRequest\032\027.company.EmployeeStatus\"(" +
+      "\202\323\344\223\002\"\022 /v1/employee/{employeeId}/status" +
+      "\022f\n\020RegisterEmployee\022 .company.RegisterE" +
       "mployeeRequest\032\027.company.EmployeeStatus\"" +
-      "$\202\323\344\223\002\036\032\031/v1/employee/{employeeId}:\001*\022_\n" +
-      "\014FireEmployee\022\034.company.FireEmployeeRequ" +
-      "est\032\016.company.Empty\"!\202\323\344\223\002\033*\031/v1/employe" +
-      "e/{employeeId}B\033\n\031id.koneko096.grpc.serv" +
-      "iceb\006proto3"
+      "\027\202\323\344\223\002\021\"\014/v1/employee:\001*\022o\n\016MutateEmploy" +
+      "ee\022\036.company.MutateEmployeeRequest\032\027.com" +
+      "pany.EmployeeStatus\"$\202\323\344\223\002\036\032\031/v1/employe" +
+      "e/{employeeId}:\001*\022_\n\014FireEmployee\022\034.comp" +
+      "any.FireEmployeeRequest\032\016.company.Empty\"" +
+      "!\202\323\344\223\002\033*\031/v1/employee/{employeeId}B\033\n\031id" +
+      ".koneko096.grpc.serviceb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -5232,7 +5303,7 @@ public final class Company {
     internal_static_company_EmployeeStatus_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_company_EmployeeStatus_descriptor,
-        new java.lang.String[] { "CitizenId", "Name", "Age", "DivisionName", "CompanyName", });
+        new java.lang.String[] { "EmployeeId", "CitizenId", "Name", "Age", "DivisionName", "CompanyName", });
     internal_static_company_ListEmployeeStatusResponse_descriptor =
       getDescriptor().getMessageTypes().get(7);
     internal_static_company_ListEmployeeStatusResponse_fieldAccessorTable = new
