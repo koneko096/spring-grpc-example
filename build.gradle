@@ -134,6 +134,6 @@ sonarqube {
         property "sonar.projectKey", "koneko096_spring-grpc-example"
         property "sonar.organization", "koneko096-github"
         property "sonar.host.url", "https://sonarcloud.io"
-        property "sonar.exclusions", "src/main/protoGen,src/main/java/id/koneko096/grpc/invoker,src/main/java/id/koneko096/grpc/config"
+        property "sonar.exclusions", "src/main/protoGen,src/main/java/id/koneko096/grpc/invoker/**/*,src/main/java/id/koneko096/grpc/config/*"
     }
 }
