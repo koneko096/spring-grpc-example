@@ -15,8 +15,8 @@ package id.koneko096.grpc.api;
 
 import id.koneko096.grpc.client.CitizenApi;
 import id.koneko096.grpc.data.model.Citizen;
-import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.Test;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class CitizenApiTest {
      */
     @Test
     public void createCitizenTest() {
-        Citizen response = api.createCitizen();
+//        Citizen response = api.createCitizen();
 
         // TODO: test validations
     }
@@ -102,7 +102,7 @@ public class CitizenApiTest {
     @Test
     public void updateCitizenTest() {
         Long citizenId = null;
-        Citizen response = api.updateCitizen(citizenId);
+//        Citizen response = api.updateCitizen(citizenId);
 
         // TODO: test validations
     }
